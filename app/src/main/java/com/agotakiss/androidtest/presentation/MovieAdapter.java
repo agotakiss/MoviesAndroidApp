@@ -56,7 +56,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.title.setText(movie.getTitle());
         holder.rating.setText(Float.toString(movie.getAverageVote()));
 //        holder.genres.setText(movie.getGenres().toString());
-        holder.releaseDate.setText(movie.getReleaseDateText());
+        holder.releaseDate.setText(movie.getReleaseDateText().substring(0,4));
         holder.description.setText(movie.getOverview());
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -30,6 +31,10 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        ImageView ratingStar = findViewById(R.id.rating_star);
+//        ratingStar.setImageResource(R.drawable.star);
+//        ImageView calendar = findViewById(R.id.calendar);
+//        calendar.setImageResource(R.drawable.calendar);
 
 
 

@@ -14,4 +14,7 @@ public interface MovieDbApi {
 
     @GET("movie/{movie_id}/similar")
     Call<LoadMoviesResponse> getSimilarMovies(@Path(value = "movie_id", encoded = true) String movieId, @Query("page") int page);
+
+//    @GET("genre/movie/list")
+//    Call<LoadMoviesResponse> getGenres(@Query("page") int page);
 }
