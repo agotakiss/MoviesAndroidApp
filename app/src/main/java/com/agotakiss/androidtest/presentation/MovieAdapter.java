@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.agotakiss.androidtest.R;
+import com.agotakiss.androidtest.models.Genre;
 import com.agotakiss.androidtest.models.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -21,10 +22,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/";
     private List<Movie> movies;
     private Context context;
+    private List<Genre> genres;
 
-    public MovieAdapter(List<Movie> movies, Context context) {
+    public MovieAdapter(List<Movie> movies, List<Genre> genres, Context context) {
         this.movies = movies;
         this.context = context;
+        this.genres = genres;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

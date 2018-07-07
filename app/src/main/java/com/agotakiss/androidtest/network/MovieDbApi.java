@@ -1,5 +1,7 @@
 package com.agotakiss.androidtest.network;
 
+import com.agotakiss.androidtest.models.Genre;
+import com.agotakiss.androidtest.models.LoadGenresResponse;
 import com.agotakiss.androidtest.models.LoadMoviesResponse;
 
 import retrofit2.Call;
@@ -15,6 +17,6 @@ public interface MovieDbApi {
     @GET("movie/{movie_id}/similar")
     Call<LoadMoviesResponse> getSimilarMovies(@Path(value = "movie_id", encoded = true) String movieId, @Query("page") int page);
 
-//    @GET("genre/movie/list")
-//    Call<LoadMoviesResponse> getGenres(@Query("page") int page);
+    @GET("genre/movie/list")
+    Call<LoadGenresResponse> getGenres();
 }

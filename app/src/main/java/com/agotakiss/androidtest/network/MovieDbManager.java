@@ -1,5 +1,7 @@
 package com.agotakiss.androidtest.network;
 
+import com.agotakiss.androidtest.models.Genre;
+import com.agotakiss.androidtest.models.LoadGenresResponse;
 import com.agotakiss.androidtest.models.LoadMoviesResponse;
 
 import retrofit2.Callback;
@@ -35,5 +37,8 @@ public class MovieDbManager {
     }
     public void loadSimilarMovies(String movieId, int page, Callback<LoadMoviesResponse> callback) {
         movieDbApi.getSimilarMovies(movieId, page).enqueue(callback);
+    }
+    public void loadGenres(Callback<LoadGenresResponse> callback) {
+        movieDbApi.getGenres().enqueue(callback);
     }
 }
