@@ -10,12 +10,15 @@ import android.widget.TextView;
 
 import com.agotakiss.androidtest.R;
 import com.agotakiss.androidtest.models.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+import retrofit2.http.Url;
 
+public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
+    public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/";
     private List<Movie> movies;
     private Context context;
 
@@ -58,6 +61,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 //        holder.genres.setText(movie.getGenres().toString());
         holder.releaseDate.setText(movie.getReleaseDateText().substring(0,4));
         holder.description.setText(movie.getOverview());
+        Picasso.get().load(IMAGE_BASE_URL + movie.getPosterPath()).into(holder.poster);
     }
 
     @Override

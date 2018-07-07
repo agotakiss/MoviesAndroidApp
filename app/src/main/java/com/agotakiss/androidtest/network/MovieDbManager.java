@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 
 public class MovieDbManager {
     //You can use this base url to load images with 342 pixel width
-    public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/";
+
 
     //region singleton
     private static MovieDbManager instance;
