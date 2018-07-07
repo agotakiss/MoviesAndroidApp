@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
         moviesList = findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         moviesList.setLayoutManager(layoutManager);
-        adapter = new MovieAdapter(results, MainActivity.this);
+        adapter = new MovieAdapter(results, genresMap, MainActivity.this);
         moviesList.setAdapter(adapter);
     }
 }
