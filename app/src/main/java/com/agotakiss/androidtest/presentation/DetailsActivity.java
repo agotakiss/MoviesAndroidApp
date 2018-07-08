@@ -1,17 +1,20 @@
 package com.agotakiss.androidtest.presentation;
 
-import android.graphics.ColorMatrix;
-import android.graphics.ColorMatrixColorFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agotakiss.androidtest.R;
 import com.agotakiss.androidtest.models.LoadMoviesResponse;
+import com.agotakiss.androidtest.models.Movie;
 import com.agotakiss.androidtest.network.MovieDbManager;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,16 +65,25 @@ public class DetailsActivity extends AppCompatActivity {
         descriptionDetailedTextView.setText(descriptionDetails);
 
 
-        MovieDbManager.getInstance().loadSimilarMovies(movieId, 1, new Callback<LoadMoviesResponse>() {
+        MovieDbManager.getInstance().loadSimilarMovies("351286", 1, new Callback<LoadMoviesResponse>() {
             @Override
             public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
-//                Toast.makeText(MainActivity.this, "Similar movies are " + response.body().getMovies(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(DetailsActivity.this, "Similar movies are " + response.body().getMovies(), Toast.LENGTH_LONG).show();
+                displaySimilarMoviesInRecyclerView(response.body().getMovies());
             }
 
             @Override
             public void onFailure(Call<LoadMoviesResponse> call, Throwable t) {
-//                Toast.makeText(DetailsActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailsActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void displaySimilarMoviesInRecyclerView(List<Movie> results) {
+        RecyclerView similarMoviesList = findViewById(R.id.similar_recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(DetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        similarMoviesList.setLayoutManager(layoutManager);
+        SimilarMovieAdapter adapter = new SimilarMovieAdapter(results, DetailsActivity.this);
+        similarMoviesList.setAdapter(adapter);
     }
 }
