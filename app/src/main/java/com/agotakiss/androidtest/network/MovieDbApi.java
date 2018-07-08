@@ -19,4 +19,5 @@ public interface MovieDbApi {
 
     @GET("genre/movie/list")
     Call<LoadGenresResponse> getGenres();
+
 }
