@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
             @Override
             public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
                 displayInRecyclerView(response.body().getMovies());
+
             }
 
             @Override

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,12 +64,12 @@ public class DetailsActivity extends AppCompatActivity {
         ratingDetailedTextView.setText(ratingDetails);
         releaseDateDetailedTextView.setText(releaseDateDetails);
         descriptionDetailedTextView.setText(descriptionDetails);
+        descriptionDetailedTextView.setMovementMethod(new ScrollingMovementMethod());
 
 
-        MovieDbManager.getInstance().loadSimilarMovies("351286", 1, new Callback<LoadMoviesResponse>() {
+        MovieDbManager.getInstance().loadSimilarMovies(movieId, 1, new Callback<LoadMoviesResponse>() {
             @Override
             public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
-//                Toast.makeText(DetailsActivity.this, "Similar movies are " + response.body().getMovies(), Toast.LENGTH_LONG).show();
                 displaySimilarMoviesInRecyclerView(response.body().getMovies());
             }
 

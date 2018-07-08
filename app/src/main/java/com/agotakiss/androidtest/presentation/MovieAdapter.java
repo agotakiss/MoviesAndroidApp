@@ -76,7 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         holder.moreInfoButton.setOnClickListener(v -> {
              Intent intent = new Intent(context, DetailsActivity.class);
-             intent.putExtra(MOVIE_ID_DETAILS, movie.getId());
+             intent.putExtra(MOVIE_ID_DETAILS, Integer.toString(movie.getId()));
              intent.putExtra(POSTER_PATH_DETAILS, movie.getPosterPath());
              intent.putExtra(MOVIE_TITLE_DETAILS, movie.getTitle());
              intent.putExtra(GENRES_DETAILS, movieGenresToDisplay(movie));
