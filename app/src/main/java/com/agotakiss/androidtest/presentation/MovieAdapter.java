@@ -14,6 +14,7 @@ import com.agotakiss.androidtest.R;
 import com.agotakiss.androidtest.models.Movie;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,14 +28,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public static final String DESCRIPTION_DETAILS = "description_details";
     public static final String BACKDROP_PATH_DETAILS = "backdrop_path_details";
     public static final String MOVIE_TITLE_DETAILS = "movie_title_details";
+    public static final String GENRES_MAP = "genres_map";
     private List<Movie> movies;
     private Context context;
-    private Map<Integer, String> genresMap;
+    private HashMap<Integer, String> genresMapInMovieAdapter;
 
-    public MovieAdapter(List<Movie> movies, Map<Integer, String> genresMap, Context context) {
+    public MovieAdapter(List<Movie> movies, HashMap<Integer, String> genresMapInMovieAdapter, Context context) {
         this.movies = movies;
         this.context = context;
-        this.genresMap = genresMap;
+        this.genresMapInMovieAdapter = genresMapInMovieAdapter;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -84,6 +86,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
              intent.putExtra(RELEASE_DATE_DETAILS, movie.getReleaseDateText());
              intent.putExtra(DESCRIPTION_DETAILS, movie.getOverview());
              intent.putExtra(BACKDROP_PATH_DETAILS, movie.getBackdropPath());
+             intent.putExtra(GENRES_MAP, genresMapInMovieAdapter);
 
             context.startActivity(intent);
         });
@@ -97,13 +100,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public String movieGenresToDisplay(Movie movie) {
         List<Integer> movieGenreIdList = movie.getGenreIdList();
 
-        if (movie.getGenreIdList() != null && genresMap != null) {
+        if (movie.getGenreIdList() != null && genresMapInMovieAdapter != null) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < movieGenreIdList.size() - 1; i++) {
-                stringBuilder.append(genresMap.get(movie.getGenreIdList().get(i)));
+                stringBuilder.append(genresMapInMovieAdapter.get(movie.getGenreIdList().get(i)));
                 stringBuilder.append(", ");
             }
-            stringBuilder.append(genresMap.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
+            stringBuilder.append(genresMapInMovieAdapter.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
             return stringBuilder.toString();
         } else return "";
     }

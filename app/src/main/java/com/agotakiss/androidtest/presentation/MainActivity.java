@@ -23,7 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends Activity {
-    public Map<Integer, String> genresMap = new HashMap<>();
+    public static HashMap<Integer, String> genresMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
