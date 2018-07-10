@@ -31,8 +31,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         displayPopularMovies();
         saveGenresToHashmap();
-
-
     }
 
     private void displayPopularMovies() {
@@ -49,6 +47,8 @@ public class MainActivity extends Activity {
             }
         });
     }
+
+
 
     public void saveGenresToHashmap() {
         MovieDbManager.getInstance().loadGenres(new Callback<LoadGenresResponse>() {
@@ -74,18 +74,4 @@ public class MainActivity extends Activity {
         MovieAdapter adapter = new MovieAdapter(results, genresMap, MainActivity.this);
         moviesList.setAdapter(adapter);
     }
-
-
-//
-//    MovieDbManager.getInstance().loadSimilarMovies("351286", 1, new Callback<LoadMoviesResponse>() {
-//        @Override
-//        public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
-////                Toast.makeText(MainActivity.this, "Similar movies are " + response.body().getMovies(), Toast.LENGTH_LONG).show();
-//        }
-//
-//        @Override
-//        public void onFailure(Call<LoadMoviesResponse> call, Throwable t) {
-//            Toast.makeText(MainActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
-//        }
-//    });
 }

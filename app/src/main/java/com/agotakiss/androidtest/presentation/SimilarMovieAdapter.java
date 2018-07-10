@@ -55,13 +55,13 @@ public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapte
                 similarMovies.get(itemPosition).getId();
                 String movieIdToRefresh = Integer.toString(similarMovies.get(itemPosition).getId());
                 Intent intent = new Intent(context, DetailsActivity.class);
+
                 intent.putExtra(MOVIE_ID_DETAILS, Integer.toString(similarMovies.get(itemPosition).getId()));
                 intent.putExtra(POSTER_PATH_DETAILS, similarMovies.get(itemPosition).getPosterPath());
                 intent.putExtra(MOVIE_TITLE_DETAILS, similarMovies.get(itemPosition).getTitle());
 
 
                 List<Integer> movieGenreIdList = similarMovies.get(itemPosition).getGenreIdList();
-//                private Map<Integer, String> genresMap;
 
                 StringBuilder stringBuilder = new StringBuilder();
                 for (int i = 0; i < movieGenreIdList.size() - 1; i++) {

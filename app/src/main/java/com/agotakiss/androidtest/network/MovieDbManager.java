@@ -33,7 +33,6 @@ public class MovieDbManager {
 
     public void loadPopularMovies(int page, Callback<LoadMoviesResponse> callback) {
         movieDbApi.getPopularMovies(page).enqueue(callback);
-
     }
     public void loadSimilarMovies(String movieId, int page, Callback<LoadMoviesResponse> callback) {
         movieDbApi.getSimilarMovies(movieId, page).enqueue(callback);
