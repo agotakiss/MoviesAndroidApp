@@ -4,6 +4,7 @@ import com.agotakiss.androidtest.models.Genre;
 import com.agotakiss.androidtest.models.LoadGenresResponse;
 import com.agotakiss.androidtest.models.LoadMoviesResponse;
 
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -12,12 +13,12 @@ import retrofit2.http.Query;
 public interface MovieDbApi {
 
     @GET("movie/popular")
-    Call<LoadMoviesResponse> getPopularMovies(@Query("page") int page);
+    Single<LoadMoviesResponse> getPopularMovies(@Query("page") int page);
 
     @GET("movie/{movie_id}/similar")
-    Call<LoadMoviesResponse> getSimilarMovies(@Path(value = "movie_id", encoded = true) String movieId, @Query("page") int page);
+    Single<LoadMoviesResponse> getSimilarMovies(@Path(value = "movie_id", encoded = true) String movieId, @Query("page") int page);
 
     @GET("genre/movie/list")
-    Call<LoadGenresResponse> getGenres();
+    Single<LoadGenresResponse> getGenres();
 
 }

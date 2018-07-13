@@ -10,23 +10,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agotakiss.androidtest.R;
-import com.agotakiss.androidtest.models.LoadMoviesResponse;
 import com.agotakiss.androidtest.models.Movie;
 import com.agotakiss.androidtest.network.MovieDbManager;
+import com.agotakiss.androidtest.presentation.BaseActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 import static com.agotakiss.androidtest.presentation.home.MainActivity.genresMap;
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.IMAGE_BASE_URL;
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends BaseActivity {
     private int similarMoviesPage = 1;
     private int totalPages;
     private String movieId;
@@ -47,17 +46,25 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void loadSimilarMovies() {
-        MovieDbManager.getInstance().loadSimilarMovies(movieId, similarMoviesPage, new Callback<LoadMoviesResponse>() {
-            @Override
-            public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
-               onSimilarMoviesLoaded(response.body().getMovies(), response.body().getTotalPages());
-            }
-
-            @Override
-            public void onFailure(Call<LoadMoviesResponse> call, Throwable t) {
-                Toast.makeText(DetailsActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        MovieDbManager.getInstance().loadSimilarMovies(movieId, similarMoviesPage, new Callback<LoadMoviesResponse>() {
+//            @Override
+//            public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
+//               onSimilarMoviesLoaded(response.body().getMovies(), response.body().getTotalPages());
+//            }
+//
+//            @Override
+//            public void onFailure(Call<LoadMoviesResponse> call, Throwable t) {
+//                Toast.makeText(DetailsActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+        MovieDbManager.getInstance().loadSimilarMovies(movieId, similarMoviesPage)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(movieList -> {
+                    onSimilarMoviesLoaded(movieList, Integer.MAX_VALUE);
+                }, throwable -> {
+                    Toast.makeText(DetailsActivity.this, "Error: " + throwable.toString(), Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void initUI() {
@@ -81,10 +88,10 @@ public class DetailsActivity extends AppCompatActivity {
         descriptionDetailedTextView.setMovementMethod(new ScrollingMovementMethod());
     }
 
-    private void onSimilarMoviesLoaded(List<Movie> newMovies, int pages){
+    private void onSimilarMoviesLoaded(List<Movie> newMovies, int pages) {
         similarMovieList.addAll(newMovies);
-        adapter.notifyItemRangeInserted(similarMovieList.size()-newMovies.size(), newMovies.size());
-        totalPages=pages;
+        adapter.notifyItemRangeInserted(similarMovieList.size() - newMovies.size(), newMovies.size());
+        totalPages = pages;
     }
 
     public void initializeSimilarMovieList() {
@@ -95,7 +102,7 @@ public class DetailsActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.setOnEndReachedListener(position -> {
             similarMoviesPage++;
-            if(similarMoviesPage < totalPages){
+            if (similarMoviesPage < totalPages) {
                 loadSimilarMovies();
             }
         });

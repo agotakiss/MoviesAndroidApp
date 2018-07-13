@@ -18,23 +18,23 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.List;
 
+import static com.agotakiss.androidtest.presentation.home.MainActivity.genresMap;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/";
     public static final int LAST_ITEMS_BEFORE_LOAD_NEW = 5;
     public static final String MOVIE = "movie";
     private List<Movie> movies;
     private Context context;
-    private HashMap<Integer, String> genresMapInMovieAdapter;
-    OnEndReachedListener onEndReachedListener;
+    private OnEndReachedListener onEndReachedListener;
 
     public void setOnEndReachedListener(OnEndReachedListener onEndReachedListener) {
         this.onEndReachedListener = onEndReachedListener;
     }
 
-    public MovieAdapter(List<Movie> movies, HashMap<Integer, String> genresMapInMovieAdapter, Context context) {
+    public MovieAdapter(List<Movie> movies,  Context context) {
         this.movies = movies;
         this.context = context;
-        this.genresMapInMovieAdapter = genresMapInMovieAdapter;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,16 +91,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     public String movieGenresToDisplay(Movie movie) {
         List<Integer> movieGenreIdList = movie.getGenreIdList();
-        if (movie.getGenreIdList() != null && genresMapInMovieAdapter != null) {
+        if (movie.getGenreIdList() != null && genresMap != null) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < movieGenreIdList.size() - 1; i++) {
-                stringBuilder.append(genresMapInMovieAdapter.get(movie.getGenreIdList().get(i)));
+                stringBuilder.append(genresMap.get(movie.getGenreIdList().get(i)));
                 stringBuilder.append(", ");
             }
-            stringBuilder.append(genresMapInMovieAdapter.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
+            stringBuilder.append(genresMap.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
             return stringBuilder.toString();
         } else return "";
     }
-
-
 }
