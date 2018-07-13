@@ -15,40 +15,42 @@ import com.agotakiss.androidtest.models.Movie;
 import com.agotakiss.androidtest.network.MovieDbManager;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.agotakiss.androidtest.presentation.home.MovieAdapter.BACKDROP_PATH_DETAILS;
-import static com.agotakiss.androidtest.presentation.home.MovieAdapter.DESCRIPTION_DETAILS;
-import static com.agotakiss.androidtest.presentation.home.MovieAdapter.GENRES_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MainActivity.genresMap;
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.IMAGE_BASE_URL;
-import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE_ID_DETAILS;
-import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE_TITLE_DETAILS;
-import static com.agotakiss.androidtest.presentation.home.MovieAdapter.POSTER_PATH_DETAILS;
-import static com.agotakiss.androidtest.presentation.home.MovieAdapter.RATING_DETAILS;
-import static com.agotakiss.androidtest.presentation.home.MovieAdapter.RELEASE_DATE_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE;
 
 public class DetailsActivity extends AppCompatActivity {
     private int similarMoviesPage = 1;
-    String movieId = getIntent().getStringExtra(MOVIE_ID_DETAILS);
+    private int totalPages;
+    private String movieId;
+    private Movie movie;
+    List<Movie> similarMovieList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private SimilarMovieAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        movie = (Movie) getIntent().getSerializableExtra(MOVIE);
+        movieId = Integer.toString(movie.getId());
         initUI();
-
-
+        loadSimilarMovies();
+        initializeSimilarMovieList();
     }
 
-    private void displaySimilarMovies() {
+    private void loadSimilarMovies() {
         MovieDbManager.getInstance().loadSimilarMovies(movieId, similarMoviesPage, new Callback<LoadMoviesResponse>() {
             @Override
             public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
-                displaySimilarMoviesInRecyclerView(response.body().getMovies());
+               onSimilarMoviesLoaded(response.body().getMovies(), response.body().getTotalPages());
             }
 
             @Override
@@ -59,15 +61,6 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        String posterDetails = getIntent().getStringExtra(POSTER_PATH_DETAILS);
-        String movieTitleDetails = getIntent().getStringExtra(MOVIE_TITLE_DETAILS);
-        String genresDetails = getIntent().getStringExtra(GENRES_DETAILS);
-        String ratingDetails = getIntent().getStringExtra(RATING_DETAILS);
-        String releaseDateDetails = getIntent().getStringExtra(RELEASE_DATE_DETAILS);
-        String descriptionDetails = getIntent().getStringExtra(DESCRIPTION_DETAILS);
-        String backdropPathDetails = getIntent().getStringExtra(BACKDROP_PATH_DETAILS);
-
-
         ImageView posterDetailsImageView = findViewById(R.id.poster_detailed);
         TextView movieTitleDetailsTextView = findViewById(R.id.movie_title_detailed);
         TextView genresDetailedTextView = findViewById(R.id.genres_detailed);
@@ -76,28 +69,49 @@ public class DetailsActivity extends AppCompatActivity {
         TextView descriptionDetailedTextView = findViewById(R.id.description_detailed);
         ImageView backdropDetailedImageView = findViewById(R.id.backdrop_detailed);
 
-        Picasso.get().load(IMAGE_BASE_URL + posterDetails).into(posterDetailsImageView);
-        Picasso.get().load(IMAGE_BASE_URL + backdropPathDetails).into(backdropDetailedImageView);
+        Picasso.get().load(IMAGE_BASE_URL + movie.getPosterPath()).into(posterDetailsImageView);
+        Picasso.get().load(IMAGE_BASE_URL + movie.getBackdropPath()).into(backdropDetailedImageView);
         backdropDetailedImageView.setAlpha(0.2f);
 
-        movieTitleDetailsTextView.setText(movieTitleDetails);
-        genresDetailedTextView.setText(genresDetails);
-        ratingDetailedTextView.setText(ratingDetails);
-        releaseDateDetailedTextView.setText(releaseDateDetails);
-        descriptionDetailedTextView.setText(descriptionDetails);
+        movieTitleDetailsTextView.setText(movie.getTitle());
+        genresDetailedTextView.setText(genresToString());
+        ratingDetailedTextView.setText(Float.toString(movie.getAverageVote()));
+        releaseDateDetailedTextView.setText(movie.getReleaseDateText().substring(0, 4));
+        descriptionDetailedTextView.setText(movie.getOverview());
         descriptionDetailedTextView.setMovementMethod(new ScrollingMovementMethod());
     }
 
-    public void displaySimilarMoviesInRecyclerView(List<Movie> results) {
-        RecyclerView similarMoviesList = findViewById(R.id.similar_recycler_view);
+    private void onSimilarMoviesLoaded(List<Movie> newMovies, int pages){
+        similarMovieList.addAll(newMovies);
+        adapter.notifyItemRangeInserted(similarMovieList.size()-newMovies.size(), newMovies.size());
+        totalPages=pages;
+    }
+
+    public void initializeSimilarMovieList() {
+        recyclerView = findViewById(R.id.similar_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(DetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        similarMoviesList.setLayoutManager(layoutManager);
-        SimilarMovieAdapter adapter = new SimilarMovieAdapter(results, DetailsActivity.this);
-        similarMoviesList.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new SimilarMovieAdapter(similarMovieList, DetailsActivity.this);
+        recyclerView.setAdapter(adapter);
         adapter.setOnEndReachedListener(position -> {
             similarMoviesPage++;
-            displaySimilarMovies();
+            if(similarMoviesPage < totalPages){
+                loadSimilarMovies();
+            }
         });
+    }
+
+    public String genresToString() {
+        List<Integer> movieGenreIdList = movie.getGenreIdList();
+        if (movie.getGenreIdList() != null && genresMap != null) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < movie.getGenreIdList().size() - 1; i++) {
+                stringBuilder.append(genresMap.get(movieGenreIdList.get(i)));
+                stringBuilder.append(", ");
+            }
+            stringBuilder.append(genresMap.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
+            return stringBuilder.toString();
+        } else return "";
     }
 
 }

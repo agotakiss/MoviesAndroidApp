@@ -30,6 +30,9 @@ public class MovieDbManager {
         retrofit = RetrofitHelper.initRetrofit();
         movieDbApi = retrofit.create(MovieDbApi.class);
     }
+//    public void loadPopularMovies(int page, com.agotakiss.androidtest.network.Callback<LoadMoviesResponse> callback){
+//
+//    }
 
     public void loadPopularMovies(int page, Callback<LoadMoviesResponse> callback) {
         movieDbApi.getPopularMovies(page).enqueue(callback);

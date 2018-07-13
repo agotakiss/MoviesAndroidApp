@@ -24,9 +24,8 @@ import retrofit2.Response;
 public class MainActivity extends Activity {
     public static HashMap<Integer, String> genresMap = new HashMap<>();
     private int page = 1;
+    private int totalPages;
     List<Movie> movieList = new ArrayList<>();
-    final Handler handler = new Handler();
-
     private RecyclerView recyclerView;
     private MovieAdapter adapter;
 
@@ -47,7 +46,9 @@ public class MainActivity extends Activity {
         recyclerView.setAdapter(adapter);
         adapter.setOnEndReachedListener(position -> {
             page++;
-            loadNextPopularMoviesPage();
+            if(page < totalPages) {
+                loadNextPopularMoviesPage();
+            }
         });
     }
 
@@ -55,7 +56,7 @@ public class MainActivity extends Activity {
         MovieDbManager.getInstance().loadPopularMovies(page, new Callback<LoadMoviesResponse>() {
             @Override
             public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
-                onMoviesLoaded(response.body().getMovies());
+                onMoviesLoaded(response.body().getMovies(), response.body().getTotalPages());
             }
 
             @Override
@@ -65,9 +66,10 @@ public class MainActivity extends Activity {
         });
     }
 
-    private void onMoviesLoaded(List<Movie> newMovies){
+    private void onMoviesLoaded(List<Movie> newMovies, int pages){
         movieList.addAll(newMovies);
         adapter.notifyItemRangeInserted(movieList.size()-newMovies.size(), newMovies.size());
+        totalPages = pages;
     }
 
 

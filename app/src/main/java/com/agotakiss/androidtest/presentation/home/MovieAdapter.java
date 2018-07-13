@@ -20,16 +20,8 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/";
-    public static final String MOVIE_ID_DETAILS = "movie_id_details";
-    public static final String POSTER_PATH_DETAILS = "poster_path_details";
-    public static final String GENRES_DETAILS = "genres_details";
-    public static final String RATING_DETAILS = "rating_details";
-    public static final String RELEASE_DATE_DETAILS = "release_date_details";
-    public static final String DESCRIPTION_DETAILS = "description_details";
-    public static final String BACKDROP_PATH_DETAILS = "backdrop_path_details";
-    public static final String MOVIE_TITLE_DETAILS = "movie_title_details";
-    public static final String GENRES_MAP = "genres_map";
     public static final int LAST_ITEMS_BEFORE_LOAD_NEW = 5;
+    public static final String MOVIE = "movie";
     private List<Movie> movies;
     private Context context;
     private HashMap<Integer, String> genresMapInMovieAdapter;
@@ -87,16 +79,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
         holder.moreInfoButton.setOnClickListener(v -> {
              Intent intent = new Intent(context, DetailsActivity.class);
-             intent.putExtra(MOVIE_ID_DETAILS, Integer.toString(movie.getId()));
-             intent.putExtra(POSTER_PATH_DETAILS, movie.getPosterPath());
-             intent.putExtra(MOVIE_TITLE_DETAILS, movie.getTitle());
-             intent.putExtra(GENRES_DETAILS, movieGenresToDisplay(movie));
-             intent.putExtra(RATING_DETAILS, (Float.toString(movie.getAverageVote())));
-             intent.putExtra(RELEASE_DATE_DETAILS, movie.getReleaseDateText());
-             intent.putExtra(DESCRIPTION_DETAILS, movie.getOverview());
-             intent.putExtra(BACKDROP_PATH_DETAILS, movie.getBackdropPath());
-             intent.putExtra(GENRES_MAP, genresMapInMovieAdapter);
-
+             intent.putExtra(MOVIE, movie);
             context.startActivity(intent);
         });
     }
@@ -108,7 +91,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
 
     public String movieGenresToDisplay(Movie movie) {
         List<Integer> movieGenreIdList = movie.getGenreIdList();
-
         if (movie.getGenreIdList() != null && genresMapInMovieAdapter != null) {
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < movieGenreIdList.size() - 1; i++) {

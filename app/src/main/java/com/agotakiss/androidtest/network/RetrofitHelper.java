@@ -27,22 +27,19 @@ public class RetrofitHelper {
     private static OkHttpClient getOkHttpClient() {
         OkHttpClient.Builder httpClient =
                 new OkHttpClient.Builder();
-        httpClient.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-                HttpUrl originalHttpUrl = original.url();
+        httpClient.addInterceptor(chain -> {
+            Request original = chain.request();
+            HttpUrl originalHttpUrl = original.url();
 
-                HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter(API_KEY, MOVIE_DB_API_KEY)
-                        .build();
+            HttpUrl url = originalHttpUrl.newBuilder()
+                    .addQueryParameter(API_KEY, MOVIE_DB_API_KEY)
+                    .build();
 
-                Request.Builder requestBuilder = original.newBuilder()
-                        .url(url);
+            Request.Builder requestBuilder = original.newBuilder()
+                    .url(url);
 
-                Request request = requestBuilder.build();
-                return chain.proceed(request);
-            }
+            Request request = requestBuilder.build();
+            return chain.proceed(request);
         });
 
         return httpClient.build();
