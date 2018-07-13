@@ -1,4 +1,4 @@
-package com.agotakiss.androidtest.presentation;
+package com.agotakiss.androidtest.presentation.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,11 +12,11 @@ import android.widget.TextView;
 
 import com.agotakiss.androidtest.R;
 import com.agotakiss.androidtest.models.Movie;
+import com.agotakiss.androidtest.presentation.detail.DetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/";
@@ -29,9 +29,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     public static final String BACKDROP_PATH_DETAILS = "backdrop_path_details";
     public static final String MOVIE_TITLE_DETAILS = "movie_title_details";
     public static final String GENRES_MAP = "genres_map";
+    public static final int LAST_ITEMS_BEFORE_LOAD_NEW = 5;
     private List<Movie> movies;
     private Context context;
     private HashMap<Integer, String> genresMapInMovieAdapter;
+    OnEndReachedListener onEndReachedListener;
+
+    public void setOnEndReachedListener(OnEndReachedListener onEndReachedListener) {
+        this.onEndReachedListener = onEndReachedListener;
+    }
 
     public MovieAdapter(List<Movie> movies, HashMap<Integer, String> genresMapInMovieAdapter, Context context) {
         this.movies = movies;
@@ -69,6 +75,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Movie movie = movies.get(position);
+        if (position == movies.size() - 1){
+            onEndReachedListener.onEndReached(position);
+        }
         holder.titleTextView.setText(movie.getTitle());
         holder.ratingTextView.setText(Float.toString(movie.getAverageVote()));
         holder.genresTextView.setText(movieGenresToDisplay(movie));

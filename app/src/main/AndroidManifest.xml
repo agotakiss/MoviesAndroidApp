@@ -11,16 +11,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.MainActivity">
+        <activity android:name=".presentation.home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.DetailsActivity"
+        <activity android:name=".presentation.detail.DetailsActivity"
             android:theme="@style/Theme.AppCompat.Light"
-            android:parentActivityName=".presentation.MainActivity">
+            android:parentActivityName=".presentation.home.MainActivity">
         </activity>
     </application>
 

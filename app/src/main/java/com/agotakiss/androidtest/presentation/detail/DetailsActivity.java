@@ -1,4 +1,4 @@
-package com.agotakiss.androidtest.presentation;
+package com.agotakiss.androidtest.presentation.detail;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,36 +15,37 @@ import com.agotakiss.androidtest.models.Movie;
 import com.agotakiss.androidtest.network.MovieDbManager;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.agotakiss.androidtest.presentation.MovieAdapter.BACKDROP_PATH_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.DESCRIPTION_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.GENRES_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.GENRES_MAP;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.IMAGE_BASE_URL;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.MOVIE_ID_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.MOVIE_TITLE_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.POSTER_PATH_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.RATING_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.RELEASE_DATE_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.BACKDROP_PATH_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.DESCRIPTION_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.GENRES_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.IMAGE_BASE_URL;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE_ID_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE_TITLE_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.POSTER_PATH_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.RATING_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.RELEASE_DATE_DETAILS;
 
 public class DetailsActivity extends AppCompatActivity {
+    private int similarMoviesPage = 1;
+    String movieId = getIntent().getStringExtra(MOVIE_ID_DETAILS);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        String movieId = initUI();
+        initUI();
 
 
+    }
 
-        MovieDbManager.getInstance().loadSimilarMovies(movieId, 1, new Callback<LoadMoviesResponse>() {
+    private void displaySimilarMovies() {
+        MovieDbManager.getInstance().loadSimilarMovies(movieId, similarMoviesPage, new Callback<LoadMoviesResponse>() {
             @Override
             public void onResponse(Call<LoadMoviesResponse> call, Response<LoadMoviesResponse> response) {
                 displaySimilarMoviesInRecyclerView(response.body().getMovies());
@@ -55,12 +56,9 @@ public class DetailsActivity extends AppCompatActivity {
                 Toast.makeText(DetailsActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
-    private String initUI() {
-        String movieId = getIntent().getStringExtra(MOVIE_ID_DETAILS);
+    private void initUI() {
         String posterDetails = getIntent().getStringExtra(POSTER_PATH_DETAILS);
         String movieTitleDetails = getIntent().getStringExtra(MOVIE_TITLE_DETAILS);
         String genresDetails = getIntent().getStringExtra(GENRES_DETAILS);
@@ -88,17 +86,18 @@ public class DetailsActivity extends AppCompatActivity {
         releaseDateDetailedTextView.setText(releaseDateDetails);
         descriptionDetailedTextView.setText(descriptionDetails);
         descriptionDetailedTextView.setMovementMethod(new ScrollingMovementMethod());
-        return movieId;
     }
 
     public void displaySimilarMoviesInRecyclerView(List<Movie> results) {
-//        HashMap<Integer, String> genresHashMap =(HashMap<Integer, String>) getIntent().getSerializableExtra(GENRES_DETAILS);
-
         RecyclerView similarMoviesList = findViewById(R.id.similar_recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(DetailsActivity.this, LinearLayoutManager.HORIZONTAL, false);
         similarMoviesList.setLayoutManager(layoutManager);
         SimilarMovieAdapter adapter = new SimilarMovieAdapter(results, DetailsActivity.this);
         similarMoviesList.setAdapter(adapter);
+        adapter.setOnEndReachedListener(position -> {
+            similarMoviesPage++;
+            displaySimilarMovies();
+        });
     }
 
 }

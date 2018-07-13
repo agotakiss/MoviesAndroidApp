@@ -1,4 +1,4 @@
-package com.agotakiss.androidtest.presentation;
+package com.agotakiss.androidtest.presentation.detail;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,34 +10,38 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.agotakiss.androidtest.R;
 import com.agotakiss.androidtest.models.Movie;
+import com.agotakiss.androidtest.presentation.home.OnEndReachedListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static com.agotakiss.androidtest.presentation.MainActivity.genresMap;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.BACKDROP_PATH_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.DESCRIPTION_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.GENRES_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.IMAGE_BASE_URL;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.MOVIE_ID_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.MOVIE_TITLE_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.POSTER_PATH_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.RATING_DETAILS;
-import static com.agotakiss.androidtest.presentation.MovieAdapter.RELEASE_DATE_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MainActivity.genresMap;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.BACKDROP_PATH_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.DESCRIPTION_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.GENRES_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.IMAGE_BASE_URL;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.LAST_ITEMS_BEFORE_LOAD_NEW;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE_ID_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE_TITLE_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.POSTER_PATH_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.RATING_DETAILS;
+import static com.agotakiss.androidtest.presentation.home.MovieAdapter.RELEASE_DATE_DETAILS;
 
 public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder> {
     private List<Movie> similarMovies;
     private Context context;
-//    private HashMap<Integer, String> detailesGenreMap;
+    OnEndReachedListener onEndReachedListener;
+
+    public void setOnEndReachedListener(OnEndReachedListener onEndReachedListener) {
+        this.onEndReachedListener = onEndReachedListener;
+    }
 
     public SimilarMovieAdapter(List<Movie> similarMovies, Context context) {
         this.similarMovies = similarMovies;
         this.context = context;
-//        this.detailesGenreMap = detailesGenreMap;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -96,6 +100,9 @@ public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Movie movie = similarMovies.get(position);
+        if (position == similarMovies.size() - LAST_ITEMS_BEFORE_LOAD_NEW){
+            onEndReachedListener.onEndReached(position);
+        }
         holder.similarMovieRating.setText(Float.toString(movie.getAverageVote()));
         Picasso.get().load(IMAGE_BASE_URL + movie.getPosterPath()).into(holder.similarMoviePoster);
 
