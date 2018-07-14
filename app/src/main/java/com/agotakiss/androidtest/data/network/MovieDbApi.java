@@ -1,11 +1,9 @@
-package com.agotakiss.androidtest.network;
+package com.agotakiss.androidtest.data.network;
 
-import com.agotakiss.androidtest.models.Genre;
-import com.agotakiss.androidtest.models.LoadGenresResponse;
-import com.agotakiss.androidtest.models.LoadMoviesResponse;
+import com.agotakiss.androidtest.data.models.LoadGenresResponse;
+import com.agotakiss.androidtest.data.models.LoadMoviesResponse;
 
 import io.reactivex.Single;
-import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

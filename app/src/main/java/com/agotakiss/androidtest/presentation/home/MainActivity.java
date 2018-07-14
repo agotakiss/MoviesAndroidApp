@@ -6,19 +6,24 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.agotakiss.androidtest.R;
-import com.agotakiss.androidtest.models.Movie;
-import com.agotakiss.androidtest.network.MovieDbManager;
+import com.agotakiss.androidtest.data.models.Movie;
+import com.agotakiss.androidtest.domain.GenreRepository;
+import com.agotakiss.androidtest.domain.MovieRepository;
+import com.agotakiss.androidtest.injector.Injector;
 import com.agotakiss.androidtest.presentation.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseActivity {
+
+    private MovieRepository movieRepository = Injector.getMovieRepository();
+    private GenreRepository genreRepository = Injector.getGenreRepository();
+
     public static HashMap<Integer, String> genresMap = new HashMap<>();
     private int page = 1;
     private int totalPages;
@@ -61,8 +66,7 @@ public class MainActivity extends BaseActivity {
 //                Toast.makeText(MainActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
 //            }
 //        });
-
-        MovieDbManager.getInstance().loadPopularMovies(page)
+        movieRepository.getPopularMovies(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieList -> {
@@ -80,20 +84,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void loadGenres() {
-//        MovieDbManager.getInstance().loadGenres(new Callback<LoadGenresResponse>() {
-//            @Override
-//            public void onResponse(Call<LoadGenresResponse> call, Response<LoadGenresResponse> response) {
-//                for (int i = 0; i < response.body().getGenres().size(); i++) {
-//                    genresMap.put(response.body().getGenres().get(i).getId(), response.body().getGenres().get(i).getName());
-//                }
-//            }
-//            @Override
-//            public void onFailure(Call<LoadGenresResponse> call, Throwable t) {
-//                Toast.makeText(MainActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
-        MovieDbManager.getInstance().loadGenres()
+        genreRepository.getGenres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(genres -> {

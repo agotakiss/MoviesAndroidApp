@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.agotakiss.androidtest.R;
-import com.agotakiss.androidtest.models.Movie;
+import com.agotakiss.androidtest.data.models.Movie;
 import com.agotakiss.androidtest.presentation.home.OnEndReachedListener;
 import com.squareup.picasso.Picasso;
 import java.util.List;

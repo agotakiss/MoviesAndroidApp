@@ -1,4 +1,4 @@
-package com.agotakiss.androidtest.network;
+package com.agotakiss.androidtest.data.network;
 
 public interface Callback <T> {
     void onSuccess(T data);

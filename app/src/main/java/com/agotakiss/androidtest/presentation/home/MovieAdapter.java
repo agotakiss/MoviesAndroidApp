@@ -11,11 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.agotakiss.androidtest.R;
-import com.agotakiss.androidtest.models.Movie;
+import com.agotakiss.androidtest.data.models.Movie;
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static com.agotakiss.androidtest.presentation.home.MainActivity.genresMap;

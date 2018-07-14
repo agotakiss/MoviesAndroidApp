@@ -1,4 +1,4 @@
-package com.agotakiss.androidtest.models;
+package com.agotakiss.androidtest.data.models;
 
 import com.google.gson.annotations.SerializedName;
 

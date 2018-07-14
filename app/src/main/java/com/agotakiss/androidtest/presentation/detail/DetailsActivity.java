@@ -1,7 +1,6 @@
 package com.agotakiss.androidtest.presentation.detail;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
@@ -10,8 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agotakiss.androidtest.R;
-import com.agotakiss.androidtest.models.Movie;
-import com.agotakiss.androidtest.network.MovieDbManager;
+import com.agotakiss.androidtest.data.models.Movie;
+import com.agotakiss.androidtest.domain.MovieRepository;
+import com.agotakiss.androidtest.injector.Injector;
 import com.agotakiss.androidtest.presentation.BaseActivity;
 import com.squareup.picasso.Picasso;
 
@@ -26,6 +26,9 @@ import static com.agotakiss.androidtest.presentation.home.MovieAdapter.IMAGE_BAS
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE;
 
 public class DetailsActivity extends BaseActivity {
+
+    private MovieRepository movieRepository = Injector.getMovieRepository();
+
     private int similarMoviesPage = 1;
     private int totalPages;
     private String movieId;
@@ -57,7 +60,7 @@ public class DetailsActivity extends BaseActivity {
 //                Toast.makeText(DetailsActivity.this, "Error: " + t.toString(), Toast.LENGTH_SHORT).show();
 //            }
 //        });
-        MovieDbManager.getInstance().loadSimilarMovies(movieId, similarMoviesPage)
+        movieRepository.getSimilarMovies(movieId, similarMoviesPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(movieList -> {
