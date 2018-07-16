@@ -6,9 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.agotakiss.androidtest.R;
-import com.agotakiss.androidtest.data.models.Movie;
-import com.agotakiss.androidtest.domain.GenreRepository;
-import com.agotakiss.androidtest.domain.MovieRepository;
+import com.agotakiss.androidtest.domain.models.Movie;
+import com.agotakiss.androidtest.domain.repository.GenreRepository;
+import com.agotakiss.androidtest.domain.repository.MovieRepository;
 import com.agotakiss.androidtest.injector.Injector;
 import com.agotakiss.androidtest.presentation.BaseActivity;
 
@@ -22,9 +22,9 @@ import io.reactivex.schedulers.Schedulers;
 public class MainActivity extends BaseActivity {
 
     private MovieRepository movieRepository = Injector.getMovieRepository();
-    private GenreRepository genreRepository = Injector.getGenreRepository();
+//    private GenreRepository genreRepository = Injector.getGenreRepository();
 
-    public static HashMap<Integer, String> genresMap = new HashMap<>();
+//    public static HashMap<Integer, String> genresMap = new HashMap<>();
     private int page = 1;
     private int totalPages;
     List<Movie> movieList = new ArrayList<>();
@@ -37,7 +37,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         initializeList();
         loadNextPopularMoviesPage();
-        loadGenres();
+//        loadGenres();
     }
 
     private void initializeList() {
@@ -82,19 +82,19 @@ public class MainActivity extends BaseActivity {
         adapter.notifyItemRangeInserted(movieList.size() - newMovies.size(), newMovies.size());
         totalPages = pages;
     }
-
-    public void loadGenres() {
-
-        genreRepository.getGenres()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(genres -> {
-                    for (int i = 0; i < genres.size(); i++) {
-                        genresMap.put(genres.get(i).getId(), genres.get(i).getName());
-                    }
-                }, throwable -> {
-                    logE(throwable);
-                    Toast.makeText(MainActivity.this, "Error: " + throwable.toString(), Toast.LENGTH_SHORT).show();
-                });
-    }
+//
+//    public void loadGenres() {
+//
+//        genreRepository.getGenres()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(genres -> {
+//                    for (int i = 0; i < genres.size(); i++) {
+//                        genresMap.put(genres.get(i).getId(), genres.get(i).getName());
+//                    }
+//                }, throwable -> {
+//                    logE(throwable);
+//                    Toast.makeText(MainActivity.this, "Error: " + throwable.toString(), Toast.LENGTH_SHORT).show();
+//                });
+//    }
 }

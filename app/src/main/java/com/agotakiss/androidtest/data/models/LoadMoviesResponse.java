@@ -11,7 +11,7 @@ public class LoadMoviesResponse implements Serializable {
     private int page;
 
     @SerializedName("results")
-    private List<Movie> movies;
+    private List<MovieDataModel> movies;
 
     @SerializedName("total_results")
     private int totalResults;
@@ -23,7 +23,7 @@ public class LoadMoviesResponse implements Serializable {
         return page;
     }
 
-    public List<Movie> getMovies() {
+    public List<MovieDataModel> getMovies() {
         return movies;
     }
 

@@ -6,8 +6,8 @@ import com.agotakiss.androidtest.data.repository.GenreRepositoryImpl;
 import com.agotakiss.androidtest.data.repository.MovieRepositoryImpl;
 import com.agotakiss.androidtest.data.store.GenreStore;
 import com.agotakiss.androidtest.data.store.GenreStoreImpl;
-import com.agotakiss.androidtest.domain.GenreRepository;
-import com.agotakiss.androidtest.domain.MovieRepository;
+import com.agotakiss.androidtest.domain.repository.GenreRepository;
+import com.agotakiss.androidtest.domain.repository.MovieRepository;
 
 import retrofit2.Retrofit;
 

@@ -9,8 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.agotakiss.androidtest.R;
-import com.agotakiss.androidtest.data.models.Movie;
-import com.agotakiss.androidtest.domain.MovieRepository;
+import com.agotakiss.androidtest.domain.models.Genre;
+import com.agotakiss.androidtest.domain.models.Movie;
+import com.agotakiss.androidtest.domain.repository.MovieRepository;
 import com.agotakiss.androidtest.injector.Injector;
 import com.agotakiss.androidtest.presentation.BaseActivity;
 import com.squareup.picasso.Picasso;
@@ -18,10 +19,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.agotakiss.androidtest.presentation.home.MainActivity.genresMap;
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.IMAGE_BASE_URL;
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE;
 
@@ -66,7 +68,8 @@ public class DetailsActivity extends BaseActivity {
                 .subscribe(movieList -> {
                     onSimilarMoviesLoaded(movieList, Integer.MAX_VALUE);
                 }, throwable -> {
-                    Toast.makeText(DetailsActivity.this, "Error: " + throwable.toString(), Toast.LENGTH_SHORT).show();
+                    logE(throwable);
+//                    Toast.makeText(DetailsActivity.this, "Error: " + throwable.toString(), Toast.LENGTH_SHORT).show();
                 });
     }
 
@@ -112,16 +115,23 @@ public class DetailsActivity extends BaseActivity {
     }
 
     public String genresToString() {
-        List<Integer> movieGenreIdList = movie.getGenreIdList();
-        if (movie.getGenreIdList() != null && genresMap != null) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < movie.getGenreIdList().size() - 1; i++) {
-                stringBuilder.append(genresMap.get(movieGenreIdList.get(i)));
-                stringBuilder.append(", ");
-            }
-            stringBuilder.append(genresMap.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
-            return stringBuilder.toString();
-        } else return "";
+//        List<Integer> movieGenreIdList = movie.getGenreIdList();
+//        if (movie.getGenreIdList() != null && genresMap != null) {
+//            StringBuilder stringBuilder = new StringBuilder();
+//            for (int i = 0; i < movie.getGenreIdList().size() - 1; i++) {
+//                stringBuilder.append(genresMap.get(movieGenreIdList.get(i)));
+//                stringBuilder.append(", ");
+//            }
+//            stringBuilder.append(genresMap.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
+//            return stringBuilder.toString();
+//        } else return "";
+        if(movie.getGenres() != null && !movie.getGenres().isEmpty()){
+            return Observable.fromIterable(movie.getGenres())
+                    .map(Genre::getName)
+                    .reduce((s, s2) -> s + ", " + s2).blockingGet();
+        } else{
+            return "";
+        }
     }
 
 }

@@ -1,6 +1,6 @@
-package com.agotakiss.androidtest.domain;
+package com.agotakiss.androidtest.domain.repository;
 
-import com.agotakiss.androidtest.data.models.Movie;
+import com.agotakiss.androidtest.domain.models.Movie;
 
 import java.util.List;
 

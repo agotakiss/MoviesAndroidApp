@@ -8,9 +8,9 @@ import java.util.List;
 public class LoadGenresResponse implements Serializable {
 
     @SerializedName("genres")
-    private List<Genre> genres;
+    private List<GenreDataModel> genres;
 
-    public List<Genre> getGenres() {
+    public List<GenreDataModel> getGenres() {
         return genres;
     }
 }

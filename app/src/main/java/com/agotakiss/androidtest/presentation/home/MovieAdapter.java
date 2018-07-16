@@ -11,13 +11,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.agotakiss.androidtest.R;
-import com.agotakiss.androidtest.data.models.Movie;
+import com.agotakiss.androidtest.domain.models.Genre;
+import com.agotakiss.androidtest.domain.models.Movie;
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static com.agotakiss.androidtest.presentation.home.MainActivity.genresMap;
+import io.reactivex.Observable;
+
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> {
     public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/";
@@ -89,15 +91,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     public String movieGenresToDisplay(Movie movie) {
-        List<Integer> movieGenreIdList = movie.getGenreIdList();
-        if (movie.getGenreIdList() != null && genresMap != null) {
-            StringBuilder stringBuilder = new StringBuilder();
-            for (int i = 0; i < movieGenreIdList.size() - 1; i++) {
-                stringBuilder.append(genresMap.get(movie.getGenreIdList().get(i)));
-                stringBuilder.append(", ");
-            }
-            stringBuilder.append(genresMap.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
-            return stringBuilder.toString();
-        } else return "";
+//        List<Integer> movieGenreIdList = movie.getGenreIdList();
+//        if (movie.getGenreIdList() != null && genresMap != null) {
+//            StringBuilder stringBuilder = new StringBuilder();
+//            for (int i = 0; i < movieGenreIdList.size() - 1; i++) {
+//                stringBuilder.append(genresMap.get(movie.getGenreIdList().get(i)));
+//                stringBuilder.append(", ");
+//            }
+//            stringBuilder.append(genresMap.get(movieGenreIdList.get(movieGenreIdList.size() - 1)));
+//            return stringBuilder.toString();
+//        } else return "";
+
+        if(movie.getGenres() != null && !movie.getGenres().isEmpty()){
+            return Observable.fromIterable(movie.getGenres())
+                    .map(Genre::getName)
+                    .reduce((s, s2) -> s + ", " + s2).blockingGet();
+        } else{
+            return "";
+        }
     }
 }
