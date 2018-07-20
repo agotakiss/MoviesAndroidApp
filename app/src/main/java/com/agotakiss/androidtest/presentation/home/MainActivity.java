@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -28,20 +30,20 @@ public class MainActivity extends BaseActivity {
     private int page = 1;
     private int totalPages;
     List<Movie> movieList = new ArrayList<>();
-    private RecyclerView recyclerView;
+    @BindView(R.id.recycler_view) RecyclerView recyclerView;
     private MovieAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
         initializeList();
         loadNextPopularMoviesPage();
 //        loadGenres();
     }
 
     private void initializeList() {
-        recyclerView = findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new MovieAdapter(movieList, MainActivity.this);
@@ -78,6 +80,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void onMoviesLoaded(List<Movie> newMovies, int pages) {
+
         movieList.addAll(newMovies);
         adapter.notifyItemRangeInserted(movieList.size() - newMovies.size(), newMovies.size());
         totalPages = pages;

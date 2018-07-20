@@ -18,6 +18,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.Observable;
 
 
@@ -39,23 +42,30 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView posterImageView;
-        public TextView titleTextView;
-        public TextView ratingTextView;
-        public TextView genresTextView;
-        public TextView releaseDate;
-        public TextView description;
-        public Button moreInfoButton;
+        @BindView(R.id.poster) ImageView posterImageView;
+        @BindView(R.id.movie_title) TextView titleTextView;
+        @BindView(R.id.movie_rating) TextView ratingTextView;
+        @BindView(R.id.movie_genres) TextView genresTextView;
+        @BindView(R.id.movie_release_date) TextView releaseDate;
+        @BindView(R.id.movie_description) TextView description;
+        @BindView(R.id.more_info_button) Button moreInfoButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            posterImageView = itemView.findViewById(R.id.poster);
-            titleTextView = itemView.findViewById(R.id.movie_title);
-            ratingTextView = itemView.findViewById(R.id.movie_rating);
-            genresTextView = itemView.findViewById(R.id.movie_genres);
-            releaseDate = itemView.findViewById(R.id.movie_release_date);
-            description = itemView.findViewById(R.id.movie_description);
-            moreInfoButton = itemView.findViewById(R.id.more_info_button);
+//            posterImageView = itemView.findViewById(R.id.poster);
+//            titleTextView = itemView.findViewById(R.id.movie_title);
+//            ratingTextView = itemView.findViewById(R.id.movie_rating);
+//            genresTextView = itemView.findViewById(R.id.movie_genres);
+//            releaseDate = itemView.findViewById(R.id.movie_release_date);
+//            description = itemView.findViewById(R.id.movie_description);
+//            moreInfoButton = itemView.findViewById(R.id.more_info_button);
+
+            ButterKnife.bind(this, itemView);
+        }
+        @OnClick(R.id.more_info_button)void onItemClicked(){
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra(MOVIE, movies.get(getAdapterPosition()));
+            context.startActivity(intent);
         }
     }
 
@@ -78,11 +88,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder> 
         holder.description.setText(movie.getOverview());
         Picasso.get().load(IMAGE_BASE_URL + movie.getPosterPath()).into(holder.posterImageView);
 
-        holder.moreInfoButton.setOnClickListener(v -> {
-             Intent intent = new Intent(context, DetailsActivity.class);
-             intent.putExtra(MOVIE, movie);
-            context.startActivity(intent);
-        });
+//        holder.moreInfoButton.setOnClickListener(v -> {
+//             Intent intent = new Intent(context, DetailsActivity.class);
+//             intent.putExtra(MOVIE, movie);
+//            context.startActivity(intent);
+//        });
     }
 
     @Override

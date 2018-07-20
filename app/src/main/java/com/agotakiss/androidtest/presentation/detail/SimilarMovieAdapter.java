@@ -15,6 +15,11 @@ import com.agotakiss.androidtest.domain.models.Movie;
 import com.agotakiss.androidtest.presentation.home.OnEndReachedListener;
 import com.squareup.picasso.Picasso;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.IMAGE_BASE_URL;
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.LAST_ITEMS_BEFORE_LOAD_NEW;
 import static com.agotakiss.androidtest.presentation.home.MovieAdapter.MOVIE;
@@ -34,22 +39,29 @@ public class SimilarMovieAdapter extends RecyclerView.Adapter<SimilarMovieAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView similarMoviePoster;
-        private TextView similarMovieRating;
+        @BindView(R.id.similar_movie_poster) ImageView similarMoviePoster;
+        @BindView(R.id.similar_movie_rating) TextView similarMovieRating;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            similarMovieRating = itemView.findViewById(R.id.similar_movie_rating);
-            similarMoviePoster = itemView.findViewById(R.id.similar_movie_poster);
+            ButterKnife.bind(this, itemView);
 
-            itemView.setOnClickListener(v -> {
-                int itemPosition = getAdapterPosition();
-                Movie similarMovie = similarMovies.get(itemPosition);
-                Intent intent = new Intent(context, DetailsActivity.class);
-                intent.putExtra(MOVIE, similarMovie);
-                ((Activity) context).finish();
-                context.startActivity(intent);
-            });
+//            itemView.setOnClickListener(v -> {
+//                int itemPosition = getAdapterPosition();
+//                Movie similarMovie = similarMovies.get(itemPosition);
+//                Intent intent = new Intent(context, DetailsActivity.class);
+//                intent.putExtra(MOVIE, similarMovie);
+//                ((Activity) context).finish();
+//                context.startActivity(intent);
+//            });
+        }
+        @OnClick(R.id.similar_movie_cardview)void onItemClicked(){
+            int itemPosition = getAdapterPosition();
+            Movie similarMovie = similarMovies.get(itemPosition);
+            Intent intent = new Intent(context, DetailsActivity.class);
+            intent.putExtra(MOVIE, similarMovie);
+            ((Activity) context).finish();
+            context.startActivity(intent);
         }
     }
 
