@@ -7,7 +7,7 @@ import android.text.method.ScrollingMovementMethod
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.di.Injector
-import com.agotakiss.androidtest.base.BaseActivity
+import com.agotakiss.androidtest.presentation.BaseActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
