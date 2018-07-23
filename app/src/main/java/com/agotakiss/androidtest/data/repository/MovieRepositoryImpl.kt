@@ -4,7 +4,7 @@ import com.agotakiss.androidtest.data.mapper.toMovie
 import com.agotakiss.androidtest.data.models.MovieApiModel
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.domain.repository.MovieRepository
-import com.agotakiss.androidtest.injector.Injector
+import com.agotakiss.androidtest.di.Injector
 import io.reactivex.Single
 
 class MovieRepositoryImpl : MovieRepository {

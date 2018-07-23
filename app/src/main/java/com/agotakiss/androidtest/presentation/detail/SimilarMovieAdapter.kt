@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
-import com.agotakiss.androidtest.presentation.home.MovieAdapter.Companion.IMAGE_BASE_URL
-import com.agotakiss.androidtest.presentation.home.MovieAdapter.Companion.LAST_ITEMS_BEFORE_LOAD_NEW
-import com.agotakiss.androidtest.presentation.home.MovieAdapter.Companion.MOVIE
-import com.agotakiss.androidtest.presentation.home.OnEndReachedListener
+import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
+import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.LAST_ITEMS_BEFORE_LOAD_NEW
+import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
+import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.similar_movie_list_item.view.*
 

@@ -3,7 +3,7 @@ package com.agotakiss.androidtest.data.repository
 import com.agotakiss.androidtest.data.mapper.toGenre
 import com.agotakiss.androidtest.domain.models.Genre
 import com.agotakiss.androidtest.domain.repository.GenreRepository
-import com.agotakiss.androidtest.injector.Injector
+import com.agotakiss.androidtest.di.Injector
 import io.reactivex.Single
 
 class GenreRepositoryImpl : GenreRepository {
@@ -21,7 +21,6 @@ class GenreRepositoryImpl : GenreRepository {
                         .doOnSuccess { genreStore.saveGenres(it).blockingAwait() }
             }
         }
-
     }
 
     private fun getGenresFromApi(): Single<Map<Int, Genre>> = movieDbApi.getGenres()

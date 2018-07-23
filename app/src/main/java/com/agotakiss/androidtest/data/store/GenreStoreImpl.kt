@@ -17,7 +17,7 @@ class GenreStoreImpl : GenreStore {
 
     override fun getGenreMap(): Single<Map<Int, Genre>> {
         return if (genreMap != null && !genreMap!!.isEmpty()) {
-            Single.just(genreMap!!)
+            Single.just(genreMap)
         } else {
             Single.error(NoSuchElementException())
         }

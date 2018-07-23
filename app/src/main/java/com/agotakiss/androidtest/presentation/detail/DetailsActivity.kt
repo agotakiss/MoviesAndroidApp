@@ -6,11 +6,11 @@ import android.support.v7.widget.RecyclerView
 import android.text.method.ScrollingMovementMethod
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
-import com.agotakiss.androidtest.injector.Injector
-import com.agotakiss.androidtest.presentation.BaseActivity
-import com.agotakiss.androidtest.presentation.home.MovieAdapter.Companion.IMAGE_BASE_URL
-import com.agotakiss.androidtest.presentation.home.MovieAdapter.Companion.MOVIE
-import com.agotakiss.androidtest.presentation.home.OnEndReachedListener
+import com.agotakiss.androidtest.di.Injector
+import com.agotakiss.androidtest.base.BaseActivity
+import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
+import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
+import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -68,9 +68,9 @@ class DetailsActivity : BaseActivity() {
 
     fun initializeSimilarMovieList() {
         recyclerView = findViewById(R.id.similar_recycler_view)
-        val layoutManager = LinearLayoutManager(this@DetailsActivity, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.layoutManager = layoutManager
-        adapter = SimilarMovieAdapter(similarMovieList, this@DetailsActivity)
+        adapter = SimilarMovieAdapter(similarMovieList, this)
         recyclerView.adapter = adapter
         adapter.setOnEndReachedListener(object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
@@ -80,8 +80,6 @@ class DetailsActivity : BaseActivity() {
                 }
             }
         })
-
-
     }
 
     fun genresToString(): String {
