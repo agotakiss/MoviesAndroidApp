@@ -4,7 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.os.Bundle
 
-abstract class MovieApplication : Application() {
+class MovieApplication : Application() {
 
     override fun onCreate() {
         instance = this
