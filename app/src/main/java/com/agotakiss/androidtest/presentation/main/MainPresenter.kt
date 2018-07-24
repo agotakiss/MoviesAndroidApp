@@ -1,11 +1,11 @@
 package com.agotakiss.androidtest.presentation.main
 
+import android.util.Log
 import com.agotakiss.androidtest.base.BasePresenter
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.domain.repository.MovieRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
@@ -31,11 +31,11 @@ class MainPresenter @Inject constructor(
     }
 
     fun onScrollEndReached() {
+        Log.d("MainPresenter", "onScrollEndReached")
         page++
         if (page < totalPages) {
             loadPopularMovies()
         }
-
     }
 
     private fun onMoviesLoaded(newMovies: List<Movie>, totalPages: Int) {

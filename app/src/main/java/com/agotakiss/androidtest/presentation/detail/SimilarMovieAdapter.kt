@@ -42,7 +42,7 @@ class SimilarMovieAdapter(private val similarMovies: List<Movie>, private val co
                 onEndReachedListener!!.onEndReached(position)
             }
             itemView.similar_movie_rating!!.text = java.lang.Float.toString(similarMovie.averageVote)
-            Picasso.get().load(IMAGE_BASE_URL + similarMovie.posterPath!!).into(itemView.similar_movie_poster)
+            Picasso.get().load(IMAGE_BASE_URL + similarMovie.posterPath).into(itemView.similar_movie_poster)
         }
     }
 
