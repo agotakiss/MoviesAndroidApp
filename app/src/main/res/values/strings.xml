@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">AndroidTest</string>
     <string name="more_info_button">More Info</string>
+    <string name="cast_text">Cast</string>
+    <string name="also_liked_text">People who liked this also liked…</string>
+    <string name="birthday">Birthday:</string>
 </resources>

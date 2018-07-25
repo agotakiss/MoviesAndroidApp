@@ -19,10 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.detail.DetailsActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:parentActivityName=".presentation.main.MainActivity">
-        </activity>
+        <activity
+            android:name=".presentation.detail.DetailsActivity"
+            android:parentActivityName=".presentation.main.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light"></activity>
+        <activity android:name=".presentation.actor.ActorDetailsActivity"></activity>
     </application>
 
 </manifest>

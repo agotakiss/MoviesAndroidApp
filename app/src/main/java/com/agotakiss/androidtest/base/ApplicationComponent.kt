@@ -1,6 +1,8 @@
 package com.agotakiss.androidtest.base
 
 import android.app.Activity
+import com.agotakiss.androidtest.presentation.actor.ActorDetailsComponent
+import com.agotakiss.androidtest.presentation.actor.ActorDetailsModule
 import com.agotakiss.androidtest.presentation.detail.DetailsComponent
 import com.agotakiss.androidtest.presentation.detail.DetailsModule
 import com.agotakiss.androidtest.presentation.main.MainComponent
@@ -16,5 +18,6 @@ interface ApplicationComponent {
 
     fun plus(mainModule: MainModule): MainComponent
     fun plus(detailsModule: DetailsModule): DetailsComponent
+    fun plus(actorDetailsModule: ActorDetailsModule): ActorDetailsComponent
 
 }

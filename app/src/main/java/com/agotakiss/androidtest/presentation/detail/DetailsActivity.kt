@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.text.method.ScrollingMovementMethod
 import android.widget.Toast
 import com.agotakiss.androidtest.R
+import com.agotakiss.androidtest.domain.models.Cast
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
@@ -18,13 +19,16 @@ import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
 
+
     val applicationComponent by lazy { movieApplication.applicationComponent.plus(DetailsModule(this)) }
 
     @Inject
     lateinit var presenter: DetailsPresenter
     private lateinit var movie: Movie
     internal var similarMovieList: MutableList<Movie> = ArrayList()
+    internal var actorsList: MutableList<Cast> = ArrayList()
     private lateinit var adapter: SimilarMovieAdapter
+    private lateinit var actorAdapter: ActorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
         movie = intent.getSerializableExtra(MOVIE) as Movie
         initUI()
         initializeSimilarMovieList()
+        initializeActorsList()
         presenter.onViewReady(this, movie)
     }
 
@@ -48,11 +53,6 @@ class DetailsActivity : BaseActivity(), DetailsView {
         description_detailed.movementMethod = ScrollingMovementMethod()
     }
 
-    override fun showSimilarMovies(newMovies: List<Movie>) {
-        similarMovieList.addAll(newMovies)
-        adapter.notifyItemRangeInserted(similarMovieList.size - newMovies.size, newMovies.size)
-    }
-
     fun initializeSimilarMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         similar_recycler_view.layoutManager = layoutManager
@@ -60,14 +60,36 @@ class DetailsActivity : BaseActivity(), DetailsView {
         similar_recycler_view.adapter = adapter
         adapter.setOnEndReachedListener(object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
-                presenter.onScrollEndReached()
+                presenter.onSimilarMovieScrollEndReached()
             }
         })
     }
 
-    override fun showError(throwable: Throwable) {
+    override fun showSimilarMovies(newMovies: List<Movie>) {
+        similarMovieList.addAll(newMovies)
+        adapter.notifyItemRangeInserted(similarMovieList.size - newMovies.size, newMovies.size)
+    }
+
+    fun initializeActorsList() {
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        actors_recycler_view.layoutManager = layoutManager
+        actorAdapter = ActorAdapter(actorsList, this)
+        actors_recycler_view.adapter = actorAdapter
+        actorAdapter.setOnEndReachedListener(object : OnEndReachedListener {
+            override fun onEndReached(position: Int) {
+                presenter.onSimilarMovieScrollEndReached()
+            }
+        })
+    }
+
+    override fun showActors(newActors: List<Cast>) {
+        actorsList.addAll(newActors)
+        actorAdapter.notifyItemRangeInserted(actorsList.size - newActors.size, newActors.size)
+    }
+
+    override fun showError(t: Throwable) {
         Toast.makeText(this, "Error loading the movies.", Toast.LENGTH_LONG).show()
-        logE(throwable)
+        logE(t)
     }
 
     fun genresToString(): String {

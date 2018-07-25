@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="73dp">
-
+    android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/backdrop_detailed"
@@ -31,12 +28,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/genres_detailed"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/movie_title_detailed"
@@ -116,10 +110,10 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintTop_toTopOf="@id/release_date_detailed"
+            android:src="@drawable/calendar"
             app:layout_constraintBottom_toBottomOf="@id/release_date_detailed"
             app:layout_constraintStart_toEndOf="@+id/release_date_detailed"
-            android:src="@drawable/calendar" />
+            app:layout_constraintTop_toTopOf="@id/release_date_detailed" />
 
         <TextView
             android:id="@+id/description_detailed"
@@ -129,14 +123,14 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:maxLines="8"
+            android:scrollbars="vertical"
             android:text="basdasdasdasdsadfaefgbghretgbrsfvserewv"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintBottom_toTopOf="@+id/guideline3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.348"
             app:layout_constraintStart_toStartOf="parent"
-            android:scrollbars="vertical"
-            android:maxLines="8"
             app:layout_constraintTop_toBottomOf="@+id/poster_detailed" />
 
         <android.support.constraint.Guideline
@@ -153,22 +147,60 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_begin="363dp" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/also_liked_text"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@id/similar_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/backdrop_detailed" />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/similar_recycler_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/actors_recycler_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/guideline3">
 
         </android.support.v7.widget.RecyclerView>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:text="@string/cast_text"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@id/actors_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/similar_recycler_view" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/actors_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/similar_recycler_view">
+
+        </android.support.v7.widget.RecyclerView>
+
 
     </android.support.constraint.ConstraintLayout>
 
-</android.support.constraint.ConstraintLayout>
+</ScrollView>
 
 
 

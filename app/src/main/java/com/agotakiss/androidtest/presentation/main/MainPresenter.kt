@@ -31,7 +31,7 @@ class MainPresenter @Inject constructor(
     }
 
     fun onScrollEndReached() {
-        Log.d("MainPresenter", "onScrollEndReached")
+        Log.d("MainPresenter", "onSimilarMovieScrollEndReached")
         page++
         if (page < totalPages) {
             loadPopularMovies()
