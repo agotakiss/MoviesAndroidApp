@@ -9,4 +9,6 @@ interface MovieRepository {
     fun getPopularMovies(page: Int): Single<List<Movie>>
 
     fun getSimilarMovies(movieId: Int, page: Int): Single<List<Movie>>
+
+    fun getActorsMovies(actorId: Int): Single<List<Movie>>
 }

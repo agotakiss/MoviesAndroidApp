@@ -8,5 +8,7 @@ interface ActorDetailsView {
 
     fun initUI(actor : Actor)
 
+    fun showActorsMovies(actorsNewMoviesList : List<Movie>)
+
     fun showError(t : Throwable)
 }

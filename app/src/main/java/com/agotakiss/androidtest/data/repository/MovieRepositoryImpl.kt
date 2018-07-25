@@ -28,7 +28,7 @@ class MovieRepositoryImpl : MovieRepository {
 
     override fun getSimilarMovies(movieId: Int, page: Int): Single<List<Movie>> {
 
-        return return Completable.fromAction {
+         return Completable.fromAction {
             genresMap = genreRepository.getGenres().blockingGet()
         }.andThen(movieDbApi.getSimilarMovies(movieId, page))
             .map { it.movies }
@@ -37,4 +37,16 @@ class MovieRepositoryImpl : MovieRepository {
             .map { it.toMovie(genresMap) }
             .toList()
     }
+
+    override fun getActorsMovies(actorId: Int): Single<List<Movie>> {
+        return Completable.fromAction {
+            genresMap = genreRepository.getGenres().blockingGet()
+        }.andThen(movieDbApi.getActorsMovies(actorId))
+            .map{it.cast}
+            .toObservable()
+            .flatMapIterable<MovieApiModel> { it }
+            .map { it.toMovie(genresMap) }
+            .toList()
+    }
+
 }

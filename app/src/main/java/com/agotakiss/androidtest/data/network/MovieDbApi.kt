@@ -1,9 +1,6 @@
 package com.agotakiss.androidtest.data.network
 
-import com.agotakiss.androidtest.data.models.ActorApiModel
-import com.agotakiss.androidtest.data.models.LoadCreditResponse
-import com.agotakiss.androidtest.data.models.LoadGenresResponse
-import com.agotakiss.androidtest.data.models.LoadMoviesResponse
+import com.agotakiss.androidtest.data.models.*
 
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -26,4 +23,9 @@ interface MovieDbApi {
 
     @GET("person/{person_id}")
     fun getActor(@Path(value = "person_id", encoded = true) personId: Int): Single<ActorApiModel>
+
+    @GET("person/{person_id}/movie_credits")
+    fun getActorsMovies(@Path(value = "person_id", encoded = true) personId: Int): Single<LoadActorsMoviesResponse>
+
+
 }
