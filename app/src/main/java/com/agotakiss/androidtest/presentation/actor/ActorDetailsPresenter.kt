@@ -44,7 +44,6 @@ class ActorDetailsPresenter @Inject constructor(
             .subscribe({ actorsMovieList -> onActorsMoviesLoaded(actorsMovieList) }, { throwable ->
                 view.showError(throwable)
             })
-
     }
 
     private fun onActorsMoviesLoaded(actorsNewMoviesList: List<Movie>) {

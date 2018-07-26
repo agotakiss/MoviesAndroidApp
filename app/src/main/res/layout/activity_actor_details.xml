@@ -86,16 +86,14 @@
             <TextView
                 android:id="@+id/actor_detail_biography"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:maxLines="8"
-                android:scrollbars="vertical"
-                android:text="basdasdasdasdsadfaefgbghretgbrsfvserewv"
+                android:ellipsize="end"
                 android:textAppearance="@style/TextAppearance.AppCompat"
-                app:layout_constraintBottom_toTopOf="@+id/guideline3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.348"
                 app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +121,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline3">
+                app:layout_constraintTop_toBottomOf="@+id/actor_detail_biography">
 
             </android.support.v7.widget.RecyclerView>
         </android.support.constraint.ConstraintLayout>

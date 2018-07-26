@@ -1,8 +1,13 @@
 package com.agotakiss.androidtest.presentation.detail
 
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.text.method.ScrollingMovementMethod
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Cast
@@ -39,6 +44,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
         initializeSimilarMovieList()
         initializeActorsList()
         presenter.onViewReady(this, movie)
+        description_detailed.setOnClickListener { expandCollapsedByMaxLines(description_detailed) }
     }
 
     private fun initUI() {
@@ -50,7 +56,6 @@ class DetailsActivity : BaseActivity(), DetailsView {
         rating_detailed.text = java.lang.Float.toString(movie.averageVote)
         release_date_detailed.text = movie.releaseDateText!!.substring(0, 4)
         description_detailed.text = movie.overview
-        description_detailed.movementMethod = ScrollingMovementMethod()
     }
 
     fun initializeSimilarMovieList() {
@@ -100,5 +105,17 @@ class DetailsActivity : BaseActivity(), DetailsView {
         } else {
             ""
         }
+    }
+
+    @SuppressLint("Range")
+    fun expandCollapsedByMaxLines(text: TextView) {
+        val height = text.measuredHeight
+        text.height = height
+        text.maxLines = Integer.MAX_VALUE //expand fully
+        text.measure(View.MeasureSpec.makeMeasureSpec(text.measuredWidth, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED))
+        val newHeight = text.measuredHeight
+        val animation = ObjectAnimator.ofInt(text, "height", height, newHeight)
+        animation.setDuration(250).start()
     }
 }

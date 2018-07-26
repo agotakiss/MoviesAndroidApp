@@ -24,7 +24,6 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="8dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/jurassic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

@@ -1,9 +1,12 @@
 package com.agotakiss.androidtest.presentation.actor
 
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.text.method.ScrollingMovementMethod
 import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Actor
@@ -15,20 +18,19 @@ import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_actor_details.*
-import kotlinx.android.synthetic.main.activity_details.*
 import java.util.*
 import javax.inject.Inject
 
+
 class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
 
+    val applicationComponent by lazy { movieApplication.applicationComponent.plus(ActorDetailsModule(this)) }
+    @Inject
+    lateinit var presenter: ActorDetailsPresenter
 
     private lateinit var actorsMoviesAdapter: SimilarMovieAdapter
     internal var actorsMoviesList: MutableList<Movie> = ArrayList()
-
-    val applicationComponent by lazy { movieApplication.applicationComponent.plus(ActorDetailsModule(this)) }
     private var actorId = 0
-    @Inject
-    lateinit var presenter: ActorDetailsPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         actorId = intent.getIntExtra(ACTOR_ID, 0)
         initializeActorsMovieList()
         presenter.onViewReady(this, actorId)
+        actor_detail_biography.setOnClickListener { expandCollapsedByMaxLines(actor_detail_biography) }
     }
 
     override fun initUI(actor: Actor) {
@@ -44,7 +47,6 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         actor_detail_name_textview.text = actor.name
         actor_detail_known_for_department.text = actor.knownForDepartment
         actor_detail_biography.text = actor.biography
-        actor_detail_biography.movementMethod = ScrollingMovementMethod()
         if (actor.birthday == null) {
             birthday_title.visibility = View.GONE
             actor_detail_birthday_textview.visibility = View.GONE
@@ -53,17 +55,11 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         }
     }
 
-
     fun initializeActorsMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         actors_movies_recycler_view.layoutManager = layoutManager
         actorsMoviesAdapter = SimilarMovieAdapter(actorsMoviesList, this)
         actors_movies_recycler_view.adapter = actorsMoviesAdapter
-        actorsMoviesAdapter.setOnEndReachedListener(object : OnEndReachedListener {
-            override fun onEndReached(position: Int) {
-
-            }
-        })
     }
 
     override fun showActorsMovies(actorsNewMoviesList: List<Movie>) {
@@ -72,11 +68,20 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
             actorsNewMoviesList.size)
     }
 
-
     override fun showError(t: Throwable) {
         Toast.makeText(this, "Error loading the actors.", Toast.LENGTH_LONG).show()
         logE(t)
     }
 
-
+    @SuppressLint("Range")
+    fun expandCollapsedByMaxLines(text: TextView) {
+        val height = text.measuredHeight
+        text.height = height
+        text.maxLines = Integer.MAX_VALUE //expand fully
+        text.measure(View.MeasureSpec.makeMeasureSpec(text.measuredWidth, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED))
+        val newHeight = text.measuredHeight
+        val animation = ObjectAnimator.ofInt(text, "height", height, newHeight)
+        animation.setDuration(250).start()
+    }
 }
