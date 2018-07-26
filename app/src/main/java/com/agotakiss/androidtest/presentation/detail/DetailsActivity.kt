@@ -24,11 +24,11 @@ import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
 
-
     val applicationComponent by lazy { movieApplication.applicationComponent.plus(DetailsModule(this)) }
 
     @Inject
     lateinit var presenter: DetailsPresenter
+
     private lateinit var movie: Movie
     internal var similarMovieList: MutableList<Movie> = ArrayList()
     internal var actorsList: MutableList<Cast> = ArrayList()

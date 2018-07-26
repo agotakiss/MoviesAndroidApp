@@ -66,6 +66,10 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         actorsMoviesList.addAll(actorsNewMoviesList)
         actorsMoviesAdapter.notifyItemRangeInserted(actorsMoviesList.size - actorsNewMoviesList.size,
             actorsNewMoviesList.size)
+        actorsMoviesAdapter.setOnEndReachedListener(object : OnEndReachedListener {
+            override fun onEndReached(position: Int) {
+            }
+        })
     }
 
     override fun showError(t: Throwable) {
