@@ -48,8 +48,12 @@ class DetailsActivity : BaseActivity(), DetailsView {
     }
 
     private fun initUI() {
+        setSupportActionBar(toolbar)
+        setTitle(movie.title)
+
         Picasso.get().load(IMAGE_BASE_URL + movie.posterPath).into(poster_detailed)
         Picasso.get().load(IMAGE_BASE_URL + movie.backdropPath).into(backdrop_detailed)
+        Picasso.get().load(IMAGE_BASE_URL + movie.backdropPath).into(collapsing_image)
         backdrop_detailed.alpha = 0.2f
         movie_title_detailed.text = movie.title
         genres_detailed.text = genresToString()

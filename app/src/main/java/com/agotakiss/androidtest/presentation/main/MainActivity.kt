@@ -34,10 +34,11 @@ class MainActivity : BaseActivity(), MainView {
         main_recycler_view.adapter = adapter
         adapter.setOnEndReachedListener(object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
-                    presenter.onScrollEndReached()
+                presenter.onScrollEndReached()
             }
         })
     }
+
     override fun showMovies(newMovies: List<Movie>) {
         movieList.addAll(newMovies)
         adapter.notifyItemRangeInserted(movieList.size - newMovies.size, newMovies.size)

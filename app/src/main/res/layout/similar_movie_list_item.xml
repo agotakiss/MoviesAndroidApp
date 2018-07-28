@@ -27,9 +27,8 @@
             style="@style/IntroTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:padding="10dp"
-            android:maxLines="1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +41,6 @@
             android:layout_marginEnd="13dp"
             android:src="@drawable/star"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/similar_movie_rating"
             app:layout_constraintTop_toBottomOf="@+id/similar_movie_poster" />
     </android.support.constraint.ConstraintLayout>
