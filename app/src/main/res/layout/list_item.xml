@@ -38,9 +38,8 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="@string/more_info_button"
-            android:textStyle="bold"
             android:background="@android:color/transparent"
-            android:textSize="16sp"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline1" />
 
