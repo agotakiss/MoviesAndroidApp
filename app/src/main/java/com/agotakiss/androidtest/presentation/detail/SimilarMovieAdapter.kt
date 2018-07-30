@@ -1,37 +1,34 @@
 package com.agotakiss.androidtest.presentation.detail
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
+import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.LAST_ITEMS_BEFORE_LOAD_NEW
-import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.similar_movie_list_item.view.*
 
-class SimilarMovieAdapter(private val similarMovies: List<Movie>, private val context: Context) : RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>() {
-    private var onEndReachedListener: OnEndReachedListener? = null
+class SimilarMovieAdapter(private val similarMovies: List<Movie>,
+                          private var onEndReachedListener: OnEndReachedListener,
+                          private val onItemClickListener: (Movie, View) -> Unit)
 
-    fun setOnEndReachedListener(onEndReachedListener: OnEndReachedListener) {
-        this.onEndReachedListener = onEndReachedListener
-    }
+    : RecyclerView.Adapter<SimilarMovieAdapter.ViewHolder>() {
+
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    val similarMovie = similarMovies[adapterPosition]
-                    val intent = Intent(context, DetailsActivity::class.java)
-                    intent.putExtra(MOVIE, similarMovie)
-                    (context as Activity).finish();
-                    context.startActivity(intent);
+                    ViewCompat.setTransitionName(itemView.similar_movie_poster, MainActivity.POSTER_TRANSITION_NAME)
+
+                    onItemClickListener.invoke(similarMovies[adapterPosition], itemView.similar_movie_poster)
                 }
             })
         }
@@ -39,10 +36,12 @@ class SimilarMovieAdapter(private val similarMovies: List<Movie>, private val co
         fun bindViewHolder(position: Int) {
             val similarMovie = similarMovies[position]
             if (position == similarMovies.size - LAST_ITEMS_BEFORE_LOAD_NEW) {
-                onEndReachedListener!!.onEndReached(position)
+                onEndReachedListener.onEndReached(position)
             }
             itemView.similar_movie_rating!!.text = java.lang.Float.toString(similarMovie.averageVote)
             Picasso.get().load(IMAGE_BASE_URL + similarMovie.posterPath).into(itemView.similar_movie_poster)
+
+//            ViewCompat.setTransitionName(itemView.similar_movie_poster, MainActivity.POSTER_TRANSITION_NAME)
         }
     }
 

@@ -2,9 +2,12 @@ package com.agotakiss.androidtest.presentation.detail
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.text.method.ScrollingMovementMethod
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -13,6 +16,8 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Cast
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
+import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
+import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
@@ -24,6 +29,10 @@ import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
 
+    companion object {
+        const val ACTOR_TRANSITION_NAME = "actorTransition"
+    }
+
     val applicationComponent by lazy { movieApplication.applicationComponent.plus(DetailsModule(this)) }
 
     @Inject
@@ -34,6 +43,9 @@ class DetailsActivity : BaseActivity(), DetailsView {
     internal var actorsList: MutableList<Cast> = ArrayList()
     private lateinit var adapter: SimilarMovieAdapter
     private lateinit var actorAdapter: ActorAdapter
+    private var hasStartedAnotherScreen = false
+
+    private var sharedImageView: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,13 +77,46 @@ class DetailsActivity : BaseActivity(), DetailsView {
     fun initializeSimilarMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         similar_recycler_view.layoutManager = layoutManager
-        adapter = SimilarMovieAdapter(similarMovieList, this)
-        similar_recycler_view.adapter = adapter
-        adapter.setOnEndReachedListener(object : OnEndReachedListener {
+        adapter = SimilarMovieAdapter(similarMovieList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onSimilarMovieScrollEndReached()
             }
-        })
+        }) { movie, view ->
+            ViewCompat.setTransitionName(poster_detailed, "random")
+            sharedImageView = view
+            hasStartedAnotherScreen = true
+            val similarMovie = movie
+            val intent = Intent(this, DetailsActivity::class.java)
+            intent.putExtra(MOVIE, similarMovie)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
+                MainActivity.POSTER_TRANSITION_NAME)
+            startActivity(intent, options.toBundle())
+        }
+        similar_recycler_view.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (hasStartedAnotherScreen) {
+            hasStartedAnotherScreen = false
+            ViewCompat.setTransitionName(sharedImageView, "unused")
+            ViewCompat.setTransitionName(poster_detailed, MainActivity.POSTER_TRANSITION_NAME)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                supportFinishAfterTransition()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        supportFinishAfterTransition()
     }
 
     override fun showSimilarMovies(newMovies: List<Movie>) {
@@ -82,13 +127,20 @@ class DetailsActivity : BaseActivity(), DetailsView {
     fun initializeActorsList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         actors_recycler_view.layoutManager = layoutManager
-        actorAdapter = ActorAdapter(actorsList, this)
-        actors_recycler_view.adapter = actorAdapter
-        actorAdapter.setOnEndReachedListener(object : OnEndReachedListener {
+        actorAdapter = ActorAdapter(actorsList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onSimilarMovieScrollEndReached()
             }
-        })
+        }) { actorId, view ->
+            ViewCompat.setTransitionName(poster_detailed, "random")
+
+            val intent = Intent(this, ActorDetailsActivity::class.java)
+            intent.putExtra(ActorAdapter.ACTOR_ID, actorId)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
+                ACTOR_TRANSITION_NAME)
+            startActivity(intent, options.toBundle())
+        }
+        actors_recycler_view.adapter = actorAdapter
     }
 
     override fun showActors(newActors: List<Cast>) {

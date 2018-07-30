@@ -2,7 +2,9 @@ package com.agotakiss.androidtest.presentation.actor
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,9 @@ import com.agotakiss.androidtest.domain.models.Actor
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
 import com.agotakiss.androidtest.presentation.detail.ActorAdapter.Companion.ACTOR_ID
+import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.detail.SimilarMovieAdapter
+import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.squareup.picasso.Picasso
@@ -58,7 +62,20 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
     fun initializeActorsMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         actors_movies_recycler_view.layoutManager = layoutManager
-        actorsMoviesAdapter = SimilarMovieAdapter(actorsMoviesList, this)
+        actorsMoviesAdapter = SimilarMovieAdapter(actorsMoviesList, object : OnEndReachedListener {
+            override fun onEndReached(position: Int) {
+
+            }
+            }) { movie, view ->
+
+                val similarMovie = movie
+                val intent = Intent(this, DetailsActivity::class.java)
+                intent.putExtra(MovieAdapter.MOVIE, similarMovie)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
+                    MainActivity.POSTER_TRANSITION_NAME)
+                startActivity(intent, options.toBundle())
+//            this.finish();
+            }
         actors_movies_recycler_view.adapter = actorsMoviesAdapter
     }
 
@@ -66,10 +83,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         actorsMoviesList.addAll(actorsNewMoviesList)
         actorsMoviesAdapter.notifyItemRangeInserted(actorsMoviesList.size - actorsNewMoviesList.size,
             actorsNewMoviesList.size)
-        actorsMoviesAdapter.setOnEndReachedListener(object : OnEndReachedListener {
-            override fun onEndReached(position: Int) {
-            }
-        })
+
     }
 
     override fun showError(t: Throwable) {

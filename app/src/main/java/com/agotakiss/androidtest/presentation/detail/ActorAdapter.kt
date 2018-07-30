@@ -21,21 +21,16 @@ import com.squareup.picasso.Transformation
 import kotlinx.android.synthetic.main.actors_list_item.view.*
 
 
-class ActorAdapter(private val actors: List<Cast>, private val context: Context) : RecyclerView.Adapter<ActorAdapter.ViewHolder>() {
-    private var onEndReachedListener: OnEndReachedListener? = null
-
-    fun setOnEndReachedListener(onEndReachedListener: OnEndReachedListener) {
-        this.onEndReachedListener = onEndReachedListener
-    }
+class ActorAdapter(private val actors: List<Cast>,
+                   private var onEndReachedListener: OnEndReachedListener,
+                   private val onItemClickListener: (Int, View) -> Unit)
+    : RecyclerView.Adapter<ActorAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    val actor = actors[adapterPosition]
-                    val intent = Intent(context, ActorDetailsActivity::class.java)
-                    intent.putExtra(ACTOR_ID, actor.id)
-                    context.startActivity(intent);
+                   onItemClickListener.invoke(actors[adapterPosition].id, itemView.actor_photo_imageview )
                 }
             })
         }
@@ -43,7 +38,7 @@ class ActorAdapter(private val actors: List<Cast>, private val context: Context)
         fun bindViewHolder(position: Int) {
             val actor = actors[position]
             if (position == actors.size - 5) {
-                onEndReachedListener!!.onEndReached(position)
+                onEndReachedListener.onEndReached(position)
             }
             itemView.actor_name_textview.text = actor.name
             itemView.character_name_textview.text = actor.character

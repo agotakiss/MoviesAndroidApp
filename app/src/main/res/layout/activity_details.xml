@@ -78,6 +78,7 @@
 
             <ImageView
                 android:id="@+id/poster_detailed"
+                android:transitionName="posterTransition"
                 android:layout_width="150dp"
                 android:layout_height="195dp"
                 android:layout_marginStart="8dp"

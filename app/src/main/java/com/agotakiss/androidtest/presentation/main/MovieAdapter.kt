@@ -1,36 +1,30 @@
 package com.agotakiss.androidtest.presentation.main
 
-import android.content.Context
-import android.content.Intent
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
-import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.detail.DetailsPresenter
+import com.agotakiss.androidtest.presentation.main.MainActivity.Companion.POSTER_TRANSITION_NAME
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.list_item.view.*
 
 
-class MovieAdapter(private val movies: List<Movie>, private val context: Context) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
-    private var onEndReachedListener: OnEndReachedListener? = null
-
-    fun setOnEndReachedListener(onEndReachedListener: OnEndReachedListener) {
-        this.onEndReachedListener = onEndReachedListener
-    }
+class MovieAdapter(
+    private val movies: List<Movie>,
+    private val onEndReachedListener: OnEndReachedListener,
+    private val onItemClickListener: (Movie, View) -> Unit
+) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.more_info_button.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    val intent = Intent(context, DetailsActivity::class.java)
-                    intent.putExtra(MOVIE, movies[adapterPosition])
-                    context.startActivity(intent)
-                }
-            })
+            itemView.setOnClickListener {
+                ViewCompat.setTransitionName(itemView.poster, POSTER_TRANSITION_NAME)
+                onItemClickListener.invoke(movies[adapterPosition], itemView.poster)
+            }
         }
 
         fun bindViewHolder(position: Int) {
@@ -44,6 +38,8 @@ class MovieAdapter(private val movies: List<Movie>, private val context: Context
             itemView.movie_release_date.text = movie.releaseDateText!!.substring(0, 4)
             itemView.movie_description.text = movie.overview
             Picasso.get().load(IMAGE_BASE_URL + movie.posterPath!!).into(itemView.poster)
+
+//            ViewCompat.setTransitionName(itemView.poster, POSTER_TRANSITION_NAME)
         }
     }
 
@@ -63,8 +59,8 @@ class MovieAdapter(private val movies: List<Movie>, private val context: Context
     fun movieGenresToDisplay(movie: Movie): String {
         return if (movie.genres != null && !movie.genres.isEmpty()) {
             Observable.fromIterable(movie.genres)
-                    .map<String> { it.name }
-                    .reduce { s, s2 -> "$s, $s2" }.blockingGet()
+                .map<String> { it.name }
+                .reduce { s, s2 -> "$s, $s2" }.blockingGet()
         } else {
             ""
         }
