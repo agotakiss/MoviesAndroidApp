@@ -4,4 +4,7 @@
     <string name="cast_text">Cast</string>
     <string name="also_liked_text">People who liked this also liked…</string>
     <string name="birthday">Birthday:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

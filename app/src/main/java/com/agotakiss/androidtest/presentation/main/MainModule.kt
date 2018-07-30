@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class MainModule (val activity: MainActivity){
+class MainModule (val fragment: MainFragment){
     @Provides
     fun providePresenter(movieRepository: MovieRepository): MainPresenter = MainPresenter(movieRepository)
 }
