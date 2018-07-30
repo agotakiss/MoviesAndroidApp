@@ -12,6 +12,7 @@ class ViewPagerAdapter(fragmentManager: FragmentManager,
         return when (position) {
             0 -> MainFragment()
             1 -> FavoritesFragment()
+            2 -> SearchFragment()
             else -> error("invalid ")
         }
     }

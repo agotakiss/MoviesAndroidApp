@@ -1,22 +1,14 @@
 package com.agotakiss.androidtest.presentation.main
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v4.view.ViewPager
 import com.agotakiss.androidtest.R
-import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
-import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
-import javax.inject.Inject
 
 class MainActivity : BaseActivity() {
 
-//    , MainView
+    //    , MainView
 //
     companion object {
         const val POSTER_TRANSITION_NAME = "posterTransition"
@@ -31,50 +23,64 @@ class MainActivity : BaseActivity() {
 //    private lateinit var adapter: MovieAdapter
 
 
-
-
-
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
-        tab_layout.addTab(tab_layout.newTab().setText("Tab 1 Item"))
-        tab_layout.addTab(tab_layout.newTab().setText("Tab 2 Item"))
 
-        val viewPagerAdapter = ViewPagerAdapter(supportFragmentManager,
-            tab_layout.tabCount)
-        pager.adapter = viewPagerAdapter
+        val mainPagerAdapter = ViewPagerAdapter(supportFragmentManager, 3)
 
-        pager.addOnPageChangeListener(
-            TabLayout.TabLayoutOnPageChangeListener(tab_layout))
-        tab_layout.addOnTabSelectedListener(object :
-            TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                pager.currentItem = tab.position
+        viewpager.adapter = mainPagerAdapter
+        viewpager.offscreenPageLimit = 3
+
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.popular -> viewpager.currentItem = 0
+                R.id.favorites -> viewpager.currentItem = 1
+                R.id.search -> viewpager.currentItem = 2
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
+            true
+        }
 
+        viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> {
+                        viewpager.shouldSkipHorizontalSwipe = false
+                        bottom_navigation.selectedItemId = R.id.popular
+                    }
+                    1 -> {
+                        viewpager.shouldSkipHorizontalSwipe = true
+                        bottom_navigation.selectedItemId = R.id.favorites
+                    }
+                    2 -> {
+                        viewpager.shouldSkipHorizontalSwipe = false
+                        bottom_navigation.selectedItemId = R.id.search
+                    }
+                }
             }
 
-            override fun onTabReselected(tab: TabLayout.Tab) {
-
+            override fun onPageScrollStateChanged(state: Int) {
             }
 
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+            }
         })
+
+        viewpager.currentItem = 1
+        viewpager.shouldSkipHorizontalSwipe = true
+    }
+
 
 //
 //        applicationComponent.inject(this)
 //        initializeList()
 //        presenter.onViewReady(this)
-    }
-
-
-
+}
 
 
 //
@@ -100,4 +106,4 @@ class MainActivity : BaseActivity() {
 //        movieList.addAll(newMovies)
 //        adapter.notifyItemRangeInserted(movieList.size - newMovies.size, newMovies.size)
 //    }
-}
+
