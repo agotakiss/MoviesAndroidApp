@@ -14,6 +14,7 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Actor
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
+import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.detail.ActorAdapter.Companion.ACTOR_ID
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.detail.SimilarMovieAdapter
@@ -72,7 +73,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
                 val intent = Intent(this, DetailsActivity::class.java)
                 intent.putExtra(MovieAdapter.MOVIE, similarMovie)
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-                    MainActivity.POSTER_TRANSITION_NAME)
+                    POSTER_TRANSITION_NAME)
                 startActivity(intent, options.toBundle())
 //            this.finish();
             }

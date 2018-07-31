@@ -31,15 +31,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
-        <Button
+        <TextView
             android:id="@+id/more_info_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
+            android:padding="16dp"
             android:text="@string/more_info_button"
             android:background="@android:color/transparent"
-            android:textSize="12sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline1" />
 
@@ -127,6 +126,15 @@
             app:layout_constraintBottom_toBottomOf="@id/movie_genres"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/movie_genres" />
+
+        <ImageView
+            android:id="@+id/favorite_imageview"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:src="@drawable/favorite_pic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:padding="10dp"/>
 
     </android.support.constraint.ConstraintLayout>
 

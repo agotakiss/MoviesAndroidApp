@@ -1,4 +1,4 @@
-package com.agotakiss.androidtest.presentation.main
+package com.agotakiss.androidtest.presentation.main.popular
 
 
 import android.content.Intent
@@ -8,10 +8,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
+import com.agotakiss.androidtest.presentation.main.MovieAdapter
+import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.fragment_main.*
 import java.util.*
 import javax.inject.Inject
@@ -36,8 +39,6 @@ class MainFragment : Fragment(), MainView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
-
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -47,7 +48,6 @@ class MainFragment : Fragment(), MainView {
         presenter.onViewReady(this)
     }
 
-
     private fun initializeList() {
         val layoutManager = LinearLayoutManager(context)
         main_recycler_view.layoutManager = layoutManager
@@ -55,20 +55,27 @@ class MainFragment : Fragment(), MainView {
             override fun onEndReached(position: Int) {
                 presenter.onScrollEndReached()
             }
-        }) { movie, view ->
+        }, { movie, view ->
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(MovieAdapter.MOVIE, movie)
 //            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity::class.java, view,
 //                POSTER_TRANSITION_NAME)
-//            options.toBundle()
+//            startActivity(intent, options.toBundle())
             startActivity(intent)
-        }
+        }, presenter::onFavoriteButtonClicked)
+
         main_recycler_view.adapter = adapter
     }
 
     override fun showMovies(newMovies: List<Movie>) {
         movieList.addAll(newMovies)
         adapter.notifyItemRangeInserted(movieList.size - newMovies.size, newMovies.size)
+    }
+
+    override fun updateFavoriteButton(position: Int) {
+        adapter.notifyItemChanged(position)
+        Toast.makeText(context, "Favorite button clicked", Toast.LENGTH_LONG).show()
+
     }
 
 

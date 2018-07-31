@@ -15,5 +15,6 @@ data class Movie(val posterPath: String? = null,
                  val popularity: Float = 0.toFloat(),
                  val voteCount: Int = 0,
                  val isVideo: Boolean = false,
-                 val averageVote: Float = 0.toFloat()
-):Serializable
+                 val averageVote: Float = 0.toFloat(),
+                 var isFavorite : Boolean = false
+) : Serializable

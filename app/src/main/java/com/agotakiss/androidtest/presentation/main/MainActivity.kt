@@ -10,9 +10,9 @@ class MainActivity : BaseActivity() {
 
     //    , MainView
 //
-    companion object {
-        const val POSTER_TRANSITION_NAME = "posterTransition"
-    }
+//    companion object {
+//        const val POSTER_TRANSITION_NAME = "posterTransition"
+//    }
 //
 //    val applicationComponent by lazy { movieApplication.applicationComponent.plus(MainModule(this)) }
 //
@@ -26,9 +26,11 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        init()
+    }
 
+    fun init(){
         val mainPagerAdapter = ViewPagerAdapter(supportFragmentManager, 3)
-
         viewpager.adapter = mainPagerAdapter
         viewpager.offscreenPageLimit = 3
 
@@ -38,7 +40,6 @@ class MainActivity : BaseActivity() {
                 R.id.favorites -> viewpager.currentItem = 1
                 R.id.search -> viewpager.currentItem = 2
             }
-
             true
         }
 

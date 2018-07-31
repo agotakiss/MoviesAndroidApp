@@ -3,6 +3,8 @@ package com.agotakiss.androidtest.presentation.main
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.agotakiss.androidtest.presentation.main.favorites.FavoritesFragment
+import com.agotakiss.androidtest.presentation.main.popular.MainFragment
 
 class ViewPagerAdapter(fragmentManager: FragmentManager,
                        var numberOfTabs: Int

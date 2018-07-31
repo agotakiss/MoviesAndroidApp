@@ -1,4 +1,4 @@
-package com.agotakiss.androidtest.presentation.main
+package com.agotakiss.androidtest.presentation.main.popular
 
 import dagger.Subcomponent
 

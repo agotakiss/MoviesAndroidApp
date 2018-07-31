@@ -1,4 +1,4 @@
-package com.agotakiss.androidtest.presentation.main
+package com.agotakiss.androidtest.presentation.main.popular
 
 import android.util.Log
 import com.agotakiss.androidtest.base.BasePresenter
@@ -13,6 +13,8 @@ class MainPresenter @Inject constructor(
 ) : BasePresenter() {
     var page = 1;
     private var totalPages: Int = 0
+
+    private var movieList = mutableListOf<Movie>()
 
     lateinit var view: MainView
 
@@ -40,6 +42,16 @@ class MainPresenter @Inject constructor(
 
     private fun onMoviesLoaded(newMovies: List<Movie>, totalPages: Int) {
         this.totalPages = totalPages
+        this.movieList.addAll(newMovies)
         view.showMovies(newMovies)
     }
+
+    fun onFavoriteButtonClicked( position: Int) {
+        val movie = movieList[position]
+        movie.isFavorite = !movie.isFavorite
+        view.updateFavoriteButton(position)
+    }
+
+
+
 }

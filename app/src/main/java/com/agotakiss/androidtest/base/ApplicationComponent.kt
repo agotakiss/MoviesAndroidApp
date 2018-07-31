@@ -4,8 +4,10 @@ import com.agotakiss.androidtest.presentation.actor.ActorDetailsComponent
 import com.agotakiss.androidtest.presentation.actor.ActorDetailsModule
 import com.agotakiss.androidtest.presentation.detail.DetailsComponent
 import com.agotakiss.androidtest.presentation.detail.DetailsModule
-import com.agotakiss.androidtest.presentation.main.MainComponent
-import com.agotakiss.androidtest.presentation.main.MainModule
+import com.agotakiss.androidtest.presentation.main.popular.MainComponent
+import com.agotakiss.androidtest.presentation.main.popular.MainModule
+import com.agotakiss.androidtest.presentation.main.favorites.FavoritesComponent
+import com.agotakiss.androidtest.presentation.main.favorites.FavoritesModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -18,4 +20,6 @@ interface ApplicationComponent {
     fun plus(mainModule: MainModule): MainComponent
     fun plus(detailsModule: DetailsModule): DetailsComponent
     fun plus(actorDetailsModule: ActorDetailsModule): ActorDetailsComponent
+
+    fun plus(favoritesModule: FavoritesModule): FavoritesComponent
 }

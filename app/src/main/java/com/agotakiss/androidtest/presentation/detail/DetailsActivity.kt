@@ -16,6 +16,7 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Cast
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
+import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
 import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
@@ -89,7 +90,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
             val intent = Intent(this, DetailsActivity::class.java)
             intent.putExtra(MOVIE, similarMovie)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-                MainActivity.POSTER_TRANSITION_NAME)
+                POSTER_TRANSITION_NAME)
             startActivity(intent, options.toBundle())
         }
         similar_recycler_view.adapter = adapter
@@ -101,7 +102,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
         if (hasStartedAnotherScreen) {
             hasStartedAnotherScreen = false
             ViewCompat.setTransitionName(sharedImageView, "unused")
-            ViewCompat.setTransitionName(poster_detailed, MainActivity.POSTER_TRANSITION_NAME)
+            ViewCompat.setTransitionName(poster_detailed, POSTER_TRANSITION_NAME)
         }
     }
 

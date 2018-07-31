@@ -7,16 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
-import com.agotakiss.androidtest.presentation.main.MainActivity.Companion.POSTER_TRANSITION_NAME
+import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.main_list_item.view.*
 
 
 class MovieAdapter(
     private val movies: List<Movie>,
     private val onEndReachedListener: OnEndReachedListener,
-    private val onItemClickListener: (Movie, View) -> Unit
+    private val onItemClickListener: (Movie, View) -> Unit,
+    private val onFavoriteButtonClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -25,12 +26,16 @@ class MovieAdapter(
                 ViewCompat.setTransitionName(itemView.poster, POSTER_TRANSITION_NAME)
                 onItemClickListener.invoke(movies[adapterPosition], itemView.poster)
             }
+            itemView.favorite_imageview.setOnClickListener {
+                onFavoriteButtonClickListener.invoke(adapterPosition)
+            }
+
         }
 
         fun bindViewHolder(position: Int) {
             val movie = movies[position]
             if (position == movies.size - 1) {
-                onEndReachedListener!!.onEndReached(position)
+                onEndReachedListener.onEndReached(position)
             }
             itemView.movie_title.text = movie.title
             itemView.movie_rating.text = java.lang.Float.toString(movie.averageVote)
@@ -38,13 +43,18 @@ class MovieAdapter(
             itemView.movie_release_date.text = movie.releaseDateText!!.substring(0, 4)
             itemView.movie_description.text = movie.overview
             Picasso.get().load(IMAGE_BASE_URL + movie.posterPath!!).into(itemView.poster)
+            if(movie.isFavorite){
+                itemView.favorite_imageview.setImageResource(R.drawable.favorite_full_pic)
+            } else{
+                itemView.favorite_imageview.setImageResource(R.drawable.favorite_pic)
+            }
 
 //            ViewCompat.setTransitionName(itemView.poster, POSTER_TRANSITION_NAME)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.main_list_item, parent, false)
         return ViewHolder(view)
     }
 

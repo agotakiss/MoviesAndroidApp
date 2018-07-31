@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
+import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.LAST_ITEMS_BEFORE_LOAD_NEW
@@ -26,7 +27,7 @@ class SimilarMovieAdapter(private val similarMovies: List<Movie>,
         init {
             itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    ViewCompat.setTransitionName(itemView.similar_movie_poster, MainActivity.POSTER_TRANSITION_NAME)
+                    ViewCompat.setTransitionName(itemView.similar_movie_poster, POSTER_TRANSITION_NAME)
 
                     onItemClickListener.invoke(similarMovies[adapterPosition], itemView.similar_movie_poster)
                 }
