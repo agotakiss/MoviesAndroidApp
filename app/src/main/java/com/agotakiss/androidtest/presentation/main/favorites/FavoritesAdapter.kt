@@ -16,8 +16,8 @@ import java.util.*
 
 class FavoritesAdapter(
     private val favoriteMovies: List<Movie>,
-    private val onClickListener: (Movie) -> Unit
-//    private val onFavoriteButtonClickListener: (Int) -> Unit
+    private val onClickListener: (Movie) -> Unit,
+    private val onFavoriteButtonClickListener: (Int, Int) -> Unit
 ) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
 
 
@@ -28,9 +28,9 @@ class FavoritesAdapter(
                 onClickListener.invoke(favoriteMovies[adapterPosition])
                 Log.d("adapter", " onclick")
             }
-//            itemView.favorite_imageview_favorite_list_item.setOnClickListener {
-//                onFavoriteButtonClickListener.invoke(adapterPosition)
-//            }
+            itemView.favorite_imageview_favorite_list_item.setOnClickListener {
+                onFavoriteButtonClickListener.invoke(adapterPosition, favoriteMovies[adapterPosition].id)
+            }
         }
 
         fun bindViewHolder(position: Int) {
@@ -39,7 +39,7 @@ class FavoritesAdapter(
             Picasso.get().load(MovieAdapter.IMAGE_BASE_URL + movie.posterPath!!).into(itemView.favoritePoster)
 
             val dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-//            itemView.addedOnDate.text = dateFormatter.format(movie.addedOn)
+            itemView.addedOnDate.text = dateFormatter.format(System.currentTimeMillis())
         }
     }
 

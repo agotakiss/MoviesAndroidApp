@@ -5,6 +5,6 @@ import com.agotakiss.androidtest.domain.models.Movie
 interface MainView {
 
     fun showMovies(newMovies: List<Movie>)
-    fun updateFavoriteButton(position: Int)
+    fun updateListItem(position: Int)
 
 }

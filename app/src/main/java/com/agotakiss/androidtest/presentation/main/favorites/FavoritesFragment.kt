@@ -17,6 +17,7 @@ import com.agotakiss.androidtest.presentation.FAVORITE_MOVIE
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import kotlinx.android.synthetic.main.fragment_favorites.*
+import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class FavoritesFragment : Fragment(), FavoritesView {
@@ -41,9 +42,14 @@ class FavoritesFragment : Fragment(), FavoritesView {
         initializeList()
     }
 
-    override fun onResume() {
-        super.onResume()
-        presenter.onViewReady(this)
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(presenter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().register(presenter)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -62,7 +68,7 @@ class FavoritesFragment : Fragment(), FavoritesView {
             intent.putExtra(MOVIE, favoriteMovie)
             startActivity(intent)
             Log.d("favorites fragment", " onclick")
-        })
+        }, presenter::onFavoriteButtonClicked)
         favorites_recycler_view.adapter = adapter
     }
 
@@ -70,5 +76,10 @@ class FavoritesFragment : Fragment(), FavoritesView {
         favoriteMoviesList.clear()
         favoriteMoviesList.addAll(favoriteMovies)
         adapter.notifyDataSetChanged()
+    }
+
+    override fun updateFavoriteMovies(position: Int) {
+        favoriteMoviesList.removeAt(position)
+        adapter.notifyItemRemoved(position)
     }
 }

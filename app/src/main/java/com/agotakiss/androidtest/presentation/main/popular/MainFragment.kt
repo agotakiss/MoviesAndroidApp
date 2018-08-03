@@ -18,6 +18,7 @@ import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.fragment_main.*
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
@@ -49,6 +50,15 @@ class MainFragment : Fragment(), MainView {
         initializeList()
         presenter.onViewReady(this)
     }
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(presenter)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().register(presenter)
+    }
 
     private fun initializeList() {
         val layoutManager = LinearLayoutManager(context)
@@ -74,7 +84,7 @@ class MainFragment : Fragment(), MainView {
         adapter.notifyItemRangeInserted(movieList.size - newMovies.size, newMovies.size)
     }
 
-    override fun updateFavoriteButton(position: Int) {
+    override fun updateListItem(position: Int) {
         adapter.notifyItemChanged(position)
 //        Toast.makeText(context, "Favorite button clicked", Toast.LENGTH_LONG).show()
 
