@@ -5,3 +5,4 @@ import com.agotakiss.androidtest.domain.models.Genre
 
 
 fun GenreApiModel.toGenre() = Genre(id, name)
+

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
+import com.agotakiss.androidtest.domain.repository.MovieRepository
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.main_list_item.view.*
 
 class MovieAdapter(
     private val movies: List<Movie>,
+//    private val movieRepository: MovieRepository,
     private val onEndReachedListener: OnEndReachedListener,
     private val onItemClickListener: (Movie, View) -> Unit,
     private val onFavoriteButtonClickListener: (Int) -> Unit
@@ -43,6 +45,9 @@ class MovieAdapter(
             itemView.movie_release_date.text = movie.releaseDateText!!.substring(0, 4)
             itemView.movie_description.text = movie.overview
             Picasso.get().load(IMAGE_BASE_URL + movie.posterPath!!).into(itemView.poster)
+
+//            movieRepository.findByMovieId(movie.id)
+
             if(movie.isFavorite){
                 itemView.favorite_imageview.setImageResource(R.drawable.favorite_full_pic)
             } else{
@@ -67,7 +72,7 @@ class MovieAdapter(
     }
 
     fun movieGenresToDisplay(movie: Movie): String {
-        return if (movie.genres != null && !movie.genres.isEmpty()) {
+        return if (movie.genres != null && !movie.genres!!.isEmpty()) {
             Observable.fromIterable(movie.genres)
                 .map<String> { it.name }
                 .reduce { s, s2 -> "$s, $s2" }.blockingGet()

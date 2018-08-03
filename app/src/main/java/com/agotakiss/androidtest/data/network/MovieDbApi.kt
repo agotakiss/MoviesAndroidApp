@@ -15,6 +15,9 @@ interface MovieDbApi {
     @GET("movie/popular")
     fun getPopularMovies(@Query("page") page: Int): Single<LoadMoviesResponse>
 
+    @GET("movie/{movie_id}")
+    fun getMovieDetails(@Path(value = "movie_id", encoded = true) movieId: Int): Single<MovieApiModel>
+
     @GET("movie/{movie_id}/similar")
     fun getSimilarMovies(@Path(value = "movie_id", encoded = true) movieId: Int, @Query("page") page: Int): Single<LoadMoviesResponse>
 

@@ -7,7 +7,10 @@ open class BasePresenter(){
 
     protected val TAG = this.javaClass.simpleName
 
+    protected fun logD(message: Any) {
+        Log.d(TAG, message.toString())
+    }
     protected fun logE(message: Any) {
-        Log.e(ContentValues.TAG, message.toString())
+        Log.e(TAG, message.toString())
     }
 }

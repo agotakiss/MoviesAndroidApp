@@ -5,12 +5,15 @@ import com.agotakiss.androidtest.base.BasePresenter
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.domain.repository.MovieRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Action
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
     private val movieRepository: MovieRepository
 ) : BasePresenter() {
+
     var page = 1;
     private var totalPages: Int = 0
 
@@ -46,12 +49,30 @@ class MainPresenter @Inject constructor(
         view.showMovies(newMovies)
     }
 
-    fun onFavoriteButtonClicked( position: Int) {
+    fun onFavoriteButtonClicked(position: Int) {
         val movie = movieList[position]
         movie.isFavorite = !movie.isFavorite
+        if (movie.isFavorite) {
+            addMovieToFavorites(movie)
+        } else {
+            removeMovieFromFavorites(movie)
+        }
         view.updateFavoriteButton(position)
     }
 
+    private fun removeMovieFromFavorites(movie: Movie) {
+        movieRepository.deleteFromFavoriteMovies(movie.id)
+    }
 
-
+    private fun addMovieToFavorites(movie: Movie) {
+        movieRepository.addToFavoriteMovies(movie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                logD("addMovieToFavorites completed")
+            }, { throwable ->
+                logE(throwable)
+            })
+        logE("mainpresenter add called")
+    }
 }

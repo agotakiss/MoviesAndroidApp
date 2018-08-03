@@ -48,12 +48,12 @@ object Injector {
         return genreRepository!!
     }
 
-    fun getMovieRepository(): MovieRepository {
-        if (movieRepository == null) {
-            movieRepository = MovieRepositoryImpl()
-        }
-        return movieRepository!!
-    }
+//    fun getMovieRepository(): MovieRepository {
+//        if (movieRepository == null) {
+//            movieRepository = MovieRepositoryImpl()
+//        }
+//        return movieRepository!!
+//    }
     fun getCastRepository(): CastRepository {
         if (castRepository == null) {
             castRepository = CastRepositoryImpl()

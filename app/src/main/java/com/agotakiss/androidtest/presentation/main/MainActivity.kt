@@ -1,13 +1,18 @@
 package com.agotakiss.androidtest.presentation.main
 
+import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import com.agotakiss.androidtest.R
+import com.agotakiss.androidtest.data.store.AppDatabase
 import com.agotakiss.androidtest.presentation.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
+//    companion object {
+//        var database: AppDatabase? = null
+//    }
     //    , MainView
 //
 //    companion object {
@@ -26,6 +31,7 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        MainActivity.database =  AppDatabase.getInstance(this)
         init()
     }
 
@@ -51,7 +57,7 @@ class MainActivity : BaseActivity() {
                         bottom_navigation.selectedItemId = R.id.popular
                     }
                     1 -> {
-                        viewpager.shouldSkipHorizontalSwipe = true
+                        viewpager.shouldSkipHorizontalSwipe = false
                         bottom_navigation.selectedItemId = R.id.favorites
                     }
                     2 -> {

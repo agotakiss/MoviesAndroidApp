@@ -3,6 +3,7 @@ package com.agotakiss.androidtest.presentation.main.popular
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
+import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -58,7 +60,7 @@ class MainFragment : Fragment(), MainView {
         }, { movie, view ->
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(MovieAdapter.MOVIE, movie)
-//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity::class.java, view,
+//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity::class, view,
 //                POSTER_TRANSITION_NAME)
 //            startActivity(intent, options.toBundle())
             startActivity(intent)
@@ -74,7 +76,7 @@ class MainFragment : Fragment(), MainView {
 
     override fun updateFavoriteButton(position: Int) {
         adapter.notifyItemChanged(position)
-        Toast.makeText(context, "Favorite button clicked", Toast.LENGTH_LONG).show()
+//        Toast.makeText(context, "Favorite button clicked", Toast.LENGTH_LONG).show()
 
     }
 

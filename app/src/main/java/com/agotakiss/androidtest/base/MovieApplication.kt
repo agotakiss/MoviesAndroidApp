@@ -1,8 +1,6 @@
 package com.agotakiss.androidtest.base
 
-import android.app.Activity
 import android.app.Application
-import android.os.Bundle
 
 class MovieApplication : Application() {
 
@@ -18,8 +16,8 @@ class MovieApplication : Application() {
     }
 
     val applicationComponent = DaggerApplicationComponent
-    .builder()
-    .applicationModule(ApplicationModule())
-    .build()
+        .builder()
+        .applicationModule(ApplicationModule(this))
+        .build()
 
 }
