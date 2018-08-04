@@ -1,21 +1,22 @@
 package com.agotakiss.androidtest.presentation.main.popular
 
-import android.content.Context
 import android.util.Log
 import com.agotakiss.androidtest.base.BasePresenter
 import com.agotakiss.androidtest.data.store.FavoriteMovieDeleteEvent
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.domain.repository.MovieRepository
+import com.agotakiss.androidtest.domain.usecase.GetPopularMovies
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val getPopularMovies: GetPopularMovies
 ) : BasePresenter() {
 
-    var page = 1;
+    private var page = 1;
     private var totalPages: Int = 0
 
     private var movieList = mutableListOf<Movie>()
@@ -28,7 +29,7 @@ class MainPresenter @Inject constructor(
     }
 
     private fun loadPopularMovies() {
-        movieRepository.getPopularMovies(page)
+        getPopularMovies.get(page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ movieList -> onMoviesLoaded(movieList, Integer.MAX_VALUE) }, { throwable ->
@@ -91,11 +92,11 @@ class MainPresenter @Inject constructor(
         movieDeleteEvent.movieId
         logD("$movieDeleteEvent deleted with eventbus")
         val movie = movieList.find { it.id == movieDeleteEvent.movieId }
-        movie!!.isFavorite = !movie.isFavorite
+        movie!!.isFavorite = false
         movieList.indexOfFirst { it.id == movieDeleteEvent.movieId }
             .takeIf { it >= 0 }
-            ?.let {view.updateListItem(it)
-
+            ?.let {
+                view.updateListItem(it)
             }
     }
 

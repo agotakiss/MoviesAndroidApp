@@ -10,32 +10,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
-//    companion object {
-//        var database: AppDatabase? = null
-//    }
-    //    , MainView
-//
-//    companion object {
-//        const val POSTER_TRANSITION_NAME = "posterTransition"
-//    }
-//
-//    val applicationComponent by lazy { movieApplication.applicationComponent.plus(MainModule(this)) }
-//
-//    @Inject
-//    lateinit var presenter: MainPresenter
-//
-//    internal var movieList: MutableList<Movie> = ArrayList()
-//    private lateinit var adapter: MovieAdapter
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        MainActivity.database =  AppDatabase.getInstance(this)
         init()
     }
 
-    fun init(){
+    fun init() {
         val mainPagerAdapter = ViewPagerAdapter(supportFragmentManager, 3)
         viewpager.adapter = mainPagerAdapter
         viewpager.offscreenPageLimit = 3
@@ -79,38 +60,6 @@ class MainActivity : BaseActivity() {
         })
 
         viewpager.currentItem = 1
-        viewpager.shouldSkipHorizontalSwipe = true
+        viewpager.shouldSkipHorizontalSwipe = false
     }
-
-
-//
-//        applicationComponent.inject(this)
-//        initializeList()
-//        presenter.onViewReady(this)
 }
-
-
-//
-//
-//    private fun initializeList() {
-//        val layoutManager = LinearLayoutManager(this)
-//        main_recycler_view.layoutManager = layoutManager
-//        adapter = MovieAdapter(movieList, object : OnEndReachedListener {
-//            override fun onEndReached(position: Int) {
-//                presenter.onScrollEndReached()
-//            }
-//        }) { movie, view ->
-//            val intent = Intent(this, DetailsActivity::class.java)
-//            intent.putExtra(MOVIE, movie)
-//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-//                POSTER_TRANSITION_NAME)
-//            startActivity(intent, options.toBundle())
-//        }
-//        main_recycler_view.adapter = adapter
-//    }
-//
-//    override fun showMovies(newMovies: List<Movie>) {
-//        movieList.addAll(newMovies)
-//        adapter.notifyItemRangeInserted(movieList.size - newMovies.size, newMovies.size)
-//    }
-

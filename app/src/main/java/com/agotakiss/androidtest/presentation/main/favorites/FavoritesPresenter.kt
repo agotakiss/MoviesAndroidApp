@@ -9,6 +9,7 @@ import com.agotakiss.androidtest.presentation.main.MainActivity
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
@@ -38,6 +39,7 @@ class FavoritesPresenter @Inject constructor(
     private fun onMoviesLoaded(newMovies: List<Movie>) {
         this.favoriteMoviesList = newMovies
         view.showFavoriteMovies(newMovies)
+        EventBus.getDefault().post(newMovies)
     }
 
     fun onFavoriteButtonClicked(position : Int, movieId: Int) {
@@ -51,12 +53,5 @@ class FavoritesPresenter @Inject constructor(
             })
         view.updateFavoriteMovies(position)
 
-    }
-
-
-    @Subscribe
-    fun onFavoriteMovieFromFavoriteFragmentDeleted(event: FavoriteMovieDeleteEvent) {
-
-        logD("${event.toString()} deleted with eventbus")
     }
 }

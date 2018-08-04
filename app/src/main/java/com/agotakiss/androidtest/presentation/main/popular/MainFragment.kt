@@ -49,16 +49,18 @@ class MainFragment : Fragment(), MainView {
         applicationComponent.inject(this)
         initializeList()
         presenter.onViewReady(this)
-    }
-    override fun onStart() {
-        super.onStart()
         EventBus.getDefault().register(presenter)
     }
 
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().register(presenter)
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        EventBus.getDefault().register(presenter)
+//    }
+
+//    override fun onStop() {
+//        super.onStop()
+//        EventBus.getDefault().register(presenter)
+//    }
 
     private fun initializeList() {
         val layoutManager = LinearLayoutManager(context)

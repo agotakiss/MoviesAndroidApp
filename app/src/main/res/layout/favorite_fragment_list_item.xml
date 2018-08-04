@@ -14,35 +14,51 @@
         <ImageView
             android:id="@+id/favoritePoster"
             android:layout_width="80dp"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:padding="4dp" />
 
-        <TextView
-            android:id="@+id/favoriteTitle"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="a legjobb film a világon"
-            app:layout_constraintStart_toEndOf="@id/favoritePoster" />
-
-        <TextView
-            android:id="@+id/addedOnTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/added_to_favorites_on"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/favorite_imageview_favorite_list_item"
             app:layout_constraintStart_toEndOf="@id/favoritePoster"
-            app:layout_constraintTop_toBottomOf="@id/favoriteTitle" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/addedOnDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2012.04.23."
-            app:layout_constraintBottom_toBottomOf="@id/addedOnTextView"
-            app:layout_constraintStart_toEndOf="@id/addedOnTextView"
-            app:layout_constraintTop_toTopOf="@id/addedOnTextView" />
+            <TextView
+                android:id="@+id/favoriteTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="a legjobb film a világon"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/genres_favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="genres" />
+
+            <TextView
+                android:id="@+id/more_info_button"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center"
+                android:text="@string/more_info_button"
+                android:textSize="12sp" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/favorite_imageview_favorite_list_item"

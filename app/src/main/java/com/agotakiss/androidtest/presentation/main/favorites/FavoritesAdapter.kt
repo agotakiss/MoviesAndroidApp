@@ -9,6 +9,7 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.squareup.picasso.Picasso
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.favorite_fragment_list_item.view.*
 import kotlinx.android.synthetic.main.main_list_item.view.*
 import java.text.SimpleDateFormat
@@ -37,9 +38,7 @@ class FavoritesAdapter(
             val movie = favoriteMovies[position]
             itemView.favoriteTitle.text = movie.title
             Picasso.get().load(MovieAdapter.IMAGE_BASE_URL + movie.posterPath!!).into(itemView.favoritePoster)
-
-            val dateFormatter = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            itemView.addedOnDate.text = dateFormatter.format(System.currentTimeMillis())
+            itemView.genres_favorites.text = movieGenresToDisplay(movie)
         }
     }
 
@@ -54,6 +53,16 @@ class FavoritesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bindViewHolder(position)
+    }
+
+    fun movieGenresToDisplay(movie: Movie): String {
+        return if (movie.genres != null && !movie.genres!!.isEmpty()) {
+            Observable.fromIterable(movie.genres)
+                .map<String> { it.name }
+                .reduce { s, s2 -> "$s, $s2" }.blockingGet()
+        } else {
+            ""
+        }
     }
 
 }

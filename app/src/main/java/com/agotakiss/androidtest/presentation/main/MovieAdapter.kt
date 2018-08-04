@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.main_list_item.view.*
 
 class MovieAdapter(
     private val movies: List<Movie>,
-//    private val movieRepository: MovieRepository,
     private val onEndReachedListener: OnEndReachedListener,
     private val onItemClickListener: (Movie, View) -> Unit,
     private val onFavoriteButtonClickListener: (Int) -> Unit
@@ -45,8 +44,6 @@ class MovieAdapter(
             itemView.movie_release_date.text = movie.releaseDateText!!.substring(0, 4)
             itemView.movie_description.text = movie.overview
             Picasso.get().load(IMAGE_BASE_URL + movie.posterPath!!).into(itemView.poster)
-
-//            movieRepository.findByMovieId(movie.id)
 
             if(movie.isFavorite){
                 itemView.favorite_imageview.setImageResource(R.drawable.favorite_full_pic)

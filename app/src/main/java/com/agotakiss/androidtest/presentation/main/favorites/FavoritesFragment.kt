@@ -42,14 +42,9 @@ class FavoritesFragment : Fragment(), FavoritesView {
         initializeList()
     }
 
-    override fun onStart() {
-        super.onStart()
-        EventBus.getDefault().register(presenter)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        EventBus.getDefault().register(presenter)
+    override fun onResume() {
+        presenter.onViewReady(this)
+        super.onResume()
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

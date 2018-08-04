@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +19,6 @@ import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
-import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
@@ -51,6 +51,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
+//        setSupportActionBar(toolbar)
         applicationComponent.inject(this)
         movie = intent.getSerializableExtra(MOVIE) as Movie
         initUI()
@@ -59,6 +60,13 @@ class DetailsActivity : BaseActivity(), DetailsView {
         presenter.onViewReady(this, movie)
         description_detailed.setOnClickListener { expandCollapsedByMaxLines(description_detailed) }
     }
+
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.details_toolbar, menu)
+//        return true
+//    }
+
+
 
     private fun initUI() {
         setSupportActionBar(toolbar)
