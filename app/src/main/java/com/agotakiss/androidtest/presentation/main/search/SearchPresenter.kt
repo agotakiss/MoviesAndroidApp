@@ -66,6 +66,7 @@ class SearchPresenter @Inject constructor
     }
 
     fun onScrollEndReached() {
+        logD("onscrollendreached method called")
         page++
         loadSearchResults(lastQueryString)
     }

@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,6 +88,7 @@ class SearchFragment : Fragment(), SearchView {
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(activity, "An error occured while searching. Try again!", Toast.LENGTH_LONG).show()
+        Log.e("searchfragment", throwable.toString())
     }
 
     override fun updateListItem(position: Int) {
