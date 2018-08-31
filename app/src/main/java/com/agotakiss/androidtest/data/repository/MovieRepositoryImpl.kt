@@ -20,10 +20,8 @@ class MovieRepositoryImpl @Inject constructor(
 ) : MovieRepository {
 
     override fun addToFavoriteMovies(movie: Movie): Completable {
-        Log.d("MovieRepository", "add method called")
         return favoriteMovieDataStore.addToFavoriteMovies(movie)
     }
-
 
     override fun deleteFromFavoriteMovies(movieId: Int): Completable {
         return favoriteMovieDataStore.deleteFromFavoriteMovies(movieId)

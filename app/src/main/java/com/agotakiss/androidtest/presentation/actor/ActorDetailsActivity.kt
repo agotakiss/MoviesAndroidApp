@@ -3,6 +3,7 @@ package com.agotakiss.androidtest.presentation.actor
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.*
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -22,6 +23,7 @@ import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Transformation
 import kotlinx.android.synthetic.main.activity_actor_details.*
 import java.util.*
 import javax.inject.Inject
@@ -48,7 +50,10 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
     }
 
     override fun initUI(actor: Actor) {
-        Picasso.get().load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath).into(actor_detailed_photo_imageview)
+        Picasso.get()
+            .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
+            .transform(CircleTransform())
+            .into(actor_detailed_photo_imageview)
         actor_detail_name_textview.text = actor.name
         actor_detail_known_for_department.text = actor.knownForDepartment
         actor_detail_biography.text = actor.biography
@@ -102,5 +107,35 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         val newHeight = text.measuredHeight
         val animation = ObjectAnimator.ofInt(text, "height", height, newHeight)
         animation.setDuration(250).start()
+    }
+
+    inner class CircleTransform : Transformation {
+        override fun transform(source: Bitmap?): Bitmap? {
+            if (source == null || source.isRecycled) {
+                return null
+            }
+
+            val width = source.width
+            val height = source.height
+
+            val canvasBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            val shader = BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+            val paint = Paint()
+            paint.isAntiAlias = true
+            paint.shader = shader
+
+            val canvas = Canvas(canvasBitmap)
+            val radius = if (width > height) height.toFloat() / 2f else width.toFloat() / 2f
+            canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), radius, paint)
+
+            if (canvasBitmap != source) {
+                source.recycle()
+            }
+            return canvasBitmap
+        }
+
+        override fun key(): String {
+            return "circle"
+        }
     }
 }

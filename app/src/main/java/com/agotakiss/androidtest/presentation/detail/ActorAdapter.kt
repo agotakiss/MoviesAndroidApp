@@ -42,8 +42,6 @@ class ActorAdapter(private val actors: List<Cast>,
             }
             itemView.actor_name_textview.text = actor.name
             itemView.character_name_textview.text = actor.character
-//            Picasso.get().load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
-//                .into(itemView.actor_photo_imageview)
             if (actor.profilePath == null){
                 itemView.actor_photo_imageview.setImageResource(R.drawable.person_picture)
             }else{

@@ -22,6 +22,8 @@ import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 import javax.inject.Inject
+import android.app.Activity
+import android.view.inputmethod.InputMethodManager
 
 
 class SearchFragment : Fragment(), SearchView {
@@ -59,6 +61,7 @@ class SearchFragment : Fragment(), SearchView {
     }
 
     override fun showSearchResults(newSearchResults: List<Movie>) {
+        hideKeyboard()
         searchResultList.addAll(newSearchResults)
         val layoutManager = LinearLayoutManager(context)
         searchResultsRecyclerView.layoutManager = layoutManager
@@ -94,5 +97,10 @@ class SearchFragment : Fragment(), SearchView {
 
     override fun updateListItem(position: Int) {
         adapter.notifyItemChanged(position)
+    }
+
+    fun hideKeyboard() {
+        val inputMethodManager = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view!!.windowToken, 0)
     }
 }

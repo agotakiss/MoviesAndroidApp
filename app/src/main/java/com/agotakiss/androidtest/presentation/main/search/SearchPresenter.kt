@@ -41,7 +41,7 @@ class SearchPresenter @Inject constructor
     }
 
     private fun loadSearchResults(queryString: String) {
-        logD("LOAD SEARCH RESULTS")
+        if (queryString == "") return
         getSearchResults.get(queryString, page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -60,18 +60,15 @@ class SearchPresenter @Inject constructor
             this.searchResultList.clear()
             this.searchResultList.addAll(newSearchResults)
             view.showSearchResults(searchResultList)
-            logD("SEARCH PRESENTER FIRST PAGE LOADED")
         }
         if(page != 1 && queryString == lastQueryString ) {
             lastQueryString = queryString
             this.searchResultList.addAll(newSearchResults)
             view.showNextPage(newSearchResults)
-            logD(" SEARCH PRESENTER NEXT PAGE LOADED")
         }
     }
 
     fun onScrollEndReached() {
-        logD("onscrollendreached method called")
         page++
         loadSearchResults(lastQueryString)
     }

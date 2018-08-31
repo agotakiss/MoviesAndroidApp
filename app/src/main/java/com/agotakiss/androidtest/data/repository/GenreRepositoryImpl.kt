@@ -1,5 +1,6 @@
 package com.agotakiss.androidtest.data.repository
 
+import android.util.Log
 import com.agotakiss.androidtest.data.mapper.toGenre
 import com.agotakiss.androidtest.data.network.MovieDbApi
 import com.agotakiss.androidtest.data.store.GenreStore

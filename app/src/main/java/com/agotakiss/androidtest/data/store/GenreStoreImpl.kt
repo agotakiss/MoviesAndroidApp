@@ -1,5 +1,6 @@
 package com.agotakiss.androidtest.data.store
 
+import android.util.Log
 import com.agotakiss.androidtest.data.models.GenreApiModel
 import com.agotakiss.androidtest.domain.models.Genre
 import java.util.NoSuchElementException
@@ -24,6 +25,7 @@ class GenreStoreImpl : GenreStore {
     }
 
     override fun saveGenres(genreMap: Map<Int, Genre>): Completable {
+        this.genreMap = genreMap
         return Completable.fromAction { this.genreMap }
     }
 }
