@@ -6,6 +6,8 @@ import com.agotakiss.androidtest.domain.repository.MovieRepository
 import com.agotakiss.androidtest.domain.usecase.GetSearchResults
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SearchPresenter @Inject constructor
@@ -16,26 +18,30 @@ class SearchPresenter @Inject constructor
     lateinit var view: SearchView
     private var searchResultList = mutableListOf<Movie>()
     private var page = 1;
-    private var queryString = ""
+    private var lastQueryString = ""
+    private val queryTextChangeSubject = PublishSubject.create<String>()
 
     fun onViewReady(view: SearchView) {
         this.view = view
+        initSearchQueryObserver()
     }
 
-    fun onSearchButtonClicked(queryString: String) {
-        if (queryString != "") {
-            if (this.queryString == "") {
-                this.queryString = queryString
-                loadSearchResults()
-            } else if (queryString != this.queryString) {
-                this.queryString = queryString
-                page = 1
-                loadSearchResults()
-            }
-        }
+    private fun initSearchQueryObserver() {
+        queryTextChangeSubject
+            .debounce(1000L, TimeUnit.MILLISECONDS)
+            .subscribe({
+                loadSearchResults(it)
+            }, {
+                logE(it)
+            })
     }
 
-    fun loadSearchResults() {
+    fun onSearchQueryChanged(queryString: String) {
+        queryTextChangeSubject.onNext(queryString)
+    }
+
+    private fun loadSearchResults(queryString: String) {
+        lastQueryString = queryString
         getSearchResults.get(queryString, page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -61,7 +67,7 @@ class SearchPresenter @Inject constructor
 
     fun onScrollEndReached() {
         page++
-        loadSearchResults()
+        loadSearchResults(lastQueryString)
     }
 
     fun onFavoriteButtonClicked(position: Int) {
