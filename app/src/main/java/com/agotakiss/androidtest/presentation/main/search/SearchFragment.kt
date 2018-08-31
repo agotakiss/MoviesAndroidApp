@@ -45,7 +45,7 @@ class SearchFragment : Fragment(), SearchView {
         super.onActivityCreated(savedInstanceState)
         applicationComponent.inject(this)
         presenter.onViewReady(this)
-        searchEditText.addTextChangedListener(object: TextWatcher {
+        searchEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -59,6 +59,7 @@ class SearchFragment : Fragment(), SearchView {
     }
 
     override fun showSearchResults(newSearchResults: List<Movie>) {
+        searchResultList.addAll(newSearchResults)
         val layoutManager = LinearLayoutManager(context)
         searchResultsRecyclerView.layoutManager = layoutManager
         adapter = MovieAdapter(newSearchResults, object : OnEndReachedListener {

@@ -41,27 +41,32 @@ class SearchPresenter @Inject constructor
     }
 
     private fun loadSearchResults(queryString: String) {
-        lastQueryString = queryString
+        logD("LOAD SEARCH RESULTS")
         getSearchResults.get(queryString, page)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ searchResultList -> onSearchResultsLoaded(searchResultList) },
+            .subscribe({ searchResultList -> onSearchResultsLoaded(searchResultList, queryString) },
                 { throwable ->
                     view.showError(throwable)
                 })
     }
 
-    private fun onSearchResultsLoaded(newSearchResults: List<Movie>) {
-        if (newSearchResults.isEmpty()) {
+    private fun onSearchResultsLoaded(newSearchResults: List<Movie>, queryString: String) {
+        if (page == 1 && newSearchResults.isEmpty()) {
             view.showNoResult()
         }
-        if (page == 1) {
+        if (queryString != lastQueryString) {
+            lastQueryString = queryString
             this.searchResultList.clear()
             this.searchResultList.addAll(newSearchResults)
             view.showSearchResults(searchResultList)
-        } else {
+            logD("SEARCH PRESENTER FIRST PAGE LOADED")
+        }
+        if(page != 1 && queryString == lastQueryString ) {
+            lastQueryString = queryString
             this.searchResultList.addAll(newSearchResults)
             view.showNextPage(newSearchResults)
+            logD(" SEARCH PRESENTER NEXT PAGE LOADED")
         }
     }
 
