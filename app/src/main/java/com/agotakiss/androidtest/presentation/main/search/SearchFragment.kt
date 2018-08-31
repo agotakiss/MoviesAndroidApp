@@ -1,9 +1,8 @@
-package com.agotakiss.androidtest.presentation.main.popular
+package com.agotakiss.androidtest.presentation.main.search
 
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -14,73 +13,71 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
+import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
-import kotlinx.android.synthetic.main.fragment_main.*
-import org.greenrobot.eventbus.EventBus
+import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 import javax.inject.Inject
 
-class MainFragment : Fragment(), MainView {
 
-
-    companion object {
-        const val POSTER_TRANSITION_NAME = "posterTransition"
-    }
+class SearchFragment : Fragment(), SearchView {
 
     val movieApplication: MovieApplication get() = MovieApplication.get()
-    val applicationComponent by lazy { movieApplication.applicationComponent.plus(MainModule(this)) }
+    val applicationComponent by lazy { movieApplication.applicationComponent.plus(SearchModule(this)) }
 
     @Inject
-    lateinit var presenter: MainPresenter
+    lateinit var presenter: SearchPresenter
 
-    internal var movieList: MutableList<Movie> = ArrayList()
+    internal var searchResultList: MutableList<Movie> = ArrayList()
     private lateinit var adapter: MovieAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         applicationComponent.inject(this)
-        initializeList()
         presenter.onViewReady(this)
-        EventBus.getDefault().register(presenter)
+        searchButton.setOnClickListener { presenter.onSearchButtonClicked(searchEditText.text.toString()) }
     }
 
-    private fun initializeList() {
+    override fun showSearchResults(newSearchResults: List<Movie>) {
         val layoutManager = LinearLayoutManager(context)
-        main_recycler_view.layoutManager = layoutManager
-        adapter = MovieAdapter(movieList, object : OnEndReachedListener {
+        searchResultsRecyclerView.layoutManager = layoutManager
+        adapter = MovieAdapter(newSearchResults, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onScrollEndReached()
             }
         }, { movie, view ->
             val intent = Intent(context, DetailsActivity::class.java)
-            intent.putExtra(MovieAdapter.MOVIE, movie)
+            intent.putExtra(MOVIE, movie)
 //            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity::class, view,
 //                POSTER_TRANSITION_NAME)
 //            startActivity(intent, options.toBundle())
             startActivity(intent)
         }, presenter::onFavoriteButtonClicked)
 
-        main_recycler_view.adapter = adapter
+        searchResultsRecyclerView.adapter = adapter
     }
 
-    override fun showMovies(newMovies: List<Movie>) {
-        movieList.addAll(newMovies)
-        adapter.notifyItemRangeInserted(movieList.size - newMovies.size, newMovies.size)
+    override fun showNextPage(newSearchResults: List<Movie>) {
+        searchResultList.addAll(newSearchResults)
+        adapter.notifyItemRangeInserted(searchResultList.size - newSearchResults.size, newSearchResults.size)
+    }
+
+    override fun showNoResult() {
+        Toast.makeText(activity, "Sorry, we couldn't find anything :(", Toast.LENGTH_LONG).show()
+    }
+
+    override fun showError(throwable: Throwable) {
+        Toast.makeText(activity, "An error occured while searching. Try again!", Toast.LENGTH_LONG).show()
     }
 
     override fun updateListItem(position: Int) {
         adapter.notifyItemChanged(position)
-//        Toast.makeText(context, "Favorite button clicked", Toast.LENGTH_LONG).show()
-
     }
-
-
 }

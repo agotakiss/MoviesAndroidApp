@@ -8,6 +8,8 @@ import com.agotakiss.androidtest.presentation.main.popular.MainComponent
 import com.agotakiss.androidtest.presentation.main.popular.MainModule
 import com.agotakiss.androidtest.presentation.main.favorites.FavoritesComponent
 import com.agotakiss.androidtest.presentation.main.favorites.FavoritesModule
+import com.agotakiss.androidtest.presentation.main.search.SearchComponent
+import com.agotakiss.androidtest.presentation.main.search.SearchModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -22,4 +24,6 @@ interface ApplicationComponent {
     fun plus(actorDetailsModule: ActorDetailsModule): ActorDetailsComponent
 
     fun plus(favoritesModule: FavoritesModule): FavoritesComponent
+    fun plus(searchModule: SearchModule): SearchComponent
+
 }

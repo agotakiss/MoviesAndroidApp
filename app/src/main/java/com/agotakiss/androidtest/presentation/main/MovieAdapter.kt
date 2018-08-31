@@ -41,9 +41,13 @@ class MovieAdapter(
             itemView.movie_title.text = movie.title
             itemView.movie_rating.text = java.lang.Float.toString(movie.averageVote)
             itemView.movie_genres.text = movieGenresToDisplay(movie)
-            itemView.movie_release_date.text = movie.releaseDateText!!.substring(0, 4)
+            if (movie.releaseDateText != ""){
+                itemView.movie_release_date.text = movie.releaseDateText?.substring(0, 4)
+            }
             itemView.movie_description.text = movie.overview
-            Picasso.get().load(IMAGE_BASE_URL + movie.posterPath!!).into(itemView.poster)
+            if (movie.posterPath != null){
+                Picasso.get().load(IMAGE_BASE_URL + movie.posterPath!!).into(itemView.poster)
+            }
 
             if(movie.isFavorite){
                 itemView.favorite_imageview.setImageResource(R.drawable.favorite_full_pic)

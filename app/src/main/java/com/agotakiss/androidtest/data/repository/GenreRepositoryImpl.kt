@@ -1,15 +1,17 @@
 package com.agotakiss.androidtest.data.repository
 
 import com.agotakiss.androidtest.data.mapper.toGenre
+import com.agotakiss.androidtest.data.network.MovieDbApi
+import com.agotakiss.androidtest.data.store.GenreStore
 import com.agotakiss.androidtest.domain.models.Genre
 import com.agotakiss.androidtest.domain.repository.GenreRepository
-import com.agotakiss.androidtest.di.Injector
 import io.reactivex.Single
+import javax.inject.Inject
 
-class GenreRepositoryImpl : GenreRepository {
-
-    private val movieDbApi = Injector.getMovieDbApi()
-    private val genreStore = Injector.getGenreStore()
+class GenreRepositoryImpl @Inject constructor(
+    private val genreStore: GenreStore,
+    private val movieDbApi: MovieDbApi
+) : GenreRepository {
 
     override fun getGenres(): Single<Map<Int, Genre>> {
         return genreStore.hasData().flatMap { hasData ->
@@ -18,15 +20,15 @@ class GenreRepositoryImpl : GenreRepository {
 
             } else {
                 getGenresFromApi()
-                        .doOnSuccess { genreStore.saveGenres(it).blockingAwait() }
+                    .doOnSuccess { genreStore.saveGenres(it).blockingAwait() }
             }
         }
     }
 
     private fun getGenresFromApi(): Single<Map<Int, Genre>> = movieDbApi.getGenres()
-            .map { it.genres }
-            .toObservable()
-            .flatMapIterable { it }
-            .map { it.toGenre() }
-            .toMap { it.id }
+        .map { it.genres }
+        .toObservable()
+        .flatMapIterable { it }
+        .map { it.toGenre() }
+        .toMap { it.id }
 }

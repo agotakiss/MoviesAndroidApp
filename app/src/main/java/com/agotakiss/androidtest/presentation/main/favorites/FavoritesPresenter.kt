@@ -33,7 +33,6 @@ class FavoritesPresenter @Inject constructor(
             .subscribe({ movieList -> onMoviesLoaded(movieList) }, { throwable ->
                 logE(throwable)
             })
-        logE("getfavoritemovies called")
     }
 
     private fun onMoviesLoaded(newMovies: List<Movie>) {
@@ -47,11 +46,9 @@ class FavoritesPresenter @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                logD("delete from favorites completed")
             }, { throwable ->
                 logE(throwable)
             })
         view.updateFavoriteMovies(position)
-
     }
 }
