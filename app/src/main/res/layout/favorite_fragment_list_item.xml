@@ -62,9 +62,9 @@
 
         <ImageView
             android:id="@+id/favorite_imageview_favorite_list_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_margin="16dp"
             android:src="@drawable/favorite_full_pic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

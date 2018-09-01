@@ -31,24 +31,24 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
-        <TextView
-            android:id="@+id/more_info_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/more_info_button"
-            android:background="@android:color/transparent"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline1" />
+        <!--<TextView-->
+        <!--android:id="@+id/more_info_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="16dp"-->
+        <!--android:text="@string/more_info_button"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:textSize="16sp"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintStart_toStartOf="@+id/guideline1" />-->
 
         <TextView
             android:id="@+id/movie_title"
             style="@style/IntroTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="1"
             android:textSize="20sp"
@@ -65,7 +65,7 @@
             app:layout_constraintBottom_toBottomOf="@id/movie_title"
             app:layout_constraintEnd_toStartOf="@id/rating_star"
             app:layout_constraintTop_toTopOf="@id/movie_title"
-            tools:text="8.0" />
+            tools:text="Unrated" />
 
         <TextView
             android:id="@+id/movie_genres"
@@ -94,11 +94,11 @@
             android:id="@+id/movie_description"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginEnd="12dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:maxLines="4"
-            app:layout_constraintBottom_toTopOf="@+id/more_info_button"
+            app:layout_constraintBottom_toTopOf="@+id/favorite_imageview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline1"
             app:layout_constraintTop_toBottomOf="@+id/movie_genres"
@@ -121,6 +121,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"
+            android:paddingStart="4dp"
             android:scaleType="fitCenter"
             android:src="@drawable/calendar"
             app:layout_constraintBottom_toBottomOf="@id/movie_genres"
@@ -129,12 +130,12 @@
 
         <ImageView
             android:id="@+id/favorite_imageview"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:src="@drawable/favorite_pic"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:padding="10dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:src="@drawable/favorite_pic" />
 
     </android.support.constraint.ConstraintLayout>
 
