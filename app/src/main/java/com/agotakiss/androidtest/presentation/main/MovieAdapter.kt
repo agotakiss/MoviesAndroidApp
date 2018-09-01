@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
-import com.agotakiss.androidtest.domain.repository.MovieRepository
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.main_list_item.view.*
 
@@ -41,17 +40,19 @@ class MovieAdapter(
             itemView.movie_title.text = movie.title
             itemView.movie_rating.text = java.lang.Float.toString(movie.averageVote)
             itemView.movie_genres.text = movieGenresToDisplay(movie)
-            if (movie.releaseDateText != ""){
+            if (movie.releaseDateText != "") {
                 itemView.movie_release_date.text = movie.releaseDateText?.substring(0, 4)
             }
             itemView.movie_description.text = movie.overview
-            if (movie.posterPath != null){
-                Picasso.get().load(IMAGE_BASE_URL + movie.posterPath!!).into(itemView.poster)
+            if (movie.posterPath != null) {
+                Glide.with(itemView.context)
+                    .load(IMAGE_BASE_URL + movie.posterPath!!)
+                    .into(itemView.poster)
             }
 
-            if(movie.isFavorite){
+            if (movie.isFavorite) {
                 itemView.favorite_imageview.setImageResource(R.drawable.favorite_full_pic)
-            } else{
+            } else {
                 itemView.favorite_imageview.setImageResource(R.drawable.favorite_pic)
             }
 

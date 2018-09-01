@@ -28,6 +28,39 @@ class DetailsPresenter @Inject constructor(
         loadActors()
     }
 
+    fun onFavoriteButtonClicked(movie: Movie){
+        movie.isFavorite = !movie.isFavorite
+        if (movie.isFavorite) {
+            addMovieToFavorites(movie)
+            view.setFavoriteButton(true)
+        } else {
+            removeMovieFromFavorites(movie)
+            view.setFavoriteButton(false)
+        }
+    }
+
+    private fun removeMovieFromFavorites(movie: Movie) {
+        movieRepository.deleteFromFavoriteMovies(movie.id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                logD("movie delete completed")
+            }, { throwable ->
+                logE(throwable)
+            })
+    }
+
+    private fun addMovieToFavorites(movie: Movie) {
+        movieRepository.addToFavoriteMovies(movie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                logD("addMovieToFavorites completed")
+            }, { throwable ->
+                logE(throwable)
+            })
+    }
+
     private fun loadSimilarMovies() {
         movieRepository.getSimilarMovies(movie.id, similarMoviesPage)
             .subscribeOn(Schedulers.io())

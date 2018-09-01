@@ -1,25 +1,15 @@
 package com.agotakiss.androidtest.presentation.detail
 
-import android.content.Context
-import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapShader
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Shader.TileMode
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Cast
-import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Transformation
 import kotlinx.android.synthetic.main.actors_list_item.view.*
 
 
@@ -32,7 +22,7 @@ class ActorAdapter(private val actors: List<Cast>,
         init {
             itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                   onItemClickListener.invoke(actors[adapterPosition].id, itemView.actor_photo_imageview )
+                    onItemClickListener.invoke(actors[adapterPosition].id, itemView.actor_photo_imageview)
                 }
             })
         }
@@ -44,9 +34,9 @@ class ActorAdapter(private val actors: List<Cast>,
             }
             itemView.actor_name_textview.text = actor.name
             itemView.character_name_textview.text = actor.character
-            if (actor.profilePath == null){
+            if (actor.profilePath == null) {
                 itemView.actor_photo_imageview.setImageResource(R.drawable.person_picture)
-            }else{
+            } else {
                 Glide.with(itemView.context)
                     .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
                     .apply(RequestOptions.circleCropTransform())

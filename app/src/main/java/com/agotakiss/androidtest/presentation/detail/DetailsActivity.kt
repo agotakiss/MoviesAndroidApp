@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_details.*
 import java.util.*
@@ -59,6 +58,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
         initializeActorsList()
         presenter.onViewReady(this, movie)
         description_detailed.setOnClickListener { expandCollapsedByMaxLines(description_detailed) }
+        detail_app_bar_layout_favorite_button.setOnClickListener { presenter.onFavoriteButtonClicked(movie) }
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -67,16 +67,18 @@ class DetailsActivity : BaseActivity(), DetailsView {
 //    }
 
 
-
     private fun initUI() {
         setSupportActionBar(toolbar)
         setTitle(movie.title)
 
-        Picasso.get().load(IMAGE_BASE_URL + movie.posterPath).into(poster_detailed)
-        Picasso.get().load(IMAGE_BASE_URL + movie.backdropPath).into(backdrop_detailed)
-        Picasso.get().load(IMAGE_BASE_URL + movie.backdropPath).into(collapsing_image)
+        Glide.with(this).load(IMAGE_BASE_URL + movie.posterPath).into(poster_detailed)
+        Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(backdrop_detailed)
+        Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(collapsing_image)
+
         backdrop_detailed.alpha = 0.2f
         movie_title_detailed.text = movie.title
+        setFavoriteButton(movie.isFavorite)
+
         genres_detailed.text = genresToString()
         rating_detailed.text = java.lang.Float.toString(movie.averageVote)
         release_date_detailed.text = movie.releaseDateText!!.substring(0, 4)
@@ -126,6 +128,14 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
     override fun onBackPressed() {
         supportFinishAfterTransition()
+    }
+
+    override fun setFavoriteButton(isFavorite: Boolean) {
+        if(isFavorite){
+            detail_app_bar_layout_favorite_button.setImageResource(R.drawable.favorite_full_white)
+        }else{
+            detail_app_bar_layout_favorite_button.setImageResource(R.drawable.favorite_white)
+        }
     }
 
     override fun showSimilarMovies(newMovies: List<Movie>) {

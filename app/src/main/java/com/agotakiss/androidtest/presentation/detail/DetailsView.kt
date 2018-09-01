@@ -10,6 +10,6 @@ interface DetailsView {
 
     fun showActors(newActors: List<Cast>)
 
-    fun showError(t : Throwable)
-
+    fun showError(t: Throwable)
+    fun setFavoriteButton(isFavorite: Boolean)
 }

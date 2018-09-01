@@ -64,12 +64,11 @@
             android:id="@+id/favorite_imageview_favorite_list_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:padding="16dp"
             android:src="@drawable/favorite_full_pic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

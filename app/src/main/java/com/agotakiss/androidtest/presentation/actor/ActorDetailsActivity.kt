@@ -3,7 +3,6 @@ package com.agotakiss.androidtest.presentation.actor
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.*
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -19,13 +18,10 @@ import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.detail.ActorAdapter.Companion.ACTOR_ID
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.detail.SimilarMovieAdapter
-import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Transformation
 import kotlinx.android.synthetic.main.activity_actor_details.*
 import java.util.*
 import javax.inject.Inject
@@ -46,15 +42,15 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         setContentView(R.layout.activity_actor_details)
         applicationComponent.inject(this)
         actorId = intent.getIntExtra(ACTOR_ID, 0)
-        initializeActorsMovieList()
+        initActorsMovieList()
         presenter.onViewReady(this, actorId)
         actor_detail_biography.setOnClickListener { expandCollapsedByMaxLines(actor_detail_biography) }
     }
 
     override fun initUI(actor: Actor) {
-        if (actor.profilePath == null){
+        if (actor.profilePath == null) {
             actor_detailed_photo_imageview.setImageResource(R.drawable.person_picture)
-        }else {
+        } else {
             Glide.with(this)
                 .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
                 .apply(RequestOptions.circleCropTransform())
@@ -71,20 +67,20 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         }
     }
 
-    fun initializeActorsMovieList() {
+    fun initActorsMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         actors_movies_recycler_view.layoutManager = layoutManager
         actorsMoviesAdapter = SimilarMovieAdapter(actorsMoviesList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
             }
-            }) { movie, view ->
-                val similarMovie = movie
-                val intent = Intent(this, DetailsActivity::class.java)
-                intent.putExtra(MovieAdapter.MOVIE, similarMovie)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-                    POSTER_TRANSITION_NAME)
-                startActivity(intent, options.toBundle())
-            }
+        }) { movie, view ->
+            val similarMovie = movie
+            val intent = Intent(this, DetailsActivity::class.java)
+            intent.putExtra(MovieAdapter.MOVIE, similarMovie)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
+                POSTER_TRANSITION_NAME)
+            startActivity(intent, options.toBundle())
+        }
         actors_movies_recycler_view.adapter = actorsMoviesAdapter
     }
 

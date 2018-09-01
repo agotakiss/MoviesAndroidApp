@@ -19,7 +19,7 @@
             android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             app:contentScrim="@android:color/black"
-            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginEnd="300dp"
             app:expandedTitleMarginStart="24dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
@@ -50,8 +50,27 @@
                 android:layout_height="56dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_collapseMode="pin"
-                app:titleTextColor="@color/colorPrimary" />
+                app:titleTextColor="@color/colorPrimary"/>
 
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="bottom|end"
+                app:layout_collapseMode="none"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/detail_app_bar_layout_favorite_button"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:src="@drawable/favorite_full_white"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="8dp"/>
+
+
+            </android.support.constraint.ConstraintLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

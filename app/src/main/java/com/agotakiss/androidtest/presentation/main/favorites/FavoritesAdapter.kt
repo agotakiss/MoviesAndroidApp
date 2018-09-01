@@ -8,12 +8,9 @@ import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.favorite_fragment_list_item.view.*
-import kotlinx.android.synthetic.main.main_list_item.view.*
-import java.text.SimpleDateFormat
-import java.util.*
 
 class FavoritesAdapter(
     private val favoriteMovies: List<Movie>,
@@ -37,7 +34,9 @@ class FavoritesAdapter(
         fun bindViewHolder(position: Int) {
             val movie = favoriteMovies[position]
             itemView.favoriteTitle.text = movie.title
-            Picasso.get().load(MovieAdapter.IMAGE_BASE_URL + movie.posterPath!!).into(itemView.favoritePoster)
+            Glide.with(itemView.context)
+                .load(MovieAdapter.IMAGE_BASE_URL +  movie.posterPath!!)
+                .into(itemView.favoritePoster)
             itemView.genres_favorites.text = movieGenresToDisplay(movie)
         }
     }
