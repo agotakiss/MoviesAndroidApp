@@ -16,6 +16,8 @@ import com.agotakiss.androidtest.domain.models.Cast
 import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
 import kotlinx.android.synthetic.main.actors_list_item.view.*
@@ -45,40 +47,10 @@ class ActorAdapter(private val actors: List<Cast>,
             if (actor.profilePath == null){
                 itemView.actor_photo_imageview.setImageResource(R.drawable.person_picture)
             }else{
-                Picasso.get()
+                Glide.with(itemView.context)
                     .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
-                    .transform(CircleTransform())
+                    .apply(RequestOptions.circleCropTransform())
                     .into(itemView.actor_photo_imageview)
-            }
-        }
-
-        inner class CircleTransform : Transformation {
-            override fun transform(source: Bitmap?): Bitmap? {
-                if (source == null || source.isRecycled) {
-                    return null
-                }
-
-                val width = source.width
-                val height = source.height
-
-                val canvasBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-                val shader = BitmapShader(source, TileMode.CLAMP, TileMode.CLAMP)
-                val paint = Paint()
-                paint.isAntiAlias = true
-                paint.shader = shader
-
-                val canvas = Canvas(canvasBitmap)
-                val radius = if (width > height) height.toFloat() / 2f else width.toFloat() / 2f
-                canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), radius, paint)
-
-                if (canvasBitmap != source) {
-                    source.recycle()
-                }
-                return canvasBitmap
-            }
-
-            override fun key(): String {
-                return "circle"
             }
         }
     }

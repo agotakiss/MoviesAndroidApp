@@ -8,6 +8,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="added_to_favorites_on">Added to favorites on:</string>
-    <string name="search_for_new_movies">Search for new movies</string>
+    <string name="search_for_movies">Search for movies</string>
     <string name="type_in_the_title_or_a_part_of_it">Type in the title or a part of it</string>
 </resources>

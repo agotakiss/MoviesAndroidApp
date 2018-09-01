@@ -22,6 +22,8 @@ import com.agotakiss.androidtest.presentation.detail.SimilarMovieAdapter
 import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
 import kotlinx.android.synthetic.main.activity_actor_details.*
@@ -50,10 +52,14 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
     }
 
     override fun initUI(actor: Actor) {
-        Picasso.get()
-            .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
-            .transform(CircleTransform())
-            .into(actor_detailed_photo_imageview)
+        if (actor.profilePath == null){
+            actor_detailed_photo_imageview.setImageResource(R.drawable.person_picture)
+        }else {
+            Glide.with(this)
+                .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
+                .apply(RequestOptions.circleCropTransform())
+                .into(actor_detailed_photo_imageview)
+        }
         actor_detail_name_textview.text = actor.name
         actor_detail_known_for_department.text = actor.knownForDepartment
         actor_detail_biography.text = actor.biography
@@ -70,17 +76,14 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         actors_movies_recycler_view.layoutManager = layoutManager
         actorsMoviesAdapter = SimilarMovieAdapter(actorsMoviesList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
-
             }
             }) { movie, view ->
-
                 val similarMovie = movie
                 val intent = Intent(this, DetailsActivity::class.java)
                 intent.putExtra(MovieAdapter.MOVIE, similarMovie)
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
                     POSTER_TRANSITION_NAME)
                 startActivity(intent, options.toBundle())
-//            this.finish();
             }
         actors_movies_recycler_view.adapter = actorsMoviesAdapter
     }
@@ -89,7 +92,6 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         actorsMoviesList.addAll(actorsNewMoviesList)
         actorsMoviesAdapter.notifyItemRangeInserted(actorsMoviesList.size - actorsNewMoviesList.size,
             actorsNewMoviesList.size)
-
     }
 
     override fun showError(t: Throwable) {
@@ -107,35 +109,5 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         val newHeight = text.measuredHeight
         val animation = ObjectAnimator.ofInt(text, "height", height, newHeight)
         animation.setDuration(250).start()
-    }
-
-    inner class CircleTransform : Transformation {
-        override fun transform(source: Bitmap?): Bitmap? {
-            if (source == null || source.isRecycled) {
-                return null
-            }
-
-            val width = source.width
-            val height = source.height
-
-            val canvasBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            val shader = BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-            val paint = Paint()
-            paint.isAntiAlias = true
-            paint.shader = shader
-
-            val canvas = Canvas(canvasBitmap)
-            val radius = if (width > height) height.toFloat() / 2f else width.toFloat() / 2f
-            canvas.drawCircle((width / 2).toFloat(), (height / 2).toFloat(), radius, paint)
-
-            if (canvasBitmap != source) {
-                source.recycle()
-            }
-            return canvasBitmap
-        }
-
-        override fun key(): String {
-            return "circle"
-        }
     }
 }
