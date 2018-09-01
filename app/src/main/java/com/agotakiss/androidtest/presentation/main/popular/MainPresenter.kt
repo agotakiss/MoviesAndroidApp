@@ -1,8 +1,7 @@
 package com.agotakiss.androidtest.presentation.main.popular
 
-import android.util.Log
 import com.agotakiss.androidtest.base.BasePresenter
-import com.agotakiss.androidtest.data.store.FavoriteMovieDeleteEvent
+import com.agotakiss.androidtest.data.store.ChangeInFavoriteMoviesEvent
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.domain.repository.MovieRepository
 import com.agotakiss.androidtest.domain.usecase.GetPopularMovies
@@ -18,9 +17,7 @@ class MainPresenter @Inject constructor(
 
     private var page = 1;
     private var totalPages: Int = 0
-
     private var movieList = mutableListOf<Movie>()
-
     lateinit var view: MainView
 
     fun onViewReady(view: MainView) {
@@ -38,7 +35,6 @@ class MainPresenter @Inject constructor(
     }
 
     fun onScrollEndReached() {
-        Log.d("MainPresenter", "onSimilarMovieScrollEndReached")
         page++
         if (page < totalPages) {
             loadPopularMovies()
@@ -67,7 +63,6 @@ class MainPresenter @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                logD("movie delete completed")
             }, { throwable ->
                 logE(throwable)
             })
@@ -78,26 +73,20 @@ class MainPresenter @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                logD("addMovieToFavorites completed")
             }, { throwable ->
                 logE(throwable)
             })
-        logE("mainpresenter add called")
-//        Toast.makeText(this, "You added " + movie.title + " to your favorites!", Toast.LENGTH_LONG).show()
     }
 
-
     @Subscribe
-    fun onFavoriteMovieFromFavoriteFragmentDeleted(movieDeleteEvent: FavoriteMovieDeleteEvent) {
-        movieDeleteEvent.movieId
-        logD("$movieDeleteEvent deleted with eventbus")
-        val movie = movieList.find { it.id == movieDeleteEvent.movieId }
-        movie!!.isFavorite = false
-        movieList.indexOfFirst { it.id == movieDeleteEvent.movieId }
+    fun onChangeInFavoriteMoviesEvent(changeEvent: ChangeInFavoriteMoviesEvent) {
+        changeEvent.movieId
+        val movie = movieList.find { it.id == changeEvent.movieId }
+        movie!!.isFavorite = changeEvent.isFavorite
+        movieList.indexOfFirst { it.id == changeEvent.movieId }
             .takeIf { it >= 0 }
             ?.let {
                 view.updateListItem(it)
             }
     }
-
 }

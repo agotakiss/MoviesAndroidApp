@@ -28,7 +28,7 @@ class FavoritesFragment : Fragment(), FavoritesView {
     @Inject
     lateinit var presenter: FavoritesPresenter
 
-    internal var favoriteMoviesList = mutableListOf<Movie>()
+    private var favoriteMoviesList = mutableListOf<Movie>()
     private lateinit var adapter: FavoritesAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -62,7 +62,6 @@ class FavoritesFragment : Fragment(), FavoritesView {
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(MOVIE, favoriteMovie)
             startActivity(intent)
-            Log.d("favorites fragment", " onclick")
         }, presenter::onFavoriteButtonClicked)
         favorites_recycler_view.adapter = adapter
     }

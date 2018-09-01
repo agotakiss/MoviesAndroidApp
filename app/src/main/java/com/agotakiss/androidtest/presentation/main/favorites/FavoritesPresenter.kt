@@ -1,16 +1,11 @@
 package com.agotakiss.androidtest.presentation.main.favorites
 
 import com.agotakiss.androidtest.base.BasePresenter
-import com.agotakiss.androidtest.data.models.MovieDatabaseModel
-import com.agotakiss.androidtest.data.store.FavoriteMovieDeleteEvent
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.domain.repository.MovieRepository
-import com.agotakiss.androidtest.presentation.main.MainActivity
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
 class FavoritesPresenter @Inject constructor(
@@ -37,6 +32,9 @@ class FavoritesPresenter @Inject constructor(
 
     private fun onMoviesLoaded(newMovies: List<Movie>) {
         this.favoriteMoviesList = newMovies
+        for (i in 0 until favoriteMoviesList.size){
+            favoriteMoviesList[i].isFavorite = true
+        }
         view.showFavoriteMovies(newMovies)
         EventBus.getDefault().post(newMovies)
     }

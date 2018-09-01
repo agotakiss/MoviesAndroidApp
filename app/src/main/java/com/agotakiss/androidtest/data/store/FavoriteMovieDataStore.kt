@@ -15,7 +15,11 @@ class FavoriteMovieDataStore @Inject constructor(
     private val genreRepository: GenreRepository
 ) {
     fun addToFavoriteMovies(movie: Movie): Completable {
-        Log.d("databasestore", "add method called")
+        val event = ChangeInFavoriteMoviesEvent()
+        event.movieId = movie.id
+        event.isFavorite = true
+        EventBus.getDefault().post(event)
+
         return Completable.fromCallable {
             val genreIdList = mutableListOf<Int>()
             for (i in 0 until movie.genres!!.size) {
@@ -28,14 +32,13 @@ class FavoriteMovieDataStore @Inject constructor(
                 movie.isVideo, movie.averageVote, movie.isFavorite, System.currentTimeMillis())
 
             favoriteMovieDao.insert(movieDatabaseModel)
-            Log.d("insert", movieDatabaseModel.title + " inserted")
         }
-
     }
 
     fun deleteFromFavoriteMovies(movieId: Int): Completable {
-        val event = FavoriteMovieDeleteEvent()
+        val event = ChangeInFavoriteMoviesEvent()
         event.movieId = movieId
+        event.isFavorite = false
         EventBus.getDefault().post(event)
         return Completable.fromCallable {
             favoriteMovieDao.deleteById(movieId)
@@ -51,9 +54,4 @@ class FavoriteMovieDataStore @Inject constructor(
                 .toList()
         }
     }
-
-//    fun findFavoriteMovieById(movieId : Int):Single<Movie>{
-//return Single.fromCallable { favoriteMovieDao.findByMovieId(movieId) }
-//    .
-//    }
 }

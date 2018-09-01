@@ -24,7 +24,6 @@ import javax.inject.Inject
 
 class MainFragment : Fragment(), MainView {
 
-
     companion object {
         const val POSTER_TRANSITION_NAME = "posterTransition"
     }
@@ -78,9 +77,5 @@ class MainFragment : Fragment(), MainView {
 
     override fun updateListItem(position: Int) {
         adapter.notifyItemChanged(position)
-//        Toast.makeText(context, "Favorite button clicked", Toast.LENGTH_LONG).show()
-
     }
-
-
 }
