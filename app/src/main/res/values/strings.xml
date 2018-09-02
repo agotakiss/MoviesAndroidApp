@@ -1,13 +1,10 @@
 <resources>
-    <string name="app_name">AndroidTest</string>
-    <string name="more_info_button">More Info</string>
+    <string name="app_name">YourMovie</string>
     <string name="cast_text">Cast</string>
     <string name="also_liked_text">People who liked this also liked…</string>
     <string name="birthday">Birthday:</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="added_to_favorites_on">Added to favorites on:</string>
     <string name="search_for_movies">Search for movies</string>
-    <string name="type_in_the_title_or_a_part_of_it">Type in the title or a part of it</string>
+    <string name="search">Search</string>
+    <string name="known_for">Known for</string>
+    <string name="biorgaphy">Biography:</string>
 </resources>

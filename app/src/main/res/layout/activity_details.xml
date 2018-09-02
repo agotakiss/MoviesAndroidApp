@@ -19,8 +19,9 @@
             android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             app:contentScrim="@android:color/black"
-            app:expandedTitleMarginEnd="300dp"
-            app:expandedTitleMarginStart="24dp"
+            app:expandedTitleMarginStart="16dp"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginBottom="40dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleTextColor="@color/colorPrimary">
@@ -50,24 +51,25 @@
                 android:layout_height="56dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:layout_collapseMode="pin"
-                app:titleTextColor="@color/colorPrimary"/>
+                app:titleTextColor="@color/colorPrimary" />
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="bottom|end"
-                app:layout_collapseMode="none"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                app:layout_collapseMode="none">
+
                 <ImageView
                     android:id="@+id/detail_app_bar_layout_favorite_button"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:src="@drawable/favorite_full_white"
                     android:layout_marginBottom="40dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp"
+                    android:src="@drawable/favorite_full_white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
 
             </android.support.constraint.ConstraintLayout>
@@ -97,13 +99,12 @@
 
             <ImageView
                 android:id="@+id/poster_detailed"
-                android:transitionName="posterTransition"
                 android:layout_width="150dp"
                 android:layout_height="195dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintEnd_toStartOf="@+id/genres_detailed"
+                android:scaleType="centerCrop"
+                android:transitionName="posterTransition"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -115,7 +116,6 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Jurassic park az elveszett birodalom"
                 app:layout_constraintBottom_toTopOf="@+id/guideline3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -131,7 +131,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:text="asdasdasdasdasdasdasdasdasdasdasd"
                 app:layout_constraintBottom_toTopOf="@+id/guideline3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -146,7 +145,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="123"
                 android:visibility="visible"
                 app:layout_constraintBottom_toTopOf="@+id/guideline3"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +170,6 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="dateofrelease"
                 app:layout_constraintBottom_toTopOf="@+id/calendar_detailed"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -200,11 +197,9 @@
                 android:ellipsize="end"
                 android:maxLines="8"
                 android:scrollbars="vertical"
-                android:text="basdasdasdasdsadfaefgbghretgbrsfvserewv"
                 android:textAppearance="@style/TextAppearance.AppCompat"
                 app:layout_constraintBottom_toTopOf="@+id/also_like_textview"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.348"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/poster_detailed" />
 
@@ -231,9 +226,9 @@
                 android:text="@string/also_liked_text"
                 android:textSize="20sp"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toTopOf="@id/similar_recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/similar_recycler_view"
                 app:layout_constraintTop_toBottomOf="@id/description_detailed" />
 
             <android.support.v7.widget.RecyclerView
@@ -242,10 +237,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constraintBottom_toTopOf="@+id/actors_recycler_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline3">
+                app:layout_constraintBottom_toTopOf="@id/cast_textview"
+                app:layout_constraintTop_toBottomOf="@+id/also_like_textview">
 
             </android.support.v7.widget.RecyclerView>
 
@@ -267,19 +262,15 @@
                 android:id="@+id/actors_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
                 android:layout_marginTop="4dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cast_textview">
 
             </android.support.v7.widget.RecyclerView>
-
-
         </android.support.constraint.ConstraintLayout>
-
     </android.support.v4.widget.NestedScrollView>
-
 
 </android.support.design.widget.CoordinatorLayout>

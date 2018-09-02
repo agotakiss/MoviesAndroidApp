@@ -11,7 +11,7 @@
             android:id="@+id/actor_detailed_photo_imageview"
             android:layout_width="150dp"
             android:layout_height="195dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:scaleType="fitCenter"
             android:transitionName="actorTransition"
@@ -20,44 +20,37 @@
 
         <TextView
             android:id="@+id/actor_detail_name_textview"
-            style="@style/IntroTitle"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="52dp"
             android:text="name"
-            app:layout_constraintBottom_toTopOf="@+id/guideline3"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.083" />
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/actor_detailed_photo_imageview"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/actor_detail_known_for_department"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
             android:text="acting, producer"
-            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/actor_detail_name_textview"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/actor_detail_name_textview"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toEndOf="@id/actor_detailed_photo_imageview"/>
 
         <TextView
             android:id="@+id/birthday_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:text="@string/birthday"
-            app:layout_constraintStart_toEndOf="@id/guideline2"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toEndOf="@id/actor_detailed_photo_imageview"
             app:layout_constraintTop_toBottomOf="@+id/actor_detail_known_for_department" />
 
         <TextView
@@ -65,43 +58,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/birthday"
+            android:layout_marginStart="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/birthday_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@id/birthday_title"
-            app:layout_constraintTop_toTopOf="@+id/birthday_title"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/birthday_title"/>
 
+
+        <TextView
+            android:id="@+id/biographyTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actor_detailed_photo_imageview"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/biorgaphy"/>
 
         <TextView
             android:id="@+id/actor_detail_biography"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:ellipsize="end"
             android:maxLines="8"
             android:textAppearance="@style/TextAppearance.AppCompat"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.348"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/actor_detailed_photo_imageview" />
+            app:layout_constraintTop_toBottomOf="@+id/biographyTextView" />
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline2"
+        <TextView
+            android:id="@+id/also_like_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="170dp" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="363dp" />
+            android:layout_margin="24dp"
+            android:gravity="center"
+            android:text="@string/known_for"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@id/actors_movies_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actor_detail_biography" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/actors_movies_recycler_view"

@@ -29,7 +29,6 @@ class MovieAdapter(
             itemView.favorite_imageview.setOnClickListener {
                 onFavoriteButtonClickListener.invoke(adapterPosition)
             }
-
         }
 
         fun bindViewHolder(position: Int) {
@@ -38,16 +37,24 @@ class MovieAdapter(
                 onEndReachedListener.onEndReached(position)
             }
             itemView.movie_title.text = movie.title
-            itemView.movie_rating.text = java.lang.Float.toString(movie.averageVote)
+            if(movie.averageVote != 0F){
+                itemView.movie_rating.text = java.lang.Float.toString(movie.averageVote)
+            }else{
+                itemView.movie_rating.text = "Unrated"
+            }
             itemView.movie_genres.text = movieGenresToDisplay(movie)
             if (movie.releaseDateText != "") {
                 itemView.movie_release_date.text = movie.releaseDateText?.substring(0, 4)
+            }else{
+                itemView.calendar.visibility = View.INVISIBLE
             }
             itemView.movie_description.text = movie.overview
             if (movie.posterPath != null) {
                 Glide.with(itemView.context)
                     .load(IMAGE_BASE_URL + movie.posterPath!!)
                     .into(itemView.poster)
+            } else{
+                itemView.poster.setImageResource(R.drawable.default_poster)
             }
 
             if (movie.isFavorite) {
@@ -55,8 +62,6 @@ class MovieAdapter(
             } else {
                 itemView.favorite_imageview.setImageResource(R.drawable.favorite_pic)
             }
-
-//            ViewCompat.setTransitionName(itemView.poster, POSTER_TRANSITION_NAME)
         }
     }
 

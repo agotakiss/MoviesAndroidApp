@@ -50,7 +50,6 @@ class DetailsActivity : BaseActivity(), DetailsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-//        setSupportActionBar(toolbar)
         applicationComponent.inject(this)
         movie = intent.getSerializableExtra(MOVIE) as Movie
         initUI()
@@ -61,28 +60,44 @@ class DetailsActivity : BaseActivity(), DetailsView {
         detail_app_bar_layout_favorite_button.setOnClickListener { presenter.onFavoriteButtonClicked(movie) }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        menuInflater.inflate(R.menu.details_toolbar, menu)
-//        return true
-//    }
-
-
     private fun initUI() {
         setSupportActionBar(toolbar)
         setTitle(movie.title)
-
-        Glide.with(this).load(IMAGE_BASE_URL + movie.posterPath).into(poster_detailed)
-        Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(backdrop_detailed)
-        Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(collapsing_image)
-
-        backdrop_detailed.alpha = 0.2f
         movie_title_detailed.text = movie.title
+        genres_detailed.text = genresToString()
+
+        if (movie.averageVote == 0F) {
+            rating_detailed.text = "Unrated"
+        } else {
+            rating_detailed.text = java.lang.Float.toString(movie.averageVote)
+        }
+
+        if (movie.posterPath != null) {
+            Glide.with(this).load(IMAGE_BASE_URL + movie.posterPath).into(poster_detailed)
+        } else {
+            poster_detailed.setImageResource(R.drawable.default_poster)
+        }
+
+        if (movie.backdropPath != null) {
+            Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(backdrop_detailed)
+            Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(collapsing_image)
+            backdrop_detailed.alpha = 0.2f
+        } else {
+            collapsing_image.setImageResource(R.drawable.default_poster)
+        }
+
         setFavoriteButton(movie.isFavorite)
 
-        genres_detailed.text = genresToString()
-        rating_detailed.text = java.lang.Float.toString(movie.averageVote)
-        release_date_detailed.text = movie.releaseDateText!!.substring(0, 4)
-        description_detailed.text = movie.overview
+        if (movie.releaseDateText != "") {
+            release_date_detailed.text = movie.releaseDateText!!.substring(0, 4)
+        } else{
+            calendar_detailed.visibility = View.INVISIBLE
+        }
+        if(movie.overview == ""){
+            description_detailed.text = "No overview found for this movie."
+        }else{
+            description_detailed.text = movie.overview
+        }
     }
 
     fun initializeSimilarMovieList() {
@@ -131,9 +146,9 @@ class DetailsActivity : BaseActivity(), DetailsView {
     }
 
     override fun setFavoriteButton(isFavorite: Boolean) {
-        if(isFavorite){
+        if (isFavorite) {
             detail_app_bar_layout_favorite_button.setImageResource(R.drawable.favorite_full_white)
-        }else{
+        } else {
             detail_app_bar_layout_favorite_button.setImageResource(R.drawable.favorite_white)
         }
     }

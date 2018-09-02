@@ -80,9 +80,8 @@ class MainPresenter @Inject constructor(
 
     @Subscribe
     fun onChangeInFavoriteMoviesEvent(changeEvent: ChangeInFavoriteMoviesEvent) {
-        changeEvent.movieId
         val movie = movieList.find { it.id == changeEvent.movieId }
-        movie!!.isFavorite = changeEvent.isFavorite
+        movie?.let { movie.isFavorite = changeEvent.isFavorite }
         movieList.indexOfFirst { it.id == changeEvent.movieId }
             .takeIf { it >= 0 }
             ?.let {
