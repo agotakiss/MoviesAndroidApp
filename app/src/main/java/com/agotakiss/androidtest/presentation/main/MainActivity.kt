@@ -1,10 +1,8 @@
 package com.agotakiss.androidtest.presentation.main
 
-import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import com.agotakiss.androidtest.R
-import com.agotakiss.androidtest.data.store.AppDatabase
 import com.agotakiss.androidtest.presentation.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -59,7 +57,7 @@ class MainActivity : BaseActivity() {
             }
         })
 
-        viewpager.currentItem = 1
+        viewpager.currentItem = 0
         viewpager.shouldSkipHorizontalSwipe = false
     }
 }

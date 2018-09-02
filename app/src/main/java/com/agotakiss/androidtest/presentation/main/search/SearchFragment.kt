@@ -47,7 +47,8 @@ class SearchFragment : Fragment(), SearchView {
         super.onActivityCreated(savedInstanceState)
         applicationComponent.inject(this)
         presenter.onViewReady(this)
-        searchEditText.addTextChangedListener(object : TextWatcher {
+        search_cancel_iv.setOnClickListener { search_et.text.clear() }
+        search_et.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -64,7 +65,7 @@ class SearchFragment : Fragment(), SearchView {
         hideKeyboard()
         searchResultList.addAll(newSearchResults)
         val layoutManager = LinearLayoutManager(context)
-        searchResultsRecyclerView.layoutManager = layoutManager
+        search_results_rv.layoutManager = layoutManager
         adapter = MovieAdapter(newSearchResults, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onScrollEndReached()
@@ -78,7 +79,7 @@ class SearchFragment : Fragment(), SearchView {
             startActivity(intent)
         }, presenter::onFavoriteButtonClicked)
 
-        searchResultsRecyclerView.adapter = adapter
+        search_results_rv.adapter = adapter
     }
 
     override fun showNextPage(newSearchResults: List<Movie>) {

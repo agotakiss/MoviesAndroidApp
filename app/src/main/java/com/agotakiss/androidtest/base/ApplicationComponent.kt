@@ -4,8 +4,8 @@ import com.agotakiss.androidtest.presentation.actor.ActorDetailsComponent
 import com.agotakiss.androidtest.presentation.actor.ActorDetailsModule
 import com.agotakiss.androidtest.presentation.detail.DetailsComponent
 import com.agotakiss.androidtest.presentation.detail.DetailsModule
-import com.agotakiss.androidtest.presentation.main.popular.MainComponent
-import com.agotakiss.androidtest.presentation.main.popular.MainModule
+import com.agotakiss.androidtest.presentation.main.popular.PopularComponent
+import com.agotakiss.androidtest.presentation.main.popular.PopularModule
 import com.agotakiss.androidtest.presentation.main.favorites.FavoritesComponent
 import com.agotakiss.androidtest.presentation.main.favorites.FavoritesModule
 import com.agotakiss.androidtest.presentation.main.search.SearchComponent
@@ -19,7 +19,7 @@ interface ApplicationComponent {
 
     fun inject(application: MovieApplication)
 
-    fun plus(mainModule: MainModule): MainComponent
+    fun plus(popularModule: PopularModule): PopularComponent
     fun plus(detailsModule: DetailsModule): DetailsComponent
     fun plus(actorDetailsModule: ActorDetailsModule): ActorDetailsComponent
 

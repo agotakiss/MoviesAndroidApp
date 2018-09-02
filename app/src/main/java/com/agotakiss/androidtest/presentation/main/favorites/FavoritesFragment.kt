@@ -5,19 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
-import com.agotakiss.androidtest.data.models.MovieDatabaseModel
 import com.agotakiss.androidtest.domain.models.Movie
-import com.agotakiss.androidtest.presentation.FAVORITE_MOVIE
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
 import kotlinx.android.synthetic.main.fragment_favorites.*
-import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 
 class FavoritesFragment : Fragment(), FavoritesView {
@@ -56,14 +52,14 @@ class FavoritesFragment : Fragment(), FavoritesView {
 
     private fun initializeList() {
         val layoutManager = LinearLayoutManager(context)
-        favorites_recycler_view.layoutManager = layoutManager
+        favorites_rv.layoutManager = layoutManager
         adapter = FavoritesAdapter(favoriteMoviesList, { favoriteMovie ->
 
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(MOVIE, favoriteMovie)
             startActivity(intent)
         }, presenter::onFavoriteButtonClicked)
-        favorites_recycler_view.adapter = adapter
+        favorites_rv.adapter = adapter
     }
 
     override fun showFavoriteMovies(favoriteMovies: List<Movie>) {

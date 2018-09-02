@@ -22,7 +22,7 @@ class ActorAdapter(private val actors: List<Cast>,
         init {
             itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    onItemClickListener.invoke(actors[adapterPosition].id, itemView.actor_photo_imageview)
+                    onItemClickListener.invoke(actors[adapterPosition].id, itemView.actor_photo_iv)
                 }
             })
         }
@@ -32,15 +32,15 @@ class ActorAdapter(private val actors: List<Cast>,
             if (position == actors.size - 5) {
                 onEndReachedListener.onEndReached(position)
             }
-            itemView.actor_name_textview.text = actor.name
-            itemView.character_name_textview.text = actor.character
+            itemView.actor_name_tv.text = actor.name
+            itemView.character_name_tv.text = actor.character
             if (actor.profilePath == null) {
-                itemView.actor_photo_imageview.setImageResource(R.drawable.person_picture)
+                itemView.actor_photo_iv.setImageResource(R.drawable.person_picture)
             } else {
                 Glide.with(itemView.context)
                     .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
                     .apply(RequestOptions.circleCropTransform())
-                    .into(itemView.actor_photo_imageview)
+                    .into(itemView.actor_photo_iv)
             }
         }
     }

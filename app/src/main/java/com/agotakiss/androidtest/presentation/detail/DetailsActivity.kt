@@ -56,59 +56,60 @@ class DetailsActivity : BaseActivity(), DetailsView {
         initializeSimilarMovieList()
         initializeActorsList()
         presenter.onViewReady(this, movie)
-        description_detailed.setOnClickListener { expandCollapsedByMaxLines(description_detailed) }
-        detail_app_bar_layout_favorite_button.setOnClickListener { presenter.onFavoriteButtonClicked(movie) }
+        detail_description_tv.setOnClickListener { expandCollapsedByMaxLines(detail_description_tv) }
+        detail_app_bar_layout_favorite_btn.setOnClickListener { presenter.onFavoriteButtonClicked(movie) }
     }
 
     private fun initUI() {
         setSupportActionBar(toolbar)
-        setTitle(movie.title)
-        movie_title_detailed.text = movie.title
-        genres_detailed.text = genresToString()
+        title = movie.title
+        detail_collapsing_toolbar_layout.expandedTitleMarginEnd = 64
+        detail_movie_title_tv.text = movie.title
+        detail_genres_tv.text = genresToString()
 
         if (movie.averageVote == 0F) {
-            rating_detailed.text = "Unrated"
+            detail_rating_tv.text = getString(R.string.unrated)
         } else {
-            rating_detailed.text = java.lang.Float.toString(movie.averageVote)
+            detail_rating_tv.text = java.lang.Float.toString(movie.averageVote)
         }
 
         if (movie.posterPath != null) {
-            Glide.with(this).load(IMAGE_BASE_URL + movie.posterPath).into(poster_detailed)
+            Glide.with(this).load(IMAGE_BASE_URL + movie.posterPath).into(detail_poster_iv)
         } else {
-            poster_detailed.setImageResource(R.drawable.default_poster)
+            detail_poster_iv.setImageResource(R.drawable.default_poster)
         }
 
         if (movie.backdropPath != null) {
-            Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(backdrop_detailed)
-            Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(collapsing_image)
-            backdrop_detailed.alpha = 0.2f
+            Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(detail_backdrop_iv)
+            Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(detail_collapsing_iv)
+            detail_backdrop_iv.alpha = 0.2f
         } else {
-            collapsing_image.setImageResource(R.drawable.default_poster)
+            detail_collapsing_iv.setImageResource(R.drawable.default_poster)
         }
 
         setFavoriteButton(movie.isFavorite)
 
         if (movie.releaseDateText != "") {
-            release_date_detailed.text = movie.releaseDateText!!.substring(0, 4)
+            detail_release_date_tv.text = movie.releaseDateText!!.substring(0, 4)
         } else{
-            calendar_detailed.visibility = View.INVISIBLE
+            detail_calendar_iv.visibility = View.INVISIBLE
         }
         if(movie.overview == ""){
-            description_detailed.text = "No overview found for this movie."
+            detail_description_tv.text = "No overview found for this movie."
         }else{
-            description_detailed.text = movie.overview
+            detail_description_tv.text = movie.overview
         }
     }
 
     fun initializeSimilarMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        similar_recycler_view.layoutManager = layoutManager
+        detail_similar_movies_rv.layoutManager = layoutManager
         adapter = SimilarMovieAdapter(similarMovieList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onSimilarMovieScrollEndReached()
             }
         }) { movie, view ->
-            ViewCompat.setTransitionName(poster_detailed, "random")
+            ViewCompat.setTransitionName(detail_poster_iv, "random")
             sharedImageView = view
             hasStartedAnotherScreen = true
             val similarMovie = movie
@@ -118,7 +119,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
                 POSTER_TRANSITION_NAME)
             startActivity(intent, options.toBundle())
         }
-        similar_recycler_view.adapter = adapter
+        detail_similar_movies_rv.adapter = adapter
     }
 
     override fun onResume() {
@@ -127,7 +128,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
         if (hasStartedAnotherScreen) {
             hasStartedAnotherScreen = false
             ViewCompat.setTransitionName(sharedImageView, "unused")
-            ViewCompat.setTransitionName(poster_detailed, POSTER_TRANSITION_NAME)
+            ViewCompat.setTransitionName(detail_poster_iv, POSTER_TRANSITION_NAME)
         }
     }
 
@@ -147,9 +148,9 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
     override fun setFavoriteButton(isFavorite: Boolean) {
         if (isFavorite) {
-            detail_app_bar_layout_favorite_button.setImageResource(R.drawable.favorite_full_white)
+            detail_app_bar_layout_favorite_btn.setImageResource(R.drawable.favorite_full_white)
         } else {
-            detail_app_bar_layout_favorite_button.setImageResource(R.drawable.favorite_white)
+            detail_app_bar_layout_favorite_btn.setImageResource(R.drawable.favorite_white)
         }
     }
 
@@ -160,13 +161,13 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
     fun initializeActorsList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        actors_recycler_view.layoutManager = layoutManager
+        detail_actors_rv.layoutManager = layoutManager
         actorAdapter = ActorAdapter(actorsList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onSimilarMovieScrollEndReached()
             }
         }) { actorId, view ->
-            ViewCompat.setTransitionName(poster_detailed, "random")
+            ViewCompat.setTransitionName(detail_poster_iv, "random")
 
             val intent = Intent(this, ActorDetailsActivity::class.java)
             intent.putExtra(ActorAdapter.ACTOR_ID, actorId)
@@ -174,7 +175,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
                 ACTOR_TRANSITION_NAME)
             startActivity(intent, options.toBundle())
         }
-        actors_recycler_view.adapter = actorAdapter
+        detail_actors_rv.adapter = actorAdapter
     }
 
     override fun showActors(newActors: List<Cast>) {

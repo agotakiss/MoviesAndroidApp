@@ -3,36 +3,33 @@ package com.agotakiss.androidtest.presentation.main.popular
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
-import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_popular.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
-class MainFragment : Fragment(), MainView {
+class PopularFragment : Fragment(), PopularView {
 
     companion object {
         const val POSTER_TRANSITION_NAME = "posterTransition"
     }
 
     val movieApplication: MovieApplication get() = MovieApplication.get()
-    val applicationComponent by lazy { movieApplication.applicationComponent.plus(MainModule(this)) }
+    val applicationComponent by lazy { movieApplication.applicationComponent.plus(PopularModule(this)) }
 
     @Inject
-    lateinit var presenter: MainPresenter
+    lateinit var presenter: PopularPresenter
 
     internal var movieList: MutableList<Movie> = ArrayList()
     private lateinit var adapter: MovieAdapter
@@ -40,7 +37,7 @@ class MainFragment : Fragment(), MainView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return inflater.inflate(R.layout.fragment_popular, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -53,7 +50,7 @@ class MainFragment : Fragment(), MainView {
 
     private fun initializeList() {
         val layoutManager = LinearLayoutManager(context)
-        main_recycler_view.layoutManager = layoutManager
+        popular_movies_rv.layoutManager = layoutManager
         adapter = MovieAdapter(movieList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onScrollEndReached()
@@ -67,7 +64,7 @@ class MainFragment : Fragment(), MainView {
             startActivity(intent)
         }, presenter::onFavoriteButtonClicked)
 
-        main_recycler_view.adapter = adapter
+        popular_movies_rv.adapter = adapter
     }
 
     override fun showMovies(newMovies: List<Movie>) {

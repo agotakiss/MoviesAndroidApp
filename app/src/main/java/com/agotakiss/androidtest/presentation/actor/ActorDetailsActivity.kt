@@ -44,32 +44,32 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         actorId = intent.getIntExtra(ACTOR_ID, 0)
         initActorsMovieList()
         presenter.onViewReady(this, actorId)
-        actor_detail_biography.setOnClickListener { expandCollapsedByMaxLines(actor_detail_biography) }
+        actor_detail_biography_tv.setOnClickListener { expandCollapsedByMaxLines(actor_detail_biography_tv) }
     }
 
     override fun initUI(actor: Actor) {
         if (actor.profilePath == null) {
-            actor_detailed_photo_imageview.setImageResource(R.drawable.person_picture)
+            actor_detail_photo_iv.setImageResource(R.drawable.person_picture)
         } else {
             Glide.with(this)
                 .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
                 .apply(RequestOptions.circleCropTransform())
-                .into(actor_detailed_photo_imageview)
+                .into(actor_detail_photo_iv)
         }
-        actor_detail_name_textview.text = actor.name
-        actor_detail_known_for_department.text = actor.knownForDepartment
-        actor_detail_biography.text = actor.biography
+        actor_detail_name_tv.text = actor.name
+        actor_detail_known_for_department_tv.text = actor.knownForDepartment
+        actor_detail_biography_tv.text = actor.biography
         if (actor.birthday == null) {
-            birthday_title.visibility = View.GONE
-            actor_detail_birthday_textview.visibility = View.GONE
+            actor_detail_birthday_title_tv.visibility = View.GONE
+            actor_detail_birthday_tv.visibility = View.GONE
         } else {
-            actor_detail_birthday_textview.text = actor.birthday
+            actor_detail_birthday_tv.text = actor.birthday
         }
     }
 
     fun initActorsMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        actors_movies_recycler_view.layoutManager = layoutManager
+        actor_detail_other_movies_rv.layoutManager = layoutManager
         actorsMoviesAdapter = SimilarMovieAdapter(actorsMoviesList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
             }
@@ -81,7 +81,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
                 POSTER_TRANSITION_NAME)
             startActivity(intent, options.toBundle())
         }
-        actors_movies_recycler_view.adapter = actorsMoviesAdapter
+        actor_detail_other_movies_rv.adapter = actorsMoviesAdapter
     }
 
     override fun showActorsMovies(actorsNewMoviesList: List<Movie>) {

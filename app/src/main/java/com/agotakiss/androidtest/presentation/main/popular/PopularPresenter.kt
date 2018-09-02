@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers
 import org.greenrobot.eventbus.Subscribe
 import javax.inject.Inject
 
-class MainPresenter @Inject constructor(
+class PopularPresenter @Inject constructor(
     private val movieRepository: MovieRepository,
     private val getPopularMovies: GetPopularMovies
 ) : BasePresenter() {
@@ -18,9 +18,9 @@ class MainPresenter @Inject constructor(
     private var page = 1;
     private var totalPages: Int = 0
     private var movieList = mutableListOf<Movie>()
-    lateinit var view: MainView
+    lateinit var view: PopularView
 
-    fun onViewReady(view: MainView) {
+    fun onViewReady(view: PopularView) {
         this.view = view
         loadPopularMovies()
     }

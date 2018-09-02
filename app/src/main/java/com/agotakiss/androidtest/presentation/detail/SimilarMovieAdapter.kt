@@ -24,9 +24,9 @@ class SimilarMovieAdapter(private val similarMovies: List<Movie>,
         init {
             itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(v: View?) {
-                    ViewCompat.setTransitionName(itemView.similar_movie_poster, POSTER_TRANSITION_NAME)
+                    ViewCompat.setTransitionName(itemView.similar_movie_poster_iv, POSTER_TRANSITION_NAME)
 
-                    onItemClickListener.invoke(similarMovies[adapterPosition], itemView.similar_movie_poster)
+                    onItemClickListener.invoke(similarMovies[adapterPosition], itemView.similar_movie_poster_iv)
                 }
             })
         }
@@ -37,16 +37,16 @@ class SimilarMovieAdapter(private val similarMovies: List<Movie>,
                 onEndReachedListener.onEndReached(position)
             }
             if (similarMovie.averageVote != 0F){
-                itemView.similar_movie_rating!!.text = java.lang.Float.toString(similarMovie.averageVote)
+                itemView.similar_movie_rating_tv!!.text = java.lang.Float.toString(similarMovie.averageVote)
             } else{
-                itemView.similar_movie_rating.text = "Unrated"
+                itemView.similar_movie_rating_tv.text = "Unrated"
             }
             if (similarMovie.posterPath != null){
                 Glide.with(itemView.context)
                     .load(IMAGE_BASE_URL + similarMovie.posterPath)
-                    .into(itemView.similar_movie_poster)
+                    .into(itemView.similar_movie_poster_iv)
             }else{
-                itemView.similar_movie_poster.setImageResource(R.drawable.default_poster)
+                itemView.similar_movie_poster_iv.setImageResource(R.drawable.default_poster)
             }
         }
     }

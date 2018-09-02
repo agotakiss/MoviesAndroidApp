@@ -18,14 +18,18 @@
 
     <style name="ExpandedAppBar" parent="@android:style/TextAppearance.Medium">
         <item name="android:textSize">32sp</item>
-        <item name="android:textColor">#01d277</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="CollapsedAppBar" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">24sp</item>
-        <item name="android:textColor">#01d277</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">normal</item>
     </style>
+
+    <!--<style name="" parent="@android:style/TextAppearance.Medium">-->
+        <!--<item name="android:textSize">24sp</item>-->
+        <!--<item name="android:textColor">#01d277</item>-->
+        <!--<item name="android:textStyle">normal</item>-->
+    <!--</style>-->
 
 </resources>

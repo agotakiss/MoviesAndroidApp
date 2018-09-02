@@ -10,7 +10,7 @@ import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.main_list_item.view.*
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.*
 
 
 class MovieAdapter(
@@ -23,10 +23,10 @@ class MovieAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                ViewCompat.setTransitionName(itemView.poster, POSTER_TRANSITION_NAME)
-                onItemClickListener.invoke(movies[adapterPosition], itemView.poster)
+                ViewCompat.setTransitionName(itemView.popular_poster_iv, POSTER_TRANSITION_NAME)
+                onItemClickListener.invoke(movies[adapterPosition], itemView.popular_poster_iv)
             }
-            itemView.favorite_imageview.setOnClickListener {
+            itemView.popular_favorite_iv.setOnClickListener {
                 onFavoriteButtonClickListener.invoke(adapterPosition)
             }
         }
@@ -36,37 +36,37 @@ class MovieAdapter(
             if (position == movies.size - 1) {
                 onEndReachedListener.onEndReached(position)
             }
-            itemView.movie_title.text = movie.title
+            itemView.popular_movie_title_tv.text = movie.title
             if(movie.averageVote != 0F){
-                itemView.movie_rating.text = java.lang.Float.toString(movie.averageVote)
+                itemView.popular_movie_rating_tv.text = java.lang.Float.toString(movie.averageVote)
             }else{
-                itemView.movie_rating.text = "Unrated"
+                itemView.popular_movie_rating_tv.text = "Unrated"
             }
-            itemView.movie_genres.text = movieGenresToDisplay(movie)
+            itemView.popular_movie_genres_tv.text = movieGenresToDisplay(movie)
             if (movie.releaseDateText != "") {
-                itemView.movie_release_date.text = movie.releaseDateText?.substring(0, 4)
+                itemView.popular_movie_release_date_tv.text = movie.releaseDateText?.substring(0, 4)
             }else{
-                itemView.calendar.visibility = View.INVISIBLE
+                itemView.popular_calendar_iv.visibility = View.INVISIBLE
             }
-            itemView.movie_description.text = movie.overview
+            itemView.popular_movie_description_tv.text = movie.overview
             if (movie.posterPath != null) {
                 Glide.with(itemView.context)
                     .load(IMAGE_BASE_URL + movie.posterPath!!)
-                    .into(itemView.poster)
+                    .into(itemView.popular_poster_iv)
             } else{
-                itemView.poster.setImageResource(R.drawable.default_poster)
+                itemView.popular_poster_iv.setImageResource(R.drawable.default_poster)
             }
 
             if (movie.isFavorite) {
-                itemView.favorite_imageview.setImageResource(R.drawable.favorite_full_pic)
+                itemView.popular_favorite_iv.setImageResource(R.drawable.favorite_full_pic)
             } else {
-                itemView.favorite_imageview.setImageResource(R.drawable.favorite_pic)
+                itemView.popular_favorite_iv.setImageResource(R.drawable.favorite_pic)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.main_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.popular_movie_list_item, parent, false)
         return ViewHolder(view)
     }
 
