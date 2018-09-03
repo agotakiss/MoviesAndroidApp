@@ -46,7 +46,7 @@ class SearchFragment : Fragment(), SearchView {
         applicationComponent.inject(this)
         presenter.onViewReady(this)
 
-        search_cancel_iv.setOnClickListener { search_et.text.clear() }
+        search_cancel_iv.setOnClickListener { onCancelButtonClicked() }
         search_et.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -62,6 +62,7 @@ class SearchFragment : Fragment(), SearchView {
 
     override fun showSearchResults(newSearchResults: List<Movie>) {
         hideKeyboard()
+        camera_av.visibility = View.GONE
         searchResultList.addAll(newSearchResults)
         val layoutManager = LinearLayoutManager(context)
         search_results_rv.layoutManager = layoutManager
@@ -96,6 +97,13 @@ class SearchFragment : Fragment(), SearchView {
 
     override fun updateListItem(position: Int) {
         adapter.notifyItemChanged(position)
+    }
+
+    fun onCancelButtonClicked(){
+        search_et.text.clear()
+        searchResultList.clear()
+        showSearchResults(searchResultList)
+        camera_av.visibility = View.VISIBLE
     }
 
     private fun hideKeyboard() {

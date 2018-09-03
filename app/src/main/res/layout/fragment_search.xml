@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
+    android:focusable="auto"
     android:focusableInTouchMode="true"
     tools:context=".presentation.main.search.SearchFragment">
 
@@ -54,16 +54,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/search_et_container" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/camera_av"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="centerCrop"
+        app:lottie_rawRes="@raw/camera_animation"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/search_results_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/search_et_container" />
+
 
 </android.support.constraint.ConstraintLayout>
