@@ -1,29 +1,28 @@
 package com.agotakiss.androidtest.presentation.main.search
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.main.MovieAdapter
-import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 import javax.inject.Inject
-import android.app.Activity
-import android.view.inputmethod.InputMethodManager
 
 
 class SearchFragment : Fragment(), SearchView {
@@ -35,8 +34,7 @@ class SearchFragment : Fragment(), SearchView {
     lateinit var presenter: SearchPresenter
 
     internal var searchResultList: MutableList<Movie> = ArrayList()
-    private lateinit var adapter: MovieAdapter
-
+    private lateinit var adapter: PopularMovieAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -47,6 +45,7 @@ class SearchFragment : Fragment(), SearchView {
         super.onActivityCreated(savedInstanceState)
         applicationComponent.inject(this)
         presenter.onViewReady(this)
+
         search_cancel_iv.setOnClickListener { search_et.text.clear() }
         search_et.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -66,7 +65,7 @@ class SearchFragment : Fragment(), SearchView {
         searchResultList.addAll(newSearchResults)
         val layoutManager = LinearLayoutManager(context)
         search_results_rv.layoutManager = layoutManager
-        adapter = MovieAdapter(newSearchResults, object : OnEndReachedListener {
+        adapter = PopularMovieAdapter(newSearchResults, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onScrollEndReached()
             }
@@ -93,15 +92,15 @@ class SearchFragment : Fragment(), SearchView {
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(activity, "An error occured while searching. Try again!", Toast.LENGTH_LONG).show()
-        Log.e("searchfragment", throwable.toString())
     }
 
     override fun updateListItem(position: Int) {
         adapter.notifyItemChanged(position)
     }
 
-    fun hideKeyboard() {
+    private fun hideKeyboard() {
         val inputMethodManager = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view!!.windowToken, 0)
     }
+
 }

@@ -17,9 +17,10 @@ import com.agotakiss.androidtest.domain.models.Cast
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
+import com.agotakiss.androidtest.presentation.main.CardAdapter
 import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
-import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.IMAGE_BASE_URL
-import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.IMAGE_BASE_URL
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
@@ -41,7 +42,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
     private lateinit var movie: Movie
     internal var similarMovieList: MutableList<Movie> = ArrayList()
     internal var actorsList: MutableList<Cast> = ArrayList()
-    private lateinit var adapter: SimilarMovieAdapter
+    private lateinit var adapter: CardAdapter
     private lateinit var actorAdapter: ActorAdapter
     private var hasStartedAnotherScreen = false
 
@@ -104,7 +105,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
     fun initializeSimilarMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         detail_similar_movies_rv.layoutManager = layoutManager
-        adapter = SimilarMovieAdapter(similarMovieList, object : OnEndReachedListener {
+        adapter = CardAdapter(similarMovieList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onSimilarMovieScrollEndReached()
             }

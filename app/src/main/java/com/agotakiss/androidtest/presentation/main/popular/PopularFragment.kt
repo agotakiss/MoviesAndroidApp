@@ -12,7 +12,7 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.main.MovieAdapter
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.fragment_popular.*
 import org.greenrobot.eventbus.EventBus
@@ -32,7 +32,7 @@ class PopularFragment : Fragment(), PopularView {
     lateinit var presenter: PopularPresenter
 
     internal var movieList: MutableList<Movie> = ArrayList()
-    private lateinit var adapter: MovieAdapter
+    private lateinit var adapter: PopularMovieAdapter
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -51,13 +51,13 @@ class PopularFragment : Fragment(), PopularView {
     private fun initializeList() {
         val layoutManager = LinearLayoutManager(context)
         popular_movies_rv.layoutManager = layoutManager
-        adapter = MovieAdapter(movieList, object : OnEndReachedListener {
+        adapter = PopularMovieAdapter(movieList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
                 presenter.onScrollEndReached()
             }
         }, { movie, view ->
             val intent = Intent(context, DetailsActivity::class.java)
-            intent.putExtra(MovieAdapter.MOVIE, movie)
+            intent.putExtra(PopularMovieAdapter.MOVIE, movie)
 //            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity::class, view,
 //                POSTER_TRANSITION_NAME)
 //            startActivity(intent, options.toBundle())

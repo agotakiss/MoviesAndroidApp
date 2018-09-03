@@ -4,7 +4,7 @@ package com.agotakiss.androidtest.presentation.main.favorites
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +12,9 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.main.MovieAdapter.Companion.MOVIE
+import com.agotakiss.androidtest.presentation.main.CardAdapter
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
+import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import javax.inject.Inject
 
@@ -25,7 +27,7 @@ class FavoritesFragment : Fragment(), FavoritesView {
     lateinit var presenter: FavoritesPresenter
 
     private var favoriteMoviesList = mutableListOf<Movie>()
-    private lateinit var adapter: FavoritesAdapter
+    private lateinit var adapter: CardAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -51,14 +53,23 @@ class FavoritesFragment : Fragment(), FavoritesView {
     }
 
     private fun initializeList() {
-        val layoutManager = LinearLayoutManager(context)
+        val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         favorites_rv.layoutManager = layoutManager
-        adapter = FavoritesAdapter(favoriteMoviesList, { favoriteMovie ->
+        adapter = CardAdapter(favoriteMoviesList, object : OnEndReachedListener {
+            override fun onEndReached(position: Int) {
 
+            }
+        }) { movie, view ->
+            //            ViewCompat.setTransitionName(detail_poster_iv, "random")
+//            sharedImageView = view
+//            hasStartedAnotherScreen = true
             val intent = Intent(context, DetailsActivity::class.java)
-            intent.putExtra(MOVIE, favoriteMovie)
+            intent.putExtra(MOVIE, movie)
+//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
+//                POSTER_TRANSITION_NAME)
+//            startActivity(intent, options.toBundle())
             startActivity(intent)
-        }, presenter::onFavoriteButtonClicked)
+        }
         favorites_rv.adapter = adapter
     }
 

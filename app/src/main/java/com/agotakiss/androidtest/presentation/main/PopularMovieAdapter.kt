@@ -13,12 +13,12 @@ import io.reactivex.Observable
 import kotlinx.android.synthetic.main.popular_movie_list_item.view.*
 
 
-class MovieAdapter(
+class PopularMovieAdapter(
     private val movies: List<Movie>,
     private val onEndReachedListener: OnEndReachedListener,
     private val onItemClickListener: (Movie, View) -> Unit,
     private val onFavoriteButtonClickListener: (Int) -> Unit
-) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<PopularMovieAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {

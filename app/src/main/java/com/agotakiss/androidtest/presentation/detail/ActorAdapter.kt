@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.domain.models.Cast
-import com.agotakiss.androidtest.presentation.main.MovieAdapter
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -38,7 +38,7 @@ class ActorAdapter(private val actors: List<Cast>,
                 itemView.actor_photo_iv.setImageResource(R.drawable.person_picture)
             } else {
                 Glide.with(itemView.context)
-                    .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
+                    .load(PopularMovieAdapter.IMAGE_BASE_URL + actor.profilePath)
                     .apply(RequestOptions.circleCropTransform())
                     .into(itemView.actor_photo_iv)
             }

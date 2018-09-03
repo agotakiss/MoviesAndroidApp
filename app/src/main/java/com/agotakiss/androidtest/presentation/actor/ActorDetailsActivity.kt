@@ -17,8 +17,8 @@ import com.agotakiss.androidtest.presentation.BaseActivity
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.detail.ActorAdapter.Companion.ACTOR_ID
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.detail.SimilarMovieAdapter
-import com.agotakiss.androidtest.presentation.main.MovieAdapter
+import com.agotakiss.androidtest.presentation.main.CardAdapter
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -33,7 +33,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
     @Inject
     lateinit var presenter: ActorDetailsPresenter
 
-    private lateinit var actorsMoviesAdapter: SimilarMovieAdapter
+    private lateinit var actorsMoviesAdapter: CardAdapter
     internal var actorsMoviesList: MutableList<Movie> = ArrayList()
     private var actorId = 0
 
@@ -52,7 +52,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
             actor_detail_photo_iv.setImageResource(R.drawable.person_picture)
         } else {
             Glide.with(this)
-                .load(MovieAdapter.IMAGE_BASE_URL + actor.profilePath)
+                .load(PopularMovieAdapter.IMAGE_BASE_URL + actor.profilePath)
                 .apply(RequestOptions.circleCropTransform())
                 .into(actor_detail_photo_iv)
         }
@@ -70,13 +70,13 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
     fun initActorsMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         actor_detail_other_movies_rv.layoutManager = layoutManager
-        actorsMoviesAdapter = SimilarMovieAdapter(actorsMoviesList, object : OnEndReachedListener {
+        actorsMoviesAdapter = CardAdapter(actorsMoviesList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
             }
         }) { movie, view ->
             val similarMovie = movie
             val intent = Intent(this, DetailsActivity::class.java)
-            intent.putExtra(MovieAdapter.MOVIE, similarMovie)
+            intent.putExtra(PopularMovieAdapter.MOVIE, similarMovie)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
                 POSTER_TRANSITION_NAME)
             startActivity(intent, options.toBundle())
