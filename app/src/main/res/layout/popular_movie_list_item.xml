@@ -73,6 +73,7 @@
             android:id="@+id/popular_movie_release_date_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="@id/popular_movie_genres_tv"
             app:layout_constraintEnd_toStartOf="@id/popular_calendar_iv"
             app:layout_constraintTop_toTopOf="@id/popular_movie_genres_tv" />
@@ -98,7 +99,6 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginStart="4dp"
             android:scaleType="fitCenter"
             android:src="@drawable/calendar"
             app:layout_constraintBottom_toBottomOf="@id/popular_movie_genres_tv"
