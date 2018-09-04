@@ -30,7 +30,7 @@ class PopularPresenter @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ movieList -> onMoviesLoaded(movieList, Integer.MAX_VALUE) }, { throwable ->
-                logE(throwable)
+                view.showError(throwable)
             })
     }
 

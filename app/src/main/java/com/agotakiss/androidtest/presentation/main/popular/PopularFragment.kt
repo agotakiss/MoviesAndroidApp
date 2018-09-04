@@ -5,15 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_popular.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
@@ -70,9 +73,17 @@ class PopularFragment : Fragment(), PopularView {
     override fun showMovies(newMovies: List<Movie>) {
         movieList.addAll(newMovies)
         adapter.notifyItemRangeInserted(movieList.size - newMovies.size, newMovies.size)
+        loading_av.visibility = View.GONE
     }
 
     override fun updateListItem(position: Int) {
         adapter.notifyItemChanged(position)
+    }
+
+    override fun showError(t: Throwable) {
+        Toast.makeText(activity, "Error loading the movies. " +
+            "Please check your internet connection or try again later!", Toast.LENGTH_LONG).show()
+        Log.e("PopularFragment", t.toString())
+        presenter.onViewReady(this)
     }
 }
