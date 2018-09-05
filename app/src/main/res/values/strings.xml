@@ -6,6 +6,7 @@
     <string name="search_for_movies">Search for movies</string>
     <string name="search">Search</string>
     <string name="known_for">Known for</string>
-    <string name="biorgaphy">Biography:</string>
+    <string name="biography">Biography:</string>
     <string name="unrated">Unrated</string>
+    <string name="error">Error loading the movies. Please check your internet connection or try again later!</string>
 </resources>

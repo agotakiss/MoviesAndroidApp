@@ -81,8 +81,7 @@ class PopularFragment : Fragment(), PopularView {
     }
 
     override fun showError(t: Throwable) {
-        Toast.makeText(activity, "Error loading the movies. " +
-            "Please check your internet connection or try again later!", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, getString(R.string.error), Toast.LENGTH_LONG).show()
         Log.e("PopularFragment", t.toString())
         presenter.onViewReady(this)
     }
