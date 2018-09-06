@@ -37,15 +37,15 @@ class PopularMovieAdapter(
                 onEndReachedListener.onEndReached(position)
             }
             itemView.popular_movie_title_tv.text = movie.title
-            if(movie.averageVote != 0F){
+            if (movie.averageVote != 0F) {
                 itemView.popular_movie_rating_tv.text = java.lang.Float.toString(movie.averageVote)
-            }else{
+            } else {
                 itemView.popular_movie_rating_tv.text = "Unrated"
             }
             itemView.popular_movie_genres_tv.text = movieGenresToDisplay(movie)
             if (movie.releaseDateText != "") {
                 itemView.popular_movie_release_date_tv.text = movie.releaseDateText?.substring(0, 4)
-            }else{
+            } else {
                 itemView.popular_calendar_iv.visibility = View.INVISIBLE
             }
             itemView.popular_movie_description_tv.text = movie.overview
@@ -53,7 +53,7 @@ class PopularMovieAdapter(
                 Glide.with(itemView.context)
                     .load(IMAGE_BASE_URL + movie.posterPath!!)
                     .into(itemView.popular_poster_iv)
-            } else{
+            } else {
                 itemView.popular_poster_iv.setImageResource(R.drawable.default_poster)
             }
 

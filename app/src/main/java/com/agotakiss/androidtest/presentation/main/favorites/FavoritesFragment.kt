@@ -5,13 +5,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.view.ViewCompat
-import android.support.v7.widget.StaggeredGridLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
-import com.agotakiss.androidtest.R.id.detail_poster_iv
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
@@ -59,14 +57,14 @@ class FavoritesFragment : MainPageFragment(), FavoritesView {
     }
 
     private fun initializeList() {
-        val layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+        val layoutManager = GridLayoutManager(context, 3)
         favorites_rv.layoutManager = layoutManager
         adapter = CardAdapter(favoriteMoviesList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
 
             }
         }) { movie, view ->
-//            ViewCompat.setTransitionName(detail_poster_iv, "random")
+            //            ViewCompat.setTransitionName(detail_poster_iv, "random")
 //            sharedImageView = view
 //            hasStartedAnotherScreen = true
             val intent = Intent(context, DetailsActivity::class.java)
