@@ -14,7 +14,7 @@
         <ImageView
             android:id="@+id/popular_poster_iv"
             android:layout_width="130dp"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:layout_marginEnd="8dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +99,6 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="12dp"
-            android:scaleType="fitCenter"
             android:src="@drawable/calendar"
             app:layout_constraintBottom_toBottomOf="@id/popular_movie_genres_tv"
             app:layout_constraintEnd_toEndOf="parent"

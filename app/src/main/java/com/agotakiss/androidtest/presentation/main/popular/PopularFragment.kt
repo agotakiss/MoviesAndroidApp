@@ -1,8 +1,10 @@
 package com.agotakiss.androidtest.presentation.main.popular
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -63,10 +65,9 @@ class PopularFragment : MainPageFragment(), PopularView {
         }, { movie, view ->
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(PopularMovieAdapter.MOVIE, movie)
-//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity::class, view,
-//                POSTER_TRANSITION_NAME)
-//            startActivity(intent, options.toBundle())
-            startActivity(intent)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, view,
+                POSTER_TRANSITION_NAME)
+            startActivity(intent, options.toBundle())
         }, presenter::onFavoriteButtonClicked)
 
         popular_movies_rv.adapter = adapter

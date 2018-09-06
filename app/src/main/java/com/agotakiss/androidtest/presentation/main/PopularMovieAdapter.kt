@@ -89,7 +89,8 @@ class PopularMovieAdapter(
     }
 
     companion object {
-        val IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/"
+        val IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w154/"
+        val BACKDROP_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/"
         val LAST_ITEMS_BEFORE_LOAD_NEW = 5
         val MOVIE = "movie"
     }

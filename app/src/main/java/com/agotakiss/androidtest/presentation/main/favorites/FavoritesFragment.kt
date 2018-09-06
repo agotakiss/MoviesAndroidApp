@@ -1,16 +1,20 @@
 package com.agotakiss.androidtest.presentation.main.favorites
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
-import com.agotakiss.androidtest.R.id.no_favorites_view
+import com.agotakiss.androidtest.R.id.detail_poster_iv
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
+import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.main.CardAdapter
 import com.agotakiss.androidtest.presentation.main.MainPageFragment
@@ -62,15 +66,14 @@ class FavoritesFragment : MainPageFragment(), FavoritesView {
 
             }
         }) { movie, view ->
-            //            ViewCompat.setTransitionName(detail_poster_iv, "random")
+//            ViewCompat.setTransitionName(detail_poster_iv, "random")
 //            sharedImageView = view
 //            hasStartedAnotherScreen = true
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(MOVIE, movie)
-//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-//                POSTER_TRANSITION_NAME)
-//            startActivity(intent, options.toBundle())
-            startActivityForResult(intent, 123)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, view,
+                POSTER_TRANSITION_NAME)
+            startActivityForResult(intent, 123, options.toBundle())
         }
         favorites_rv.adapter = adapter
     }

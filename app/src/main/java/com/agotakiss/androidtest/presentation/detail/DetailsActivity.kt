@@ -22,6 +22,7 @@ import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.IMAGE_BASE_URL
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.BACKDROP_IMAGE_BASE_URL
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_details.*
@@ -81,8 +82,8 @@ class DetailsActivity : BaseActivity(), DetailsView {
         }
 
         if (movie.backdropPath != null) {
-            Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(detail_backdrop_iv)
-            Glide.with(this).load(IMAGE_BASE_URL + movie.backdropPath).into(detail_collapsing_iv)
+            Glide.with(this).load(BACKDROP_IMAGE_BASE_URL + movie.backdropPath).into(detail_backdrop_iv)
+            Glide.with(this).load(BACKDROP_IMAGE_BASE_URL + movie.backdropPath).into(detail_collapsing_iv)
             detail_backdrop_iv.alpha = 0.2f
         } else {
             detail_collapsing_iv.setImageResource(R.drawable.default_poster)

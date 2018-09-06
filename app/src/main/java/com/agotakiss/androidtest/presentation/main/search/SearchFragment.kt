@@ -4,6 +4,7 @@ package com.agotakiss.androidtest.presentation.main.search
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,7 +19,9 @@ import android.widget.Toast
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
+import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
+import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MainPageFragment
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
@@ -97,10 +100,9 @@ class SearchFragment : MainPageFragment(), SearchView {
         }, { movie, view ->
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(MOVIE, movie)
-//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity::class, view,
-//                POSTER_TRANSITION_NAME)
-//            startActivity(intent, options.toBundle())
-            startActivity(intent)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, view,
+                POSTER_TRANSITION_NAME)
+            startActivity(intent, options.toBundle())
         }, presenter::onFavoriteButtonClicked)
 
         search_results_rv.adapter = adapter
