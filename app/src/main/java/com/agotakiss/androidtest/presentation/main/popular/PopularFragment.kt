@@ -4,6 +4,7 @@ package com.agotakiss.androidtest.presentation.main.popular
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -88,7 +89,9 @@ class PopularFragment : MainPageFragment(), PopularView {
 
     override fun showError(t: Throwable) {
         Toast.makeText(activity, getString(R.string.error), Toast.LENGTH_LONG).show()
-        Log.e("PopularFragment", t.toString())
-        presenter.onViewReady(this)
+        Log.e("popular fragment", "kabbe", t)
+        Handler().postDelayed({
+            presenter.onViewReady(this)
+        }, 5000)
     }
 }
