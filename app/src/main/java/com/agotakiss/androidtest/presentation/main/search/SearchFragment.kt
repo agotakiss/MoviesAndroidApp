@@ -4,23 +4,25 @@ package com.agotakiss.androidtest.presentation.main.search
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.main.MainPageFragment
+import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
-import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.fragment_search.*
 import java.util.*
 import javax.inject.Inject
@@ -48,6 +50,13 @@ class SearchFragment : MainPageFragment(), SearchView {
         presenter.onViewReady(this)
 
         search_cancel_iv.setOnClickListener { onCancelButtonClicked() }
+        search_et.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                hideKeyboard()
+                return@OnEditorActionListener true;
+            }
+            false;
+        })
         search_et.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
@@ -59,6 +68,20 @@ class SearchFragment : MainPageFragment(), SearchView {
                 presenter.onSearchQueryChanged(s.toString())
             }
         })
+    }
+
+    override fun onPageShow() {
+        super.onPageShow()
+        if (searchResultList.isEmpty()) {
+            search_et.requestFocus()
+            showKeyboard()
+        }
+    }
+
+    override fun onPageHide() {
+        super.onPageHide()
+        search_et.clearFocus()
+        hideKeyboard()
     }
 
     override fun showSearchResults(newSearchResults: List<Movie>) {
@@ -89,7 +112,9 @@ class SearchFragment : MainPageFragment(), SearchView {
     }
 
     override fun showNoResult() {
+        Log.d("no results", "noooooooooooooooooooooooooooo results")
         Toast.makeText(activity, "Sorry, we couldn't find anything :(", Toast.LENGTH_LONG).show()
+        showKeyboard()
     }
 
     override fun showError(throwable: Throwable) {
@@ -100,16 +125,22 @@ class SearchFragment : MainPageFragment(), SearchView {
         adapter.notifyItemChanged(position)
     }
 
-    fun onCancelButtonClicked(){
+    private fun onCancelButtonClicked() {
         search_et.text.clear()
-        searchResultList.clear()
-        showSearchResults(searchResultList)
-        camera_av.visibility = View.VISIBLE
+//        searchResultList.clear()
+//        showSearchResults(searchResultList)
+        showKeyboard()
+//        camera_av.visibility = View.VISIBLE
     }
 
     private fun hideKeyboard() {
         val inputMethodManager = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view!!.windowToken, 0)
+    }
+
+    private fun showKeyboard() {
+        val inputMethodManager = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.showSoftInput(search_et, 0)
     }
 
 }

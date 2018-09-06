@@ -40,6 +40,10 @@ class SearchPresenter @Inject constructor
         queryTextChangeSubject.onNext(queryString)
     }
 
+    fun onDoneButtonClicked(queryString: String){
+        loadSearchResults(queryString)
+    }
+
     private fun loadSearchResults(queryString: String) {
         if (queryString == "") return
         getSearchResults.get(queryString, page)
@@ -55,7 +59,7 @@ class SearchPresenter @Inject constructor
         if (page == 1 && newSearchResults.isEmpty()) {
             view.showNoResult()
         }
-        if (queryString != lastQueryString) {
+        else if (queryString != lastQueryString && newSearchResults.isNotEmpty()) {
             lastQueryString = queryString
             this.searchResultList.clear()
             this.searchResultList.addAll(newSearchResults)
