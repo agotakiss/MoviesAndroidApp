@@ -24,6 +24,7 @@ import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_popular.*
 import org.greenrobot.eventbus.EventBus
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -66,6 +67,7 @@ class PopularFragment : MainPageFragment(), PopularView {
         }, { movie, view ->
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(PopularMovieAdapter.MOVIE, movie)
+            Timber.d("details of the movie ${movie.title} and it is ${movie.isFavorite}")
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, view,
                 POSTER_TRANSITION_NAME)
             startActivity(intent, options.toBundle())
@@ -89,7 +91,7 @@ class PopularFragment : MainPageFragment(), PopularView {
 
     override fun showError(t: Throwable) {
         Toast.makeText(activity, getString(R.string.error), Toast.LENGTH_LONG).show()
-        Log.e("popular fragment", "kabbe", t)
+        Timber.e(t)
         Handler().postDelayed({
             presenter.onViewReady(this)
         }, 5000)

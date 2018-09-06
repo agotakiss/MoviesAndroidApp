@@ -1,6 +1,7 @@
 package com.agotakiss.androidtest.base
 
 import android.app.Application
+import timber.log.Timber
 
 class MovieApplication : Application() {
 
@@ -8,6 +9,7 @@ class MovieApplication : Application() {
         instance = this
         super.onCreate()
         applicationComponent.inject(this)
+        Timber.plant(Timber.DebugTree())
     }
 
     companion object {

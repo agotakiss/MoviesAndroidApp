@@ -6,12 +6,14 @@ import com.agotakiss.androidtest.domain.models.Cast
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.domain.repository.CastRepository
 import com.agotakiss.androidtest.domain.repository.MovieRepository
+import com.agotakiss.androidtest.domain.usecase.CheckIfMovieIsFavorite
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class DetailsPresenter @Inject constructor(
     private val movieRepository: MovieRepository,
+    private val checkIfMovieIsFavorite: CheckIfMovieIsFavorite,
     private val castRepository: CastRepository
 ) : BasePresenter() {
 
@@ -24,11 +26,12 @@ class DetailsPresenter @Inject constructor(
     fun onViewReady(view: DetailsView, movie: Movie) {
         this.view = view
         this.movie = movie
+        checkIfMovieIsFavorite(movie)
         loadSimilarMovies()
         loadActors()
     }
 
-    fun onFavoriteButtonClicked(movie: Movie){
+    fun onFavoriteButtonClicked(movie: Movie) {
         movie.isFavorite = !movie.isFavorite
         if (movie.isFavorite) {
             addMovieToFavorites(movie)
@@ -61,6 +64,15 @@ class DetailsPresenter @Inject constructor(
             })
     }
 
+    private fun checkIfMovieIsFavorite(movie: Movie) {
+        checkIfMovieIsFavorite.check(movie)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ isFavorite -> view.setFavoriteButton(isFavorite) }, { t ->
+                view.showError(t)
+            })
+    }
+
     private fun loadSimilarMovies() {
         movieRepository.getSimilarMovies(movie.id, similarMoviesPage)
             .subscribeOn(Schedulers.io())
@@ -90,14 +102,6 @@ class DetailsPresenter @Inject constructor(
         this.actorsTotalPage = actorsTotalPage
         view.showActors(newActors)
     }
-
-//    fun onActorsScrollEndReached() {
-//        Log.d("DetailPresenter", "onActorsScrollEndReached")
-//        actorsPage++
-//        if (actorsPage < actorsTotalPage) {
-//            loadActors()
-//        }
-//    }
 
     fun onSimilarMovieScrollEndReached() {
         Log.d("DetailPresenter", "onSimilarMovieScrollEndReached")

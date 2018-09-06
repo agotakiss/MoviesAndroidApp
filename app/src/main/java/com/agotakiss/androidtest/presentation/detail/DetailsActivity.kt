@@ -26,6 +26,7 @@ import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_details.*
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
