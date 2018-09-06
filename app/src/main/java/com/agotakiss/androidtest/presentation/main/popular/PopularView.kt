@@ -6,6 +6,7 @@ interface PopularView {
 
     fun showMovies(newMovies: List<Movie>)
     fun showError(t: Throwable)
+    fun hideLoadingView()
     fun updateListItem(position: Int)
 
 }

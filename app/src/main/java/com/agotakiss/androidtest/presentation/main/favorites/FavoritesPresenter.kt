@@ -18,7 +18,6 @@ class FavoritesPresenter @Inject constructor(
 
     fun onViewReady(view: FavoritesView) {
         this.view = view
-        getFavoriteMovies()
     }
 
     private fun getFavoriteMovies() {
@@ -31,22 +30,24 @@ class FavoritesPresenter @Inject constructor(
     }
 
     private fun onMoviesLoaded(newMovies: List<Movie>) {
-        this.favoriteMoviesList = newMovies
-        for (i in 0 until favoriteMoviesList.size){
-            favoriteMoviesList[i].isFavorite = true
+        this.favoriteMoviesList = newMovies.map {
+            it.apply {
+                isFavorite = true
+            }
         }
-        view.showFavoriteMovies(newMovies)
-        EventBus.getDefault().post(newMovies)
+        if(newMovies.isNotEmpty()){
+            view.showFavoriteMovies(newMovies)
+            EventBus.getDefault().post(newMovies)
+        } else{
+            view.showNoFavoritesView()
+        }
     }
 
-    fun onFavoriteButtonClicked(position : Int, movieId: Int) {
-        movieRepository.deleteFromFavoriteMovies(movieId)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-            }, { throwable ->
-                logE(throwable)
-            })
-        view.updateFavoriteMovies(position)
+    fun onPageShow() {
+        getFavoriteMovies()
+    }
+
+    fun onActivityResult() {
+        getFavoriteMovies()
     }
 }

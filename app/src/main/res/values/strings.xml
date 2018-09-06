@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YourMovie</string>
+    <string name="app_name">Movie4U</string>
     <string name="cast_text">Cast</string>
     <string name="also_liked_text">People who liked this also liked…</string>
     <string name="birthday">Birthday:</string>
@@ -9,4 +9,5 @@
     <string name="biography">Biography:</string>
     <string name="unrated">Unrated</string>
     <string name="error">Error loading the movies. Please check your internet connection or try again later!</string>
+    <string name="no_favorites_textview">You didn\'t add any favorites yet.</string>
 </resources>

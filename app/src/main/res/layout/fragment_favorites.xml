@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
     tools:context=".presentation.main.favorites.FavoritesFragment">
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/favorites_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent" />
 
-</LinearLayout>
+    <ViewStub
+        android:id="@+id/no_favorites_stub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/no_favorites_view"
+        android:layout="@layout/view_no_favorites_added" />
+
+</FrameLayout>
+
+
+    <!--<ViewStub--><!--android:id="@+id/stub"--><!--android:inflatedId="@id/favorites_rv"--><!--tools:app="You don't have any favorites yet."--><!--android:layout="@layout/fragment_favorites"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent" />-->

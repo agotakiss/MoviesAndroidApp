@@ -17,6 +17,7 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
+import com.agotakiss.androidtest.presentation.main.MainPageFragment
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
@@ -25,7 +26,7 @@ import java.util.*
 import javax.inject.Inject
 
 
-class SearchFragment : Fragment(), SearchView {
+class SearchFragment : MainPageFragment(), SearchView {
 
     val movieApplication: MovieApplication get() = MovieApplication.get()
     val applicationComponent by lazy { movieApplication.applicationComponent.plus(SearchModule(this)) }

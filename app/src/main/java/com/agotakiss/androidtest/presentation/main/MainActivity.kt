@@ -2,6 +2,7 @@ package com.agotakiss.androidtest.presentation.main
 
 import android.os.Bundle
 import android.support.v4.view.ViewPager
+import android.view.View
 import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.presentation.BaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,8 +29,14 @@ class MainActivity : BaseActivity() {
             true
         }
 
+        viewpager.offscreenPageLimit = 3
         viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            var lastPage: MainPageFragment? = null
             override fun onPageSelected(position: Int) {
+                lastPage?.onPageHide()
+                lastPage = mainPagerAdapter.getItemByPosition(position)?.apply {
+                    onPageShow()
+                }
                 when (position) {
                     0 -> {
                         viewpager.shouldSkipHorizontalSwipe = false
@@ -59,5 +66,10 @@ class MainActivity : BaseActivity() {
 
         viewpager.currentItem = 0
         viewpager.shouldSkipHorizontalSwipe = false
+    }
+
+    fun hideLoadingView() {
+        loading_view_container.visibility = View.GONE
+        bottom_navigation.visibility = View.VISIBLE
     }
 }

@@ -8,4 +8,6 @@ interface FavoritesView {
     fun showFavoriteMovies(favoriteMovies: List<Movie>)
 
     fun updateFavoriteMovies(position : Int)
+
+    fun showNoFavoritesView()
 }

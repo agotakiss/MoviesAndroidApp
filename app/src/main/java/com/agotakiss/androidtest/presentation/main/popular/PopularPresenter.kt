@@ -45,6 +45,10 @@ class PopularPresenter @Inject constructor(
         this.totalPages = totalPages
         this.movieList.addAll(newMovies)
         view.showMovies(newMovies)
+
+        if(page == 1){
+            view.hideLoadingView()
+        }
     }
 
     fun onFavoriteButtonClicked(position: Int) {

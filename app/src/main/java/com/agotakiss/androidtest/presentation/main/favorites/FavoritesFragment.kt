@@ -3,25 +3,27 @@ package com.agotakiss.androidtest.presentation.main.favorites
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.androidtest.R
+import com.agotakiss.androidtest.R.id.no_favorites_view
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.main.CardAdapter
-import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
+import com.agotakiss.androidtest.presentation.main.MainPageFragment
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import javax.inject.Inject
 
-class FavoritesFragment : Fragment(), FavoritesView {
+class FavoritesFragment : MainPageFragment(), FavoritesView {
 
     val movieApplication: MovieApplication get() = MovieApplication.get()
     val applicationComponent by lazy { movieApplication.applicationComponent.plus(FavoritesModule(this)) }
+    var noFavoritesView: View? = null
 
     @Inject
     lateinit var presenter: FavoritesPresenter
@@ -38,11 +40,7 @@ class FavoritesFragment : Fragment(), FavoritesView {
         super.onActivityCreated(savedInstanceState)
         applicationComponent.inject(this)
         initializeList()
-    }
-
-    override fun onResume() {
         presenter.onViewReady(this)
-        super.onResume()
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -50,6 +48,10 @@ class FavoritesFragment : Fragment(), FavoritesView {
         if (isVisibleToUser && isResumed) {
             presenter.onViewReady(this)
         }
+    }
+
+    override fun onPageShow() {
+        presenter.onPageShow()
     }
 
     private fun initializeList() {
@@ -68,15 +70,29 @@ class FavoritesFragment : Fragment(), FavoritesView {
 //            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
 //                POSTER_TRANSITION_NAME)
 //            startActivity(intent, options.toBundle())
-            startActivity(intent)
+            startActivityForResult(intent, 123)
         }
         favorites_rv.adapter = adapter
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        presenter.onActivityResult()
     }
 
     override fun showFavoriteMovies(favoriteMovies: List<Movie>) {
         favoriteMoviesList.clear()
         favoriteMoviesList.addAll(favoriteMovies)
         adapter.notifyDataSetChanged()
+        noFavoritesView?.visibility = View.GONE
+    }
+
+    override fun showNoFavoritesView() {
+        if (noFavoritesView == null) {
+            noFavoritesView = no_favorites_stub.inflate()
+        } else {
+            noFavoritesView?.visibility = View.VISIBLE
+        }
     }
 
     override fun updateFavoriteMovies(position: Int) {

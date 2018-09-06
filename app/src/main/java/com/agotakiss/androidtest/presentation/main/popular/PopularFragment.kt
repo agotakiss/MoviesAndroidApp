@@ -14,6 +14,8 @@ import com.agotakiss.androidtest.R
 import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
+import com.agotakiss.androidtest.presentation.main.MainActivity
+import com.agotakiss.androidtest.presentation.main.MainPageFragment
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,7 +24,7 @@ import org.greenrobot.eventbus.EventBus
 import java.util.*
 import javax.inject.Inject
 
-class PopularFragment : Fragment(), PopularView {
+class PopularFragment : MainPageFragment(), PopularView {
 
     companion object {
         const val POSTER_TRANSITION_NAME = "posterTransition"
@@ -73,7 +75,10 @@ class PopularFragment : Fragment(), PopularView {
     override fun showMovies(newMovies: List<Movie>) {
         movieList.addAll(newMovies)
         adapter.notifyItemRangeInserted(movieList.size - newMovies.size, newMovies.size)
-        loading_av.visibility = View.GONE
+    }
+
+    override fun hideLoadingView() {
+        (activity as MainActivity).hideLoadingView()
     }
 
     override fun updateListItem(position: Int) {
