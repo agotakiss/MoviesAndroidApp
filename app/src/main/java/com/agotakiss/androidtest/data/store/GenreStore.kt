@@ -1,6 +1,5 @@
 package com.agotakiss.androidtest.data.store
 
-
 import com.agotakiss.androidtest.domain.models.Genre
 import io.reactivex.Completable
 import io.reactivex.Single

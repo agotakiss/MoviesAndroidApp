@@ -18,4 +18,3 @@ class LoadMoviesResponse : Serializable {
     @SerializedName("total_pages")
     val totalPages: Int = 0
 }
-

@@ -1,6 +1,5 @@
 package com.agotakiss.androidtest.presentation.main.search
 
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -21,15 +20,16 @@ import com.agotakiss.androidtest.base.MovieApplication
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
-import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MainPageFragment
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
-import kotlinx.android.synthetic.main.fragment_search.*
-import java.util.*
+import kotlinx.android.synthetic.main.fragment_search.camera_av
+import kotlinx.android.synthetic.main.fragment_search.search_cancel_iv
+import kotlinx.android.synthetic.main.fragment_search.search_et
+import kotlinx.android.synthetic.main.fragment_search.search_results_rv
+import java.util.ArrayList
 import javax.inject.Inject
-
 
 class SearchFragment : MainPageFragment(), SearchView {
 
@@ -42,8 +42,11 @@ class SearchFragment : MainPageFragment(), SearchView {
     internal var searchResultList: MutableList<Movie> = ArrayList()
     private lateinit var adapter: PopularMovieAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
 
@@ -56,9 +59,9 @@ class SearchFragment : MainPageFragment(), SearchView {
         search_et.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 hideKeyboard()
-                return@OnEditorActionListener true;
+                return@OnEditorActionListener true
             }
-            false;
+            false
         })
         search_et.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
@@ -144,5 +147,4 @@ class SearchFragment : MainPageFragment(), SearchView {
         val inputMethodManager = activity!!.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.showSoftInput(search_et, 0)
     }
-
 }

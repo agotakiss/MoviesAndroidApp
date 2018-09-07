@@ -8,7 +8,8 @@ import io.reactivex.Single
 import javax.inject.Inject
 
 class CastRepositoryImpl @Inject constructor(
-   private val movieDbApi: MovieDbApi): CastRepository {
+    private val movieDbApi: MovieDbApi
+) : CastRepository {
 
     override fun getCast(movieId: Int): Single<List<Cast>> {
         return movieDbApi.getCredits(movieId)

@@ -6,8 +6,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class PopularModule (val popularFragment: PopularFragment){
+class PopularModule(val popularFragment: PopularFragment) {
     @Provides
-    fun providePresenter(movieRepository: MovieRepository, getPopularMovies: GetPopularMovies)
-        : PopularPresenter = PopularPresenter(movieRepository, getPopularMovies)
+    fun providePresenter(movieRepository: MovieRepository, getPopularMovies: GetPopularMovies): PopularPresenter = PopularPresenter(movieRepository, getPopularMovies)
 }

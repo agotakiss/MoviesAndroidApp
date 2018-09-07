@@ -1,9 +1,8 @@
 package com.agotakiss.androidtest.base
 
-import android.content.ContentValues
 import android.util.Log
 
-open class BasePresenter(){
+open class BasePresenter() {
 
     protected val TAG = this.javaClass.simpleName
 

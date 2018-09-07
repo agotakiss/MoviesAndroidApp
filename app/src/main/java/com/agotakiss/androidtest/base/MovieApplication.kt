@@ -3,10 +3,8 @@ package com.agotakiss.androidtest.base
 import android.app.Application
 import com.agotakiss.androidtest.BuildConfig
 import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import io.fabric.sdk.android.Fabric
 import timber.log.Timber
-
 
 class MovieApplication : Application() {
 
@@ -35,5 +33,4 @@ class MovieApplication : Application() {
         .builder()
         .applicationModule(ApplicationModule(this))
         .build()
-
 }

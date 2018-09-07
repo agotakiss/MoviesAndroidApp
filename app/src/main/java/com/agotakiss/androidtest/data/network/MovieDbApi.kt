@@ -1,7 +1,11 @@
 package com.agotakiss.androidtest.data.network
 
-import com.agotakiss.androidtest.data.models.*
-
+import com.agotakiss.androidtest.data.models.ActorApiModel
+import com.agotakiss.androidtest.data.models.LoadActorsMoviesResponse
+import com.agotakiss.androidtest.data.models.LoadCreditResponse
+import com.agotakiss.androidtest.data.models.LoadGenresResponse
+import com.agotakiss.androidtest.data.models.LoadMoviesResponse
+import com.agotakiss.androidtest.data.models.MovieApiModel
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -19,8 +23,10 @@ interface MovieDbApi {
     fun getMovieDetails(@Path(value = "movie_id", encoded = true) movieId: Int): Single<MovieApiModel>
 
     @GET("movie/{movie_id}/similar")
-    fun getSimilarMovies(@Path(value = "movie_id", encoded = true) movieId: Int,
-                         @Query("page") page: Int): Single<LoadMoviesResponse>
+    fun getSimilarMovies(
+        @Path(value = "movie_id", encoded = true) movieId: Int,
+        @Query("page") page: Int
+    ): Single<LoadMoviesResponse>
 
     @GET("movie/{movie_id}/credits")
     fun getCredits(@Path(value = "movie_id", encoded = true) movieId: Int): Single<LoadCreditResponse>
@@ -29,10 +35,8 @@ interface MovieDbApi {
     fun getActor(@Path(value = "person_id", encoded = true) personId: Int): Single<ActorApiModel>
 
     @GET("person/{person_id}/movie_credits")
-    fun getActorsMovies(@Path(value = "person_id", encoded = true) personId: Int)
-                                                                : Single<LoadActorsMoviesResponse>
+    fun getActorsMovies(@Path(value = "person_id", encoded = true) personId: Int): Single<LoadActorsMoviesResponse>
 
     @GET("search/movie")
-    fun getSearchResults(@Query("query", encoded = true)query : String, @Query("page") page: Int) : Single<LoadMoviesResponse>
-
+    fun getSearchResults(@Query("query", encoded = true) query: String, @Query("page") page: Int): Single<LoadMoviesResponse>
 }

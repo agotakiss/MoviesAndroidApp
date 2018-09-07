@@ -1,7 +1,5 @@
 package com.agotakiss.androidtest.data.store
 
-import android.util.Log
-import com.agotakiss.androidtest.data.models.GenreApiModel
 import com.agotakiss.androidtest.domain.models.Genre
 import java.util.NoSuchElementException
 

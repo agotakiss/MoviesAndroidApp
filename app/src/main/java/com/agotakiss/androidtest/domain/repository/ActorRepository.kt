@@ -5,5 +5,4 @@ import io.reactivex.Single
 
 interface ActorRepository {
     fun getActor(actorId: Int): Single<Actor>
-
 }

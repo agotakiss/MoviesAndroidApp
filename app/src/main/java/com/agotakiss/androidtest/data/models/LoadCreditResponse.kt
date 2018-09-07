@@ -1,6 +1,5 @@
 package com.agotakiss.androidtest.data.models
 
-import com.agotakiss.androidtest.domain.models.Cast
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

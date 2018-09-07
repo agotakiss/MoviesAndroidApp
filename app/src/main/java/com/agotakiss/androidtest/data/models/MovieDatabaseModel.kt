@@ -3,7 +3,6 @@ package com.agotakiss.androidtest.data.models
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import java.util.*
 
 @Entity(tableName = "favorite_movies")
 data class MovieDatabaseModel(

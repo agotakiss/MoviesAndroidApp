@@ -15,7 +15,7 @@ class PopularPresenter @Inject constructor(
     private val getPopularMovies: GetPopularMovies
 ) : BasePresenter() {
 
-    private var page = 1;
+    private var page = 1
     private var totalPages: Int = 0
     private var movieList = mutableListOf<Movie>()
     lateinit var view: PopularView
@@ -46,7 +46,7 @@ class PopularPresenter @Inject constructor(
         this.movieList.addAll(newMovies)
         view.showMovies(newMovies)
 
-        if(page == 1){
+        if (page == 1) {
             view.hideLoadingView()
         }
     }

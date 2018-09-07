@@ -12,10 +12,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.actors_list_item.view.*
 
-
-class ActorAdapter(private val actors: List<Cast>,
-                   private var onEndReachedListener: OnEndReachedListener,
-                   private val onItemClickListener: (Int, View) -> Unit)
+class ActorAdapter(
+    private val actors: List<Cast>,
+    private var onEndReachedListener: OnEndReachedListener,
+    private val onItemClickListener: (Int, View) -> Unit
+)
     : RecyclerView.Adapter<ActorAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -62,4 +63,3 @@ class ActorAdapter(private val actors: List<Cast>,
         val ACTOR_ID = "actor_id"
     }
 }
-

@@ -1,6 +1,5 @@
 package com.agotakiss.androidtest.data.repository
 
-import android.util.Log
 import com.agotakiss.androidtest.data.mapper.toMovie
 import com.agotakiss.androidtest.data.models.MovieApiModel
 import com.agotakiss.androidtest.data.network.MovieDbApi
@@ -83,5 +82,4 @@ class MovieRepositoryImpl @Inject constructor(
             .map { it.toMovie(genresMap) }
             .toList()
     }
-
 }

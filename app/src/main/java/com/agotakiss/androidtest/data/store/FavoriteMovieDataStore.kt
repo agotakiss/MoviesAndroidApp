@@ -1,6 +1,5 @@
 package com.agotakiss.androidtest.data.store
 
-import android.util.Log
 import com.agotakiss.androidtest.data.mapper.toMovie
 import com.agotakiss.androidtest.data.models.MovieDatabaseModel
 import com.agotakiss.androidtest.domain.models.Movie

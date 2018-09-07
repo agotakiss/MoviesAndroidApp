@@ -2,7 +2,7 @@ package com.agotakiss.androidtest.data.models
 
 import com.google.gson.annotations.SerializedName
 
-data class CastApiModel (
+data class CastApiModel(
     @SerializedName("cast_id")
     val castId: Int = 0,
 

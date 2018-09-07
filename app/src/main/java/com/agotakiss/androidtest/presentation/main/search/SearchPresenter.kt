@@ -10,14 +10,14 @@ import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class SearchPresenter @Inject constructor
-(private val movieRepository: MovieRepository,
- private val getSearchResults: GetSearchResults
+class SearchPresenter @Inject constructor(
+    private val movieRepository: MovieRepository,
+    private val getSearchResults: GetSearchResults
 ) : BasePresenter() {
 
     lateinit var view: SearchView
     private var searchResultList = mutableListOf<Movie>()
-    private var page = 1;
+    private var page = 1
     private var lastQueryString = ""
     private val queryTextChangeSubject = PublishSubject.create<String>()
 
@@ -40,7 +40,7 @@ class SearchPresenter @Inject constructor
         queryTextChangeSubject.onNext(queryString)
     }
 
-    fun onDoneButtonClicked(queryString: String){
+    fun onDoneButtonClicked(queryString: String) {
         loadSearchResults(queryString)
     }
 
@@ -58,14 +58,13 @@ class SearchPresenter @Inject constructor
     private fun onSearchResultsLoaded(newSearchResults: List<Movie>, queryString: String) {
         if (page == 1 && newSearchResults.isEmpty()) {
             view.showNoResult()
-        }
-        else if (queryString != lastQueryString && newSearchResults.isNotEmpty()) {
+        } else if (queryString != lastQueryString && newSearchResults.isNotEmpty()) {
             lastQueryString = queryString
             this.searchResultList.clear()
             this.searchResultList.addAll(newSearchResults)
             view.showSearchResults(searchResultList)
         }
-        if(page != 1 && queryString == lastQueryString ) {
+        if (page != 1 && queryString == lastQueryString) {
             lastQueryString = queryString
             this.searchResultList.addAll(newSearchResults)
             view.showNextPage(newSearchResults)

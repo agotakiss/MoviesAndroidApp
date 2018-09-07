@@ -7,7 +7,11 @@ import com.agotakiss.androidtest.data.repository.ActorRepositoryImpl
 import com.agotakiss.androidtest.data.repository.CastRepositoryImpl
 import com.agotakiss.androidtest.data.repository.GenreRepositoryImpl
 import com.agotakiss.androidtest.data.repository.MovieRepositoryImpl
-import com.agotakiss.androidtest.data.store.*
+import com.agotakiss.androidtest.data.store.AppDatabase
+import com.agotakiss.androidtest.data.store.FavoriteMovieDao
+import com.agotakiss.androidtest.data.store.FavoriteMovieDataStore
+import com.agotakiss.androidtest.data.store.GenreStore
+import com.agotakiss.androidtest.data.store.GenreStoreImpl
 import com.agotakiss.androidtest.domain.repository.ActorRepository
 import com.agotakiss.androidtest.domain.repository.CastRepository
 import com.agotakiss.androidtest.domain.repository.GenreRepository
@@ -28,8 +32,11 @@ class ApplicationModule(val application: MovieApplication) {
 
     @Provides
     @Singleton
-    fun provideMovieRepository(favoriteMovieDataStore: FavoriteMovieDataStore, genreRepository: GenreRepository,
-                               movieDbApi: MovieDbApi): MovieRepository {
+    fun provideMovieRepository(
+        favoriteMovieDataStore: FavoriteMovieDataStore,
+        genreRepository: GenreRepository,
+        movieDbApi: MovieDbApi
+    ): MovieRepository {
         return MovieRepositoryImpl(favoriteMovieDataStore, genreRepository, movieDbApi)
     }
 

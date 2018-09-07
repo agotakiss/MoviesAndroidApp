@@ -1,6 +1,5 @@
 package com.agotakiss.androidtest.data.repository
 
-import android.util.Log
 import com.agotakiss.androidtest.data.mapper.toGenre
 import com.agotakiss.androidtest.data.network.MovieDbApi
 import com.agotakiss.androidtest.data.store.GenreStore
@@ -18,7 +17,6 @@ class GenreRepositoryImpl @Inject constructor(
         return genreStore.hasData().flatMap { hasData ->
             if (hasData) {
                 genreStore.getGenreMap()
-
             } else {
                 getGenresFromApi()
                     .doOnSuccess { genreStore.saveGenres(it).blockingAwait() }

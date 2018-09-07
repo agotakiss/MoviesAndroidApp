@@ -25,5 +25,4 @@ interface ApplicationComponent {
 
     fun plus(favoritesModule: FavoritesModule): FavoritesComponent
     fun plus(searchModule: SearchModule): SearchComponent
-
 }

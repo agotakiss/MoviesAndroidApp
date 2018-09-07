@@ -1,8 +1,6 @@
 package com.agotakiss.androidtest.domain.models
 
-import com.google.gson.annotations.SerializedName
-
-data class Actor (
+data class Actor(
     val birthday: String? = null,
     val knownForDepartment: String? = null,
     val id: Int,

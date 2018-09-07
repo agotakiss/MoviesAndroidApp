@@ -1,14 +1,11 @@
 package com.agotakiss.androidtest.presentation.main.popular
 
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,13 +16,12 @@ import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.main.MainActivity
 import com.agotakiss.androidtest.presentation.main.MainPageFragment
-import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_popular.*
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
+import kotlinx.android.synthetic.main.fragment_popular.popular_movies_rv
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
-import java.util.*
+import java.util.ArrayList
 import javax.inject.Inject
 
 class PopularFragment : MainPageFragment(), PopularView {
@@ -43,9 +39,11 @@ class PopularFragment : MainPageFragment(), PopularView {
     internal var movieList: MutableList<Movie> = ArrayList()
     private lateinit var adapter: PopularMovieAdapter
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_popular, container, false)
     }
 

@@ -22,7 +22,6 @@ fun MovieApiModel.toMovie(genreMap: Map<Int, Genre>): Movie =
         isVideo,
         averageVote)
 
-
 fun MovieDatabaseModel.toMovie(genreMap: Map<Int, Genre>): Movie =
 
     Movie(posterPath,
@@ -39,5 +38,3 @@ fun MovieDatabaseModel.toMovie(genreMap: Map<Int, Genre>): Movie =
         voteCount,
         isVideo,
         averageVote)
-
-

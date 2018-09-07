@@ -35,10 +35,10 @@ class FavoritesPresenter @Inject constructor(
                 isFavorite = true
             }
         }
-        if(newMovies.isNotEmpty()){
+        if (newMovies.isNotEmpty()) {
             view.showFavoriteMovies(newMovies)
             EventBus.getDefault().post(newMovies)
-        } else{
+        } else {
             view.showNoFavoritesView()
         }
     }

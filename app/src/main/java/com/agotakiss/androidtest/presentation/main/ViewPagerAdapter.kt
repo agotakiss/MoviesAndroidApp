@@ -8,8 +8,9 @@ import com.agotakiss.androidtest.presentation.main.popular.PopularFragment
 import com.agotakiss.androidtest.presentation.main.search.SearchFragment
 import java.lang.ref.WeakReference
 
-class ViewPagerAdapter(fragmentManager: FragmentManager,
-                       var numberOfTabs: Int
+class ViewPagerAdapter(
+    fragmentManager: FragmentManager,
+    var numberOfTabs: Int
 ) : FragmentStatePagerAdapter(fragmentManager) {
 
     val pages = mutableMapOf<Int, WeakReference<MainPageFragment>>()

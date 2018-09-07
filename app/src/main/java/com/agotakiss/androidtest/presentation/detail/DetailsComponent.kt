@@ -7,5 +7,4 @@ import dagger.Subcomponent
 interface DetailsComponent {
 
     fun inject(activity: DetailsActivity)
-
 }

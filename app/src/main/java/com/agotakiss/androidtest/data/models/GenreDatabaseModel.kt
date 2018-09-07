@@ -5,9 +5,9 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "genres_table")
-data class GenreDatabaseModel (
+data class GenreDatabaseModel(
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     @ColumnInfo(name = "genreName")
     val name: String
-    )
+)

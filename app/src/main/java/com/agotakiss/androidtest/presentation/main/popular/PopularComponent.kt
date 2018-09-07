@@ -6,5 +6,4 @@ import dagger.Subcomponent
 interface PopularComponent {
 
     fun inject(fragment: PopularFragment)
-
 }

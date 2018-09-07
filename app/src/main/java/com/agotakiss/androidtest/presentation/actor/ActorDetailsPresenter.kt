@@ -37,7 +37,7 @@ class ActorDetailsPresenter @Inject constructor(
         view.initUI(actor)
     }
 
-    private fun loadActorsMovies(){
+    private fun loadActorsMovies() {
         movieRepository.getActorsMovies(actorId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())

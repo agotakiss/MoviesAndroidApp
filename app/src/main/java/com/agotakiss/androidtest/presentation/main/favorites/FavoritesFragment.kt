@@ -1,6 +1,5 @@
 package com.agotakiss.androidtest.presentation.main.favorites
 
-
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -33,8 +32,11 @@ class FavoritesFragment : MainPageFragment(), FavoritesView {
     private var favoriteMoviesList = mutableListOf<Movie>()
     private lateinit var adapter: CardAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
 
@@ -61,7 +63,6 @@ class FavoritesFragment : MainPageFragment(), FavoritesView {
         favorites_rv.layoutManager = layoutManager
         adapter = CardAdapter(favoriteMoviesList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
-
             }
         }) { movie, view ->
             //            ViewCompat.setTransitionName(detail_poster_iv, "random")

@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.popular_movie_list_item.view.*
 
-
 class PopularMovieAdapter(
     private val movies: List<Movie>,
     private val onEndReachedListener: OnEndReachedListener,

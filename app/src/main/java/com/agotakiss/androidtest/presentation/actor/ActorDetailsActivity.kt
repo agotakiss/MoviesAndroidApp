@@ -18,14 +18,18 @@ import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.androidtest.presentation.detail.ActorAdapter.Companion.ACTOR_ID
 import com.agotakiss.androidtest.presentation.detail.DetailsActivity
 import com.agotakiss.androidtest.presentation.main.CardAdapter
-import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.activity_actor_details.*
-import java.util.*
+import kotlinx.android.synthetic.main.activity_actor_details.actor_detail_biography_tv
+import kotlinx.android.synthetic.main.activity_actor_details.actor_detail_birthday_title_tv
+import kotlinx.android.synthetic.main.activity_actor_details.actor_detail_birthday_tv
+import kotlinx.android.synthetic.main.activity_actor_details.actor_detail_known_for_department_tv
+import kotlinx.android.synthetic.main.activity_actor_details.actor_detail_name_tv
+import kotlinx.android.synthetic.main.activity_actor_details.actor_detail_other_movies_rv
+import kotlinx.android.synthetic.main.activity_actor_details.actor_detail_photo_iv
 import javax.inject.Inject
-
 
 class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
 
@@ -99,7 +103,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
     fun expandCollapsedByMaxLines(text: TextView) {
         val height = text.measuredHeight
         text.height = height
-        text.maxLines = Integer.MAX_VALUE //expand fully
+        text.maxLines = Integer.MAX_VALUE // expand fully
         text.measure(View.MeasureSpec.makeMeasureSpec(text.measuredWidth, View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED))
         val newHeight = text.measuredHeight

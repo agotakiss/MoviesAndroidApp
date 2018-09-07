@@ -17,17 +17,29 @@ import com.agotakiss.androidtest.domain.models.Cast
 import com.agotakiss.androidtest.domain.models.Movie
 import com.agotakiss.androidtest.presentation.BaseActivity
 import com.agotakiss.androidtest.presentation.POSTER_TRANSITION_NAME
-import com.agotakiss.androidtest.presentation.main.CardAdapter
 import com.agotakiss.androidtest.presentation.actor.ActorDetailsActivity
-import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.IMAGE_BASE_URL
-import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
+import com.agotakiss.androidtest.presentation.main.CardAdapter
 import com.agotakiss.androidtest.presentation.main.OnEndReachedListener
 import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.BACKDROP_IMAGE_BASE_URL
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.IMAGE_BASE_URL
+import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion.MOVIE
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.activity_details.*
-import timber.log.Timber
-import java.util.*
+import kotlinx.android.synthetic.main.activity_details.detail_actors_rv
+import kotlinx.android.synthetic.main.activity_details.detail_app_bar_layout_favorite_btn
+import kotlinx.android.synthetic.main.activity_details.detail_backdrop_iv
+import kotlinx.android.synthetic.main.activity_details.detail_calendar_iv
+import kotlinx.android.synthetic.main.activity_details.detail_collapsing_iv
+import kotlinx.android.synthetic.main.activity_details.detail_collapsing_toolbar_layout
+import kotlinx.android.synthetic.main.activity_details.detail_description_tv
+import kotlinx.android.synthetic.main.activity_details.detail_genres_tv
+import kotlinx.android.synthetic.main.activity_details.detail_movie_title_tv
+import kotlinx.android.synthetic.main.activity_details.detail_poster_iv
+import kotlinx.android.synthetic.main.activity_details.detail_rating_tv
+import kotlinx.android.synthetic.main.activity_details.detail_release_date_tv
+import kotlinx.android.synthetic.main.activity_details.detail_similar_movies_rv
+import kotlinx.android.synthetic.main.activity_details.toolbar
+import java.util.ArrayList
 import javax.inject.Inject
 
 class DetailsActivity : BaseActivity(), DetailsView {
@@ -94,12 +106,12 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
         if (movie.releaseDateText != "") {
             detail_release_date_tv.text = movie.releaseDateText!!.substring(0, 4)
-        } else{
+        } else {
             detail_calendar_iv.visibility = View.INVISIBLE
         }
-        if(movie.overview == ""){
+        if (movie.overview == "") {
             detail_description_tv.text = "No overview found for this movie."
-        }else{
+        } else {
             detail_description_tv.text = movie.overview
         }
     }
@@ -205,7 +217,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
     fun expandCollapsedByMaxLines(text: TextView) {
         val height = text.measuredHeight
         text.height = height
-        text.maxLines = Integer.MAX_VALUE //expand fully
+        text.maxLines = Integer.MAX_VALUE // expand fully
         text.measure(View.MeasureSpec.makeMeasureSpec(text.measuredWidth, View.MeasureSpec.EXACTLY),
             View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED))
         val newHeight = text.measuredHeight

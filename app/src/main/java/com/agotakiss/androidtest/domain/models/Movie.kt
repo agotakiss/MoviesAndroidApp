@@ -1,11 +1,8 @@
 package com.agotakiss.androidtest.domain.models
 
-import android.arch.persistence.room.ColumnInfo
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
-//@Entity(tableName = "favorite_movies")
+// @Entity(tableName = "favorite_movies")
 data class Movie(
 //    @ColumnInfo(name = "poster_path")
     var posterPath: String? = null,

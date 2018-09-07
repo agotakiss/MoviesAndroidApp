@@ -8,5 +8,4 @@ interface PopularView {
     fun showError(t: Throwable)
     fun hideLoadingView()
     fun updateListItem(position: Int)
-
 }

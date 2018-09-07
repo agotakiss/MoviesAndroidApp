@@ -6,7 +6,6 @@ import android.arch.persistence.room.TypeConverters
 import com.agotakiss.androidtest.data.mapper.GenreConverter
 import com.agotakiss.androidtest.data.models.MovieDatabaseModel
 
-
 @Database(entities = arrayOf(MovieDatabaseModel::class), version = 1)
 @TypeConverters(GenreConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -28,7 +27,4 @@ abstract class AppDatabase : RoomDatabase() {
 //                AppDatabase::class.java, "movies_database")
 //                .build()
 //    }
-
-
-
 }

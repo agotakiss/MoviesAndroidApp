@@ -13,9 +13,11 @@ import com.agotakiss.androidtest.presentation.main.PopularMovieAdapter.Companion
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.card_movie_list_item.view.*
 
-class CardAdapter(private val movies: List<Movie>,
-                  private var onEndReachedListener: OnEndReachedListener,
-                  private val onItemClickListener: (Movie, View) -> Unit)
+class CardAdapter(
+    private val movies: List<Movie>,
+    private var onEndReachedListener: OnEndReachedListener,
+    private val onItemClickListener: (Movie, View) -> Unit
+)
 
     : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
 
@@ -33,16 +35,16 @@ class CardAdapter(private val movies: List<Movie>,
             if (position == movies.size - LAST_ITEMS_BEFORE_LOAD_NEW) {
                 onEndReachedListener.onEndReached(position)
             }
-            if (movie.averageVote != 0F){
+            if (movie.averageVote != 0F) {
                 itemView.card_movie_rating_tv!!.text = java.lang.Float.toString(movie.averageVote)
-            } else{
+            } else {
                 itemView.card_movie_rating_tv.text = "Unrated"
             }
-            if (movie.posterPath != null){
+            if (movie.posterPath != null) {
                 Glide.with(itemView.context)
                     .load(IMAGE_BASE_URL + movie.posterPath)
                     .into(itemView.card_movie_poster_iv)
-            }else{
+            } else {
                 itemView.card_movie_poster_iv.setImageResource(R.drawable.default_poster)
             }
         }

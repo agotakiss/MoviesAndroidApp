@@ -8,7 +8,5 @@ import dagger.Provides
 @Module
 class SearchModule(val searchFragment: SearchFragment) {
     @Provides
-    fun providePresenter(movieRepository: MovieRepository, getSearchResults: GetSearchResults)
-        : SearchPresenter = SearchPresenter(movieRepository, getSearchResults)
-
+    fun providePresenter(movieRepository: MovieRepository, getSearchResults: GetSearchResults): SearchPresenter = SearchPresenter(movieRepository, getSearchResults)
 }

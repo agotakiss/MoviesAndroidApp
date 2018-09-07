@@ -6,7 +6,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 
 class MovieViewPager @JvmOverloads constructor(
-    context: Context, attrs: AttributeSet? = null
+    context: Context,
+    attrs: AttributeSet? = null
 ) : ViewPager(context, attrs) {
 
     var shouldSkipHorizontalSwipe = false
