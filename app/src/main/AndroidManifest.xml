@@ -25,6 +25,10 @@
             android:name=".presentation.detail.DetailsActivity"
             android:parentActivityName=".presentation.main.MainActivity" />
         <activity android:name=".presentation.actor.ActorDetailsActivity" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="994acbe98173b3a41aa0260039eb558290c45332"
+            />
     </application>
 
 </manifest>
