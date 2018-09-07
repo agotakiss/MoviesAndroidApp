@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.agotakiss.androidtest.presentation.main.MovieViewPager
+    <com.agotakiss.movie4u.presentation.main.MovieViewPager
         android:id="@+id/viewpager"
         android:layout_width="0dp"
         android:layout_height="0dp"
