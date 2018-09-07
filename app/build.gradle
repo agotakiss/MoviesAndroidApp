@@ -14,9 +14,28 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    buildTypes {
+
+    signingConfigs {
+
         release {
+            storeFile file("signing_keys/movie4u_release_keystore.jks")
+            storePassword System.getenv("movie_signing_store_pass")
+            keyAlias "agotakiss"
+            keyPassword System.getenv("movie_signing_key_pass")
+        }
+    }
+
+    buildTypes {
+        debug {
             minifyEnabled false
+            debuggable true
+            useProguard false
+        }
+        release {
+            minifyEnabled true
+            debuggable false
+            useProguard true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
