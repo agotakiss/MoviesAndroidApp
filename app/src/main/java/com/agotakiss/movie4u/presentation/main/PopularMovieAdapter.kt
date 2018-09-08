@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.domain.models.Movie
+import com.agotakiss.movie4u.presentation.IMAGE_BASE_URL
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
@@ -85,12 +86,5 @@ class PopularMovieAdapter(
         } else {
             ""
         }
-    }
-
-    companion object {
-        val IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w154/"
-        val BACKDROP_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w342/"
-        val LAST_ITEMS_BEFORE_LOAD_NEW = 5
-        val MOVIE = "movie"
     }
 }

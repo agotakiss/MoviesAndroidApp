@@ -40,10 +40,6 @@ class SearchPresenter @Inject constructor(
         queryTextChangeSubject.onNext(queryString)
     }
 
-    fun onDoneButtonClicked(queryString: String) {
-        loadSearchResults(queryString)
-    }
-
     private fun loadSearchResults(queryString: String) {
         if (queryString == "") return
         getSearchResults.get(queryString, page)

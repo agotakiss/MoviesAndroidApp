@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.domain.models.Cast
+import com.agotakiss.movie4u.presentation.IMAGE_BASE_URL
 import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
 import com.bumptech.glide.Glide
@@ -39,7 +40,7 @@ class ActorAdapter(
                 itemView.actor_photo_iv.setImageResource(R.drawable.person_picture)
             } else {
                 Glide.with(itemView.context)
-                    .load(PopularMovieAdapter.IMAGE_BASE_URL + actor.profilePath)
+                    .load(IMAGE_BASE_URL + actor.profilePath)
                     .apply(RequestOptions.circleCropTransform())
                     .into(itemView.actor_photo_iv)
             }

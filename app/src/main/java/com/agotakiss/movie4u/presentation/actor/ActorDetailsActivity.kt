@@ -14,6 +14,8 @@ import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.domain.models.Actor
 import com.agotakiss.movie4u.domain.models.Movie
 import com.agotakiss.movie4u.presentation.BaseActivity
+import com.agotakiss.movie4u.presentation.IMAGE_BASE_URL
+import com.agotakiss.movie4u.presentation.MOVIE
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.detail.ActorAdapter.Companion.ACTOR_ID
 import com.agotakiss.movie4u.presentation.detail.DetailsActivity
@@ -56,7 +58,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
             actor_detail_photo_iv.setImageResource(R.drawable.person_picture)
         } else {
             Glide.with(this)
-                .load(PopularMovieAdapter.IMAGE_BASE_URL + actor.profilePath)
+                .load(IMAGE_BASE_URL + actor.profilePath)
                 .apply(RequestOptions.circleCropTransform())
                 .into(actor_detail_photo_iv)
         }
@@ -82,7 +84,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
             }) { movie, view ->
             val similarMovie = movie
             val intent = Intent(this, DetailsActivity::class.java)
-            intent.putExtra(PopularMovieAdapter.MOVIE, similarMovie)
+            intent.putExtra(MOVIE, similarMovie)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this, view,
                 POSTER_TRANSITION_NAME

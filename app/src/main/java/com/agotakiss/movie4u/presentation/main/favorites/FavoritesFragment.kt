@@ -11,11 +11,11 @@ import android.view.ViewGroup
 import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.base.MovieApplication
 import com.agotakiss.movie4u.domain.models.Movie
+import com.agotakiss.movie4u.presentation.MOVIE
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.detail.DetailsActivity
 import com.agotakiss.movie4u.presentation.main.MainPageFragment
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.MOVIE
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import javax.inject.Inject
 

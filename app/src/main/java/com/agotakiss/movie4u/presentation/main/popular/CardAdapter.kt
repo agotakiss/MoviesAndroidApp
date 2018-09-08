@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.domain.models.Movie
+import com.agotakiss.movie4u.presentation.IMAGE_BASE_URL
+import com.agotakiss.movie4u.presentation.LAST_ITEMS_BEFORE_LOAD_NEW
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.IMAGE_BASE_URL
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.LAST_ITEMS_BEFORE_LOAD_NEW
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.card_movie_list_item.view.*
 
