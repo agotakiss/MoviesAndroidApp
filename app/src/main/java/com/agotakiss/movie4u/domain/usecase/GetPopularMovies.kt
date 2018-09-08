@@ -16,7 +16,7 @@ class GetPopularMovies @Inject constructor(
 
                 for (i in 0 until popularMovies.size) {
                     val movie = popularMovies[i]
-                    if (favoriteMovies.contains(movie)) {
+                    if ((favoriteMovies.find { it.id == movie.id }) != null) {
                         movie.isFavorite = true
                     }
                     moviesToDisplay.add(movie)
