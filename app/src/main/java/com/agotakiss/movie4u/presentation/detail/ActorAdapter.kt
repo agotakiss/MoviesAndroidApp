@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.domain.models.Cast
 import com.agotakiss.movie4u.presentation.IMAGE_BASE_URL
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.actors_list_item.view.*
+import kotlinx.android.synthetic.main.actors_list_item.view.actor_name_tv
+import kotlinx.android.synthetic.main.actors_list_item.view.actor_photo_iv
+import kotlinx.android.synthetic.main.actors_list_item.view.character_name_tv
 
 class ActorAdapter(
     private val actors: List<Cast>,
     private var onEndReachedListener: OnEndReachedListener,
     private val onItemClickListener: (Int, View) -> Unit
-)
-    : RecyclerView.Adapter<ActorAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ActorAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {

@@ -11,7 +11,6 @@ import com.agotakiss.movie4u.presentation.IMAGE_BASE_URL
 import com.agotakiss.movie4u.presentation.LAST_ITEMS_BEFORE_LOAD_NEW
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.favorites_list_item.view.favorite_movie_poster_iv
 import kotlinx.android.synthetic.main.favorites_list_item.view.favorite_movie_rating_tv

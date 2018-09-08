@@ -19,9 +19,8 @@ import com.agotakiss.movie4u.presentation.MOVIE
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.detail.ActorAdapter.Companion.ACTOR_ID
 import com.agotakiss.movie4u.presentation.detail.DetailsActivity
-import com.agotakiss.movie4u.presentation.main.popular.CardAdapter
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter
+import com.agotakiss.movie4u.presentation.main.popular.CardAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_actor_details.actor_detail_biography_tv
@@ -96,8 +95,10 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
 
     override fun showActorsMovies(actorsNewMoviesList: List<Movie>) {
         actorsMoviesList.addAll(actorsNewMoviesList)
-        actorsMoviesAdapter.notifyItemRangeInserted(actorsMoviesList.size - actorsNewMoviesList.size,
-            actorsNewMoviesList.size)
+        actorsMoviesAdapter.notifyItemRangeInserted(
+            actorsMoviesList.size - actorsNewMoviesList.size,
+            actorsNewMoviesList.size
+        )
     }
 
     override fun showError(t: Throwable) {
@@ -110,8 +111,10 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         val height = text.measuredHeight
         text.height = height
         text.maxLines = Integer.MAX_VALUE // expand fully
-        text.measure(View.MeasureSpec.makeMeasureSpec(text.measuredWidth, View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED))
+        text.measure(
+            View.MeasureSpec.makeMeasureSpec(text.measuredWidth, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED)
+        )
         val newHeight = text.measuredHeight
         val animation = ObjectAnimator.ofInt(text, "height", height, newHeight)
         animation.setDuration(250).start()
