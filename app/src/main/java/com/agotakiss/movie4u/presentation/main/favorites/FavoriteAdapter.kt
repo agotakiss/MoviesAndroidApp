@@ -1,4 +1,4 @@
-package com.agotakiss.movie4u.presentation.main
+package com.agotakiss.movie4u.presentation.main.favorites
 
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
@@ -8,50 +8,51 @@ import android.view.ViewGroup
 import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.domain.models.Movie
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.IMAGE_BASE_URL
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.LAST_ITEMS_BEFORE_LOAD_NEW
+import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
+import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.card_movie_list_item.view.*
+import kotlinx.android.synthetic.main.favorites_list_item.view.favorite_movie_poster_iv
+import kotlinx.android.synthetic.main.favorites_list_item.view.favorite_movie_rating_tv
 
-class CardAdapter(
+class FavoriteAdapter(
     private val movies: List<Movie>,
     private var onEndReachedListener: OnEndReachedListener,
     private val onItemClickListener: (Movie, View) -> Unit
 )
 
-    : RecyclerView.Adapter<CardAdapter.ViewHolder>() {
+    : RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
-                ViewCompat.setTransitionName(itemView.card_movie_poster_iv, POSTER_TRANSITION_NAME)
+                ViewCompat.setTransitionName(itemView.favorite_movie_poster_iv, POSTER_TRANSITION_NAME)
 
-                onItemClickListener.invoke(movies[adapterPosition], itemView.card_movie_poster_iv)
+                onItemClickListener.invoke(movies[adapterPosition], itemView.favorite_movie_poster_iv)
             }
         }
 
         fun bindViewHolder(position: Int) {
             val movie = movies[position]
-            if (position == movies.size - LAST_ITEMS_BEFORE_LOAD_NEW) {
+            if (position == movies.size - PopularMovieAdapter.LAST_ITEMS_BEFORE_LOAD_NEW) {
                 onEndReachedListener.onEndReached(position)
             }
             if (movie.averageVote != 0F) {
-                itemView.card_movie_rating_tv!!.text = java.lang.Float.toString(movie.averageVote)
+                itemView.favorite_movie_rating_tv!!.text = java.lang.Float.toString(movie.averageVote)
             } else {
-                itemView.card_movie_rating_tv.text = "Unrated"
+                itemView.favorite_movie_rating_tv.text = "Unrated"
             }
             if (movie.posterPath != null) {
                 Glide.with(itemView.context)
-                    .load(IMAGE_BASE_URL + movie.posterPath)
-                    .into(itemView.card_movie_poster_iv)
+                    .load(PopularMovieAdapter.IMAGE_BASE_URL + movie.posterPath)
+                    .into(itemView.favorite_movie_poster_iv)
             } else {
-                itemView.card_movie_poster_iv.setImageResource(R.drawable.default_poster)
+                itemView.favorite_movie_poster_iv.setImageResource(R.drawable.default_poster)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_movie_list_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.favorites_list_item, parent, false)
         return ViewHolder(view)
     }
 

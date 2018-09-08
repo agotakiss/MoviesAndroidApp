@@ -17,7 +17,7 @@ import com.agotakiss.movie4u.presentation.BaseActivity
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.detail.ActorAdapter.Companion.ACTOR_ID
 import com.agotakiss.movie4u.presentation.detail.DetailsActivity
-import com.agotakiss.movie4u.presentation.main.CardAdapter
+import com.agotakiss.movie4u.presentation.main.popular.CardAdapter
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
 import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter
 import com.bumptech.glide.Glide
@@ -74,15 +74,19 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
     fun initActorsMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         actor_detail_other_movies_rv.layoutManager = layoutManager
-        actorsMoviesAdapter = CardAdapter(actorsMoviesList, object : OnEndReachedListener {
-            override fun onEndReached(position: Int) {
-            }
-        }) { movie, view ->
+        actorsMoviesAdapter = CardAdapter(
+            actorsMoviesList,
+            object : OnEndReachedListener {
+                override fun onEndReached(position: Int) {
+                }
+            }) { movie, view ->
             val similarMovie = movie
             val intent = Intent(this, DetailsActivity::class.java)
             intent.putExtra(PopularMovieAdapter.MOVIE, similarMovie)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-                POSTER_TRANSITION_NAME)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this, view,
+                POSTER_TRANSITION_NAME
+            )
             startActivity(intent, options.toBundle())
         }
         actor_detail_other_movies_rv.adapter = actorsMoviesAdapter

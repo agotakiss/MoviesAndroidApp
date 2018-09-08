@@ -13,7 +13,6 @@ import com.agotakiss.movie4u.base.MovieApplication
 import com.agotakiss.movie4u.domain.models.Movie
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.detail.DetailsActivity
-import com.agotakiss.movie4u.presentation.main.CardAdapter
 import com.agotakiss.movie4u.presentation.main.MainPageFragment
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
 import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.MOVIE
@@ -30,7 +29,7 @@ class FavoritesFragment : MainPageFragment(), FavoritesView {
     lateinit var presenter: FavoritesPresenter
 
     private var favoriteMoviesList = mutableListOf<Movie>()
-    private lateinit var adapter: CardAdapter
+    private lateinit var adapter: FavoriteAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +60,7 @@ class FavoritesFragment : MainPageFragment(), FavoritesView {
     private fun initializeList() {
         val layoutManager = GridLayoutManager(context, 3)
         favorites_rv.layoutManager = layoutManager
-        adapter = CardAdapter(favoriteMoviesList, object : OnEndReachedListener {
+        adapter = FavoriteAdapter(favoriteMoviesList, object : OnEndReachedListener {
             override fun onEndReached(position: Int) {
             }
         }) { movie, view ->

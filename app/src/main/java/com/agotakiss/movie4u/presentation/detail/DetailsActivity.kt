@@ -18,7 +18,7 @@ import com.agotakiss.movie4u.domain.models.Movie
 import com.agotakiss.movie4u.presentation.BaseActivity
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.actor.ActorDetailsActivity
-import com.agotakiss.movie4u.presentation.main.CardAdapter
+import com.agotakiss.movie4u.presentation.main.popular.CardAdapter
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
 import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.BACKDROP_IMAGE_BASE_URL
 import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.IMAGE_BASE_URL
@@ -119,19 +119,23 @@ class DetailsActivity : BaseActivity(), DetailsView {
     fun initializeSimilarMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         detail_similar_movies_rv.layoutManager = layoutManager
-        adapter = CardAdapter(similarMovieList, object : OnEndReachedListener {
-            override fun onEndReached(position: Int) {
-                presenter.onSimilarMovieScrollEndReached()
-            }
-        }) { movie, view ->
+        adapter = CardAdapter(
+            similarMovieList,
+            object : OnEndReachedListener {
+                override fun onEndReached(position: Int) {
+                    presenter.onSimilarMovieScrollEndReached()
+                }
+            }) { movie, view ->
             ViewCompat.setTransitionName(detail_poster_iv, "random")
             sharedImageView = view
             hasStartedAnotherScreen = true
             val similarMovie = movie
             val intent = Intent(this, DetailsActivity::class.java)
             intent.putExtra(MOVIE, similarMovie)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-                POSTER_TRANSITION_NAME)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this, view,
+                POSTER_TRANSITION_NAME
+            )
             startActivity(intent, options.toBundle())
         }
         detail_similar_movies_rv.adapter = adapter

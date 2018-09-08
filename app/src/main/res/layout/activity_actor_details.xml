@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
@@ -19,17 +19,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/actor_detail_name_tv"
-            android:layout_width="180dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="52dp"
-            android:text="name"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/actor_detail_photo_iv"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/actor_detail_name_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:maxLines="4"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="48dp"
+                android:text="name"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/actor_detail_photo_iv"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.027"/>
 
         <TextView
             android:id="@+id/actor_detail_known_for_department_tv"
@@ -53,14 +55,13 @@
             app:layout_constraintTop_toBottomOf="@+id/actor_detail_known_for_department_tv" />
 
         <TextView
-            android:id="@+id/actor_detail_birthday_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/birthday"
-            android:layout_marginStart="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/actor_detail_birthday_title_tv"
-            app:layout_constraintStart_toEndOf="@id/actor_detail_birthday_title_tv"
-            app:layout_constraintTop_toTopOf="@+id/actor_detail_birthday_title_tv"/>
+                android:id="@+id/actor_detail_birthday_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/birthday"
+                android:layout_marginStart="24dp"
+                app:layout_constraintStart_toEndOf="@+id/actor_detail_photo_iv" android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/actor_detail_birthday_title_tv"/>
 
 
         <TextView
