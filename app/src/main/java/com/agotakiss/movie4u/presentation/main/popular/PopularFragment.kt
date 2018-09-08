@@ -66,8 +66,10 @@ class PopularFragment : MainPageFragment(), PopularView {
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(PopularMovieAdapter.MOVIE, movie)
             Timber.d("details of the movie ${movie.title} and it is ${movie.isFavorite}")
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity as Activity, view,
-                POSTER_TRANSITION_NAME)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                activity as Activity, view,
+                POSTER_TRANSITION_NAME
+            )
             startActivity(intent, options.toBundle())
         }, presenter::onFavoriteButtonClicked)
 
@@ -80,7 +82,9 @@ class PopularFragment : MainPageFragment(), PopularView {
     }
 
     override fun hideLoadingView() {
-        (activity as MainActivity).hideLoadingView()
+        activity?.let {
+            (activity as MainActivity).hideLoadingView()
+        }
     }
 
     override fun updateListItem(position: Int) {
