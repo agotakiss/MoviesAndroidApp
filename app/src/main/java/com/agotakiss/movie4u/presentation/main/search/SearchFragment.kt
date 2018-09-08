@@ -7,7 +7,6 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +17,18 @@ import android.widget.Toast
 import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.base.MovieApplication
 import com.agotakiss.movie4u.domain.models.Movie
+import com.agotakiss.movie4u.presentation.DETAILS_ACTIVITY_RESULT_CODE
+import com.agotakiss.movie4u.presentation.MOVIE
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
+import com.agotakiss.movie4u.presentation.SEARCH_FRAGMENT_REQUEST_CODE
 import com.agotakiss.movie4u.presentation.detail.DetailsActivity
 import com.agotakiss.movie4u.presentation.main.MainPageFragment
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
 import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.MOVIE
-import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.android.synthetic.main.fragment_search.camera_av
+import kotlinx.android.synthetic.main.fragment_search.search_cancel_iv
+import kotlinx.android.synthetic.main.fragment_search.search_et
+import kotlinx.android.synthetic.main.fragment_search.search_results_rv
 import java.util.ArrayList
 import javax.inject.Inject
 
@@ -104,7 +108,7 @@ class SearchFragment : MainPageFragment(), SearchView {
                 activity as Activity, view,
                 POSTER_TRANSITION_NAME
             )
-            startActivity(intent, options.toBundle())
+            startActivityForResult(intent, SEARCH_FRAGMENT_REQUEST_CODE, options.toBundle())
         }, presenter::onFavoriteButtonClicked)
 
         search_results_rv.adapter = adapter
@@ -116,13 +120,12 @@ class SearchFragment : MainPageFragment(), SearchView {
     }
 
     override fun showNoResult() {
-        Log.d("no results", "noooooooooooooooooooooooooooo results")
         Toast.makeText(activity, "Sorry, we couldn't find anything :(", Toast.LENGTH_LONG).show()
         showKeyboard()
     }
 
     override fun showError(throwable: Throwable) {
-        Toast.makeText(activity, "An error occured while searching. Try again!", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "An error occurred while searching. Try again!", Toast.LENGTH_LONG).show()
     }
 
     override fun updateListItem(position: Int) {
@@ -131,10 +134,17 @@ class SearchFragment : MainPageFragment(), SearchView {
 
     private fun onCancelButtonClicked() {
         search_et.text.clear()
-//        searchResultList.clear()
-//        showSearchResults(searchResultList)
         showKeyboard()
-//        camera_av.visibility = View.VISIBLE
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SEARCH_FRAGMENT_REQUEST_CODE && resultCode == DETAILS_ACTIVITY_RESULT_CODE) {
+            val chosenMovie = data!!.getSerializableExtra(MOVIE) as Movie
+            val position = searchResultList.indexOfFirst { it.id == chosenMovie.id }
+            searchResultList[position].isFavorite = chosenMovie.isFavorite
+            updateListItem(position)
+        }
     }
 
     private fun hideKeyboard() {

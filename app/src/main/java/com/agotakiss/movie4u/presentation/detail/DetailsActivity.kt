@@ -15,14 +15,15 @@ import android.widget.Toast
 import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.domain.models.Cast
 import com.agotakiss.movie4u.domain.models.Movie
+import com.agotakiss.movie4u.presentation.BACKDROP_IMAGE_BASE_URL
 import com.agotakiss.movie4u.presentation.BaseActivity
+import com.agotakiss.movie4u.presentation.DETAILS_ACTIVITY_RESULT_CODE
+import com.agotakiss.movie4u.presentation.IMAGE_BASE_URL
+import com.agotakiss.movie4u.presentation.MOVIE
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.actor.ActorDetailsActivity
-import com.agotakiss.movie4u.presentation.main.popular.CardAdapter
 import com.agotakiss.movie4u.presentation.main.OnEndReachedListener
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.BACKDROP_IMAGE_BASE_URL
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.IMAGE_BASE_URL
-import com.agotakiss.movie4u.presentation.main.PopularMovieAdapter.Companion.MOVIE
+import com.agotakiss.movie4u.presentation.main.popular.CardAdapter
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_details.detail_actors_rv
@@ -59,6 +60,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
     private lateinit var adapter: CardAdapter
     private lateinit var actorAdapter: ActorAdapter
     private var hasStartedAnotherScreen = false
+    private var hasChangedMovieFavoriteState = false
 
     private var sharedImageView: View? = null
 
@@ -163,6 +165,11 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
     override fun onBackPressed() {
         supportFinishAfterTransition()
+        if (hasChangedMovieFavoriteState) {
+            val intent = Intent()
+            intent.putExtra(MOVIE, movie)
+            setResult(DETAILS_ACTIVITY_RESULT_CODE, intent)
+        }
     }
 
     override fun setFavoriteButton(isFavorite: Boolean) {
@@ -171,6 +178,10 @@ class DetailsActivity : BaseActivity(), DetailsView {
         } else {
             detail_app_bar_layout_favorite_btn.setImageResource(R.drawable.favorite_white)
         }
+    }
+
+    override fun hasChangedFavoriteState() {
+        hasChangedMovieFavoriteState = true
     }
 
     override fun showSimilarMovies(newMovies: List<Movie>) {
@@ -190,8 +201,10 @@ class DetailsActivity : BaseActivity(), DetailsView {
 
             val intent = Intent(this, ActorDetailsActivity::class.java)
             intent.putExtra(ActorAdapter.ACTOR_ID, actorId)
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view,
-                ACTOR_TRANSITION_NAME)
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                this, view,
+                ACTOR_TRANSITION_NAME
+            )
             startActivity(intent, options.toBundle())
         }
         detail_actors_rv.adapter = actorAdapter
@@ -222,8 +235,10 @@ class DetailsActivity : BaseActivity(), DetailsView {
         val height = text.measuredHeight
         text.height = height
         text.maxLines = Integer.MAX_VALUE // expand fully
-        text.measure(View.MeasureSpec.makeMeasureSpec(text.measuredWidth, View.MeasureSpec.EXACTLY),
-            View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED))
+        text.measure(
+            View.MeasureSpec.makeMeasureSpec(text.measuredWidth, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(ViewGroup.LayoutParams.WRAP_CONTENT, View.MeasureSpec.UNSPECIFIED)
+        )
         val newHeight = text.measuredHeight
         val animation = ObjectAnimator.ofInt(text, "height", height, newHeight)
         animation.setDuration(250).start()

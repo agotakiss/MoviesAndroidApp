@@ -11,4 +11,5 @@ interface DetailsView {
 
     fun showError(t: Throwable)
     fun setFavoriteButton(isFavorite: Boolean)
+    fun hasChangedFavoriteState()
 }

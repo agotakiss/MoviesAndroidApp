@@ -33,6 +33,7 @@ class DetailsPresenter @Inject constructor(
 
     fun onFavoriteButtonClicked(movie: Movie) {
         movie.isFavorite = !movie.isFavorite
+        view.hasChangedFavoriteState()
         if (movie.isFavorite) {
             addMovieToFavorites(movie)
             view.setFavoriteButton(true)
