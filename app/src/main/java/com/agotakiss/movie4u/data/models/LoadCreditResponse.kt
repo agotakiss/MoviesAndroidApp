@@ -10,7 +10,4 @@ class LoadCreditResponse : Serializable {
 
     @SerializedName("cast")
     val cast: List<CastApiModel>? = null
-
-    @SerializedName("crew")
-    val crew: List<CrewApiModel>? = null
 }

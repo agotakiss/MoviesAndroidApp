@@ -11,20 +11,4 @@ import com.agotakiss.movie4u.data.models.MovieDatabaseModel
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun favoriteMovieDao(): FavoriteMovieDao
-
-//    companion object {
-//
-//        @Volatile
-//        private var INSTANCE: AppDatabase? = null
-//
-//        fun getInstance(context: Context): AppDatabase =
-//            INSTANCE ?: synchronized(this) {
-//                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
-//            }
-//
-//        private fun buildDatabase(context: Context) =
-//            Room.databaseBuilder(context.applicationContext,
-//                AppDatabase::class.java, "movies_database")
-//                .build()
-//    }
 }
