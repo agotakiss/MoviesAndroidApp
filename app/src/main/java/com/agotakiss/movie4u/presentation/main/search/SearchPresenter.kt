@@ -38,6 +38,7 @@ class SearchPresenter @Inject constructor(
 
     fun onSearchQueryChanged(queryString: String) {
         queryTextChangeSubject.onNext(queryString)
+        page = 1
     }
 
     private fun loadSearchResults(queryString: String) {
