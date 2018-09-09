@@ -44,6 +44,7 @@ class SearchPresenter @Inject constructor(
     private fun loadSearchResults(queryString: String) {
         if (queryString == "") return
         getSearchResults.get(queryString, page)
+            .map { it.sortedByDescending { it.popularity } }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ searchResultList -> onSearchResultsLoaded(searchResultList, queryString) },
