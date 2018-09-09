@@ -2,6 +2,7 @@ package com.agotakiss.movie4u.base
 
 import android.arch.persistence.room.Room
 import com.agotakiss.movie4u.data.network.MovieDbApi
+import com.agotakiss.movie4u.data.network.MovieRemoteStore
 import com.agotakiss.movie4u.data.network.RetrofitHelper
 import com.agotakiss.movie4u.data.repository.ActorRepositoryImpl
 import com.agotakiss.movie4u.data.repository.CastRepositoryImpl
@@ -34,10 +35,10 @@ class ApplicationModule(val application: MovieApplication) {
     @Singleton
     fun provideMovieRepository(
         favoriteMovieDataStore: FavoriteMovieDataStore,
-        genreRepository: GenreRepository,
-        movieDbApi: MovieDbApi
+        movieRemoteStore: MovieRemoteStore
+
     ): MovieRepository {
-        return MovieRepositoryImpl(favoriteMovieDataStore, genreRepository, movieDbApi)
+        return MovieRepositoryImpl(favoriteMovieDataStore, movieRemoteStore)
     }
 
     @Provides

@@ -1,9 +1,11 @@
 package com.agotakiss.movie4u.presentation.detail
 
-import android.util.Log
 import com.agotakiss.movie4u.base.BasePresenter
 import com.agotakiss.movie4u.domain.models.Cast
 import com.agotakiss.movie4u.domain.models.Movie
+import com.agotakiss.movie4u.domain.paging.Pager
+import com.agotakiss.movie4u.domain.paging.PagerFactory
+import com.agotakiss.movie4u.domain.paging.PagingType
 import com.agotakiss.movie4u.domain.repository.CastRepository
 import com.agotakiss.movie4u.domain.repository.MovieRepository
 import com.agotakiss.movie4u.domain.usecase.CheckIfMovieIsFavorite
@@ -13,19 +15,19 @@ import javax.inject.Inject
 
 class DetailsPresenter @Inject constructor(
     private val movieRepository: MovieRepository,
+    private val pagerFactory: PagerFactory,
     private val checkIfMovieIsFavorite: CheckIfMovieIsFavorite,
     private val castRepository: CastRepository
 ) : BasePresenter() {
 
-    private var similarMoviesPage = 1
-    private var totalPages: Int = 0
-    private var actorsTotalPage = 0
     lateinit var view: DetailsView
     lateinit var movie: Movie
+    lateinit var similarMoviePager: Pager<Movie>
 
     fun onViewReady(view: DetailsView, movie: Movie) {
         this.view = view
         this.movie = movie
+        this.similarMoviePager = pagerFactory.createPager(PagingType.SIMILAR_MOVIES, movie.id)
         checkIfMovieIsFavorite(movie)
         loadSimilarMovies()
         loadActors()
@@ -75,16 +77,15 @@ class DetailsPresenter @Inject constructor(
     }
 
     private fun loadSimilarMovies() {
-        movieRepository.getSimilarMovies(movie.id, similarMoviesPage)
+        similarMoviePager.getNextPage()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ movieList -> onSimilarMoviesLoaded(movieList, Integer.MAX_VALUE) }, { throwable ->
+            .subscribe({ movieList -> onSimilarMoviesLoaded(movieList) }, { throwable ->
                 view.showError(throwable)
             })
     }
 
-    private fun onSimilarMoviesLoaded(newMovies: List<Movie>, totalPages: Int) {
-        this.totalPages = totalPages
+    private fun onSimilarMoviesLoaded(newMovies: List<Movie>) {
         view.showSimilarMovies(newMovies)
     }
 
@@ -93,22 +94,17 @@ class DetailsPresenter @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ actorsList ->
-                onActorsLoaded(actorsList, Int.MAX_VALUE)
+                onActorsLoaded(actorsList)
             }, { t ->
                 view.showError(t)
             })
     }
 
-    private fun onActorsLoaded(newActors: List<Cast>, actorsTotalPage: Int) {
-        this.actorsTotalPage = actorsTotalPage
+    private fun onActorsLoaded(newActors: List<Cast>) {
         view.showActors(newActors)
     }
 
     fun onSimilarMovieScrollEndReached() {
-        Log.d("DetailPresenter", "onSimilarMovieScrollEndReached")
-        similarMoviesPage++
-        if (similarMoviesPage < totalPages) {
-            loadSimilarMovies()
-        }
+        loadSimilarMovies()
     }
 }

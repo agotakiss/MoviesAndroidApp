@@ -14,6 +14,7 @@ import com.agotakiss.movie4u.R
 import com.agotakiss.movie4u.base.MovieApplication
 import com.agotakiss.movie4u.domain.models.Movie
 import com.agotakiss.movie4u.presentation.MOVIE
+import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.agotakiss.movie4u.presentation.detail.DetailsActivity
 import com.agotakiss.movie4u.presentation.main.MainActivity
 import com.agotakiss.movie4u.presentation.main.MainPageFragment
@@ -26,10 +27,6 @@ import java.util.ArrayList
 import javax.inject.Inject
 
 class PopularFragment : MainPageFragment(), PopularView {
-
-    companion object {
-        const val POSTER_TRANSITION_NAME = "posterTransition"
-    }
 
     val movieApplication: MovieApplication get() = MovieApplication.get()
     val applicationComponent by lazy { movieApplication.applicationComponent.plus(PopularModule(this)) }
@@ -66,7 +63,6 @@ class PopularFragment : MainPageFragment(), PopularView {
         }, { movie, view ->
             val intent = Intent(context, DetailsActivity::class.java)
             intent.putExtra(MOVIE, movie)
-            Timber.d("details of the movie ${movie.title} and it is ${movie.isFavorite}")
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 activity as Activity, view,
                 POSTER_TRANSITION_NAME

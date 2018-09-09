@@ -15,8 +15,6 @@ class PopularPresenter @Inject constructor(
     private val getPopularMovies: GetPopularMovies
 ) : BasePresenter() {
 
-    private var page = 1
-    private var totalPages: Int = 0
     private var movieList = mutableListOf<Movie>()
     lateinit var view: PopularView
 
@@ -26,29 +24,22 @@ class PopularPresenter @Inject constructor(
     }
 
     private fun loadPopularMovies() {
-        getPopularMovies.get(page)
+        getPopularMovies.get()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ movieList -> onMoviesLoaded(movieList, Integer.MAX_VALUE) }, { throwable ->
+            .subscribe({ movieList -> onMoviesLoaded(movieList) }, { throwable ->
                 view.showError(throwable)
             })
     }
 
     fun onScrollEndReached() {
-        page++
-        if (page < totalPages) {
-            loadPopularMovies()
-        }
+        loadPopularMovies()
     }
 
-    private fun onMoviesLoaded(newMovies: List<Movie>, totalPages: Int) {
-        this.totalPages = totalPages
+    private fun onMoviesLoaded(newMovies: List<Movie>) {
         this.movieList.addAll(newMovies)
         view.showMovies(newMovies)
-
-        if (page == 1) {
-            view.hideLoadingView()
-        }
+        view.hideLoadingView()
     }
 
     fun onFavoriteButtonClicked(position: Int) {

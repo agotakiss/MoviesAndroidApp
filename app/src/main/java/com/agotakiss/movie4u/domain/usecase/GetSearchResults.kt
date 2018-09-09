@@ -1,16 +1,26 @@
 package com.agotakiss.movie4u.domain.usecase
 
 import com.agotakiss.movie4u.domain.models.Movie
+import com.agotakiss.movie4u.domain.paging.Pager
+import com.agotakiss.movie4u.domain.paging.PagerFactory
+import com.agotakiss.movie4u.domain.paging.PagingType
 import com.agotakiss.movie4u.domain.repository.MovieRepository
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import javax.inject.Inject
 
 class GetSearchResults @Inject constructor(
-    private val movieRepository: MovieRepository
+    private val movieRepository: MovieRepository,
+    private val pagerFactory: PagerFactory
 ) {
-    fun get(queryString: String, page: Int): Single<List<Movie>> {
-        return movieRepository.getSearchResults(queryString, page).zipWith(movieRepository.getFavoriteMovies(),
+
+    var pager: Pager<Movie>? = null
+
+    fun get(queryString: String): Single<List<Movie>> {
+        if (pager == null || pager!!.param != queryString) {
+            pager = pagerFactory.createPager(PagingType.SEARCH_MOVIES, queryString)
+        }
+        return pager!!.getNextPage().zipWith(movieRepository.getFavoriteMovies(),
             BiFunction<List<Movie>, List<Movie>, List<Movie>> { searchResults, favoriteMovies ->
                 val moviesToDisplay = mutableListOf<Movie>()
 

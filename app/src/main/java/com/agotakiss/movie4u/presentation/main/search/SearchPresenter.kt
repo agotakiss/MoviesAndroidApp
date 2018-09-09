@@ -17,7 +17,6 @@ class SearchPresenter @Inject constructor(
 
     lateinit var view: SearchView
     private var searchResultList = mutableListOf<Movie>()
-    private var page = 1
     private var lastQueryString = ""
     private val queryTextChangeSubject = PublishSubject.create<String>()
 
@@ -38,12 +37,11 @@ class SearchPresenter @Inject constructor(
 
     fun onSearchQueryChanged(queryString: String) {
         queryTextChangeSubject.onNext(queryString)
-        page = 1
     }
 
     private fun loadSearchResults(queryString: String) {
         if (queryString == "") return
-        getSearchResults.get(queryString, page)
+        getSearchResults.get(queryString)
             .map { it.sortedByDescending { it.popularity } }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -54,7 +52,7 @@ class SearchPresenter @Inject constructor(
     }
 
     private fun onSearchResultsLoaded(newSearchResults: List<Movie>, queryString: String) {
-        if (page == 1 && newSearchResults.isEmpty()) {
+        if (searchResultList.isEmpty() && newSearchResults.isEmpty()) {
             view.showNoResult()
         } else if (queryString != lastQueryString && newSearchResults.isNotEmpty()) {
             lastQueryString = queryString
@@ -62,7 +60,7 @@ class SearchPresenter @Inject constructor(
             this.searchResultList.addAll(newSearchResults)
             view.showSearchResults(searchResultList)
         }
-        if (page != 1 && queryString == lastQueryString) {
+        if (searchResultList.isNotEmpty() && queryString == lastQueryString) {
             lastQueryString = queryString
             this.searchResultList.addAll(newSearchResults)
             view.showNextPage(newSearchResults)
@@ -70,7 +68,6 @@ class SearchPresenter @Inject constructor(
     }
 
     fun onScrollEndReached() {
-        page++
         loadSearchResults(lastQueryString)
     }
 
