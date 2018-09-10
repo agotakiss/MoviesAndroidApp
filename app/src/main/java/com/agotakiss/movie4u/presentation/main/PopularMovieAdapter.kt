@@ -11,7 +11,14 @@ import com.agotakiss.movie4u.presentation.IMAGE_BASE_URL
 import com.agotakiss.movie4u.presentation.POSTER_TRANSITION_NAME
 import com.bumptech.glide.Glide
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.popular_movie_list_item.view.*
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.popular_calendar_iv
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.popular_favorite_iv
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.popular_movie_description_tv
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.popular_movie_genres_tv
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.popular_movie_rating_tv
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.popular_movie_release_date_tv
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.popular_movie_title_tv
+import kotlinx.android.synthetic.main.popular_movie_list_item.view.popular_poster_iv
 
 class PopularMovieAdapter(
     private val movies: List<Movie>,
@@ -45,7 +52,9 @@ class PopularMovieAdapter(
             itemView.popular_movie_genres_tv.text = movieGenresToDisplay(movie)
             if (movie.releaseDateText != "") {
                 itemView.popular_movie_release_date_tv.text = movie.releaseDateText?.substring(0, 4)
+                itemView.popular_calendar_iv.visibility = View.VISIBLE
             } else {
+                itemView.popular_movie_release_date_tv.text = ""
                 itemView.popular_calendar_iv.visibility = View.INVISIBLE
             }
             itemView.popular_movie_description_tv.text = movie.overview

@@ -11,6 +11,7 @@ import com.agotakiss.movie4u.domain.repository.MovieRepository
 import com.agotakiss.movie4u.domain.usecase.CheckIfMovieIsFavorite
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 class DetailsPresenter @Inject constructor(
@@ -72,7 +73,7 @@ class DetailsPresenter @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ isFavorite -> view.setFavoriteButton(isFavorite) }, { t ->
-                view.showError(t)
+                Timber.e(t)
             })
     }
 
@@ -80,8 +81,8 @@ class DetailsPresenter @Inject constructor(
         similarMoviePager.getNextPage()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ movieList -> onSimilarMoviesLoaded(movieList) }, { throwable ->
-                view.showError(throwable)
+            .subscribe({ movieList -> onSimilarMoviesLoaded(movieList) }, { t ->
+                Timber.e(t)
             })
     }
 
@@ -96,7 +97,7 @@ class DetailsPresenter @Inject constructor(
             .subscribe({ actorsList ->
                 onActorsLoaded(actorsList)
             }, { t ->
-                view.showError(t)
+                Timber.e(t)
             })
     }
 

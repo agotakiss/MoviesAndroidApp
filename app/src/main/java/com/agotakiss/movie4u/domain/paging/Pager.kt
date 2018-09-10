@@ -16,9 +16,12 @@ class Pager<T> constructor(
         }
 
         return sourceProvider.invoke(currentPage++, param)
-            .map {
-                totalPages = it.totalPages
-                it.data
+            .map { result ->
+                totalPages = result.totalPages
+                if (totalPages!! <= 1 && result.data.isEmpty()) {
+                    throw NoSuchElementException("No result")
+                }
+                result.data
             }
     }
 }

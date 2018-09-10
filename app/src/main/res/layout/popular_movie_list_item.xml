@@ -38,9 +38,10 @@
 
         <TextView
             android:id="@+id/popular_movie_rating_tv"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            tools:text="unrated"
             app:layout_constraintBottom_toBottomOf="@id/popular_movie_title_tv"
             app:layout_constraintEnd_toStartOf="@id/popular_rating_star_iv"
             app:layout_constraintTop_toTopOf="@id/popular_movie_title_tv" />
