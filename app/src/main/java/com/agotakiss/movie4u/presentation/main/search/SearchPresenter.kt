@@ -27,7 +27,7 @@ class SearchPresenter @Inject constructor(
 
     private fun initSearchQueryObserver() {
         queryTextChangeSubject
-            .debounce(1000L, TimeUnit.MILLISECONDS)
+            .debounce(500L, TimeUnit.MILLISECONDS)
             .subscribe({
                 loadSearchResults(it)
             }, {

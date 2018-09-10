@@ -92,7 +92,6 @@ class SearchFragment : MainPageFragment(), SearchView {
     }
 
     override fun showSearchResults(newSearchResults: List<Movie>) {
-        hideKeyboard()
         camera_av.visibility = View.GONE
         searchResultList.addAll(newSearchResults)
         val layoutManager = LinearLayoutManager(context)
