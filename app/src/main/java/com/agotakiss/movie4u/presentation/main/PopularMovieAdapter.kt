@@ -45,7 +45,7 @@ class PopularMovieAdapter(
             }
             itemView.popular_movie_title_tv.text = movie.title
             if (movie.averageVote != 0F) {
-                itemView.popular_movie_rating_tv.text = java.lang.Float.toString(movie.averageVote)
+                itemView.popular_movie_rating_tv.text = movie.averageVote.toString()
             } else {
                 itemView.popular_movie_rating_tv.text = "Unrated"
             }

@@ -10,10 +10,10 @@ import java.lang.ref.WeakReference
 
 class ViewPagerAdapter(
     fragmentManager: FragmentManager,
-    var numberOfTabs: Int
+    private var numberOfTabs: Int
 ) : FragmentStatePagerAdapter(fragmentManager) {
 
-    val pages = mutableMapOf<Int, WeakReference<MainPageFragment>>()
+    private val pages = mutableMapOf<Int, WeakReference<MainPageFragment>>()
 
     override fun getItem(position: Int): MainPageFragment {
         return when (position) {

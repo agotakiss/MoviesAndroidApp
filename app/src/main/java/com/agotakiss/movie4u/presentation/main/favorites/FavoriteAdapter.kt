@@ -38,7 +38,7 @@ class FavoriteAdapter(
                 onEndReachedListener.onEndReached(position)
             }
             if (movie.averageVote != 0F) {
-                itemView.favorite_movie_rating_tv!!.text = java.lang.Float.toString(movie.averageVote)
+                itemView.favorite_movie_rating_tv!!.text = movie.averageVote.toString()
             } else {
                 itemView.favorite_movie_rating_tv.text = "Unrated"
             }

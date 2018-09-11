@@ -21,9 +21,9 @@ import javax.inject.Inject
 
 class FavoritesFragment : MainPageFragment(), FavoritesView {
 
-    val movieApplication: MovieApplication get() = MovieApplication.get()
-    val applicationComponent by lazy { movieApplication.applicationComponent.plus(FavoritesModule(this)) }
-    var noFavoritesView: View? = null
+    private val movieApplication: MovieApplication get() = MovieApplication.get()
+    private val applicationComponent by lazy { movieApplication.applicationComponent.plus(FavoritesModule(this)) }
+    private var noFavoritesView: View? = null
 
     @Inject
     lateinit var presenter: FavoritesPresenter

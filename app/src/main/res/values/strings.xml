@@ -4,10 +4,13 @@
     <string name="also_liked_text">People who liked this also liked…</string>
     <string name="birthday">Birthday:</string>
     <string name="search_for_movies">Search for movies</string>
-    <string name="search">Search</string>
     <string name="known_for">Known for</string>
     <string name="biography">Biography:</string>
     <string name="unrated">Unrated</string>
     <string name="error">Error loading the movies. Please check your internet connection or try again later!</string>
-    <string name="no_favorites_textview">You didn\'t add any favorites yet.</string>
+    <string name="no_favorites_tv">You didn\'t add any favorites yet.</string>
+    <string name="popular">Popular</string>
+    <string name="favorites">Favorites</string>
+    <string name="search">Search</string>
+    <string name="no_overview">No overview found for this movie.</string>
 </resources>

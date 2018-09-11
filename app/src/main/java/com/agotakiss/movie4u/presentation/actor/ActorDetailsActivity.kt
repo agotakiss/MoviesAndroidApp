@@ -34,12 +34,12 @@ import javax.inject.Inject
 
 class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
 
-    val applicationComponent by lazy { movieApplication.applicationComponent.plus(ActorDetailsModule(this)) }
+    private val applicationComponent by lazy { movieApplication.applicationComponent.plus(ActorDetailsModule(this)) }
     @Inject
     lateinit var presenter: ActorDetailsPresenter
 
     private lateinit var actorsMoviesAdapter: CardAdapter
-    internal var actorsMoviesList: MutableList<Movie> = ArrayList()
+    private var actorsMoviesList: MutableList<Movie> = ArrayList()
     private var actorId = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +72,7 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
         }
     }
 
-    fun initActorsMovieList() {
+    private fun initActorsMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         actor_detail_other_movies_rv.layoutManager = layoutManager
         actorsMoviesAdapter = CardAdapter(
@@ -81,9 +81,8 @@ class ActorDetailsActivity : BaseActivity(), ActorDetailsView {
                 override fun onEndReached(position: Int) {
                 }
             }) { movie, view ->
-            val similarMovie = movie
             val intent = Intent(this, DetailsActivity::class.java)
-            intent.putExtra(MOVIE, similarMovie)
+            intent.putExtra(MOVIE, movie)
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this, view,
                 POSTER_TRANSITION_NAME

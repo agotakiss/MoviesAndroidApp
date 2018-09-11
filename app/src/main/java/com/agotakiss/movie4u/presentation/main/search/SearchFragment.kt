@@ -34,13 +34,13 @@ import javax.inject.Inject
 
 class SearchFragment : MainPageFragment(), SearchView {
 
-    val movieApplication: MovieApplication get() = MovieApplication.get()
-    val applicationComponent by lazy { movieApplication.applicationComponent.plus(SearchModule(this)) }
+    private val movieApplication: MovieApplication get() = MovieApplication.get()
+    private val applicationComponent by lazy { movieApplication.applicationComponent.plus(SearchModule(this)) }
 
     @Inject
     lateinit var presenter: SearchPresenter
 
-    internal var searchResultList: MutableList<Movie> = ArrayList()
+    private var searchResultList: MutableList<Movie> = ArrayList()
     private lateinit var adapter: PopularMovieAdapter
 
     override fun onCreateView(

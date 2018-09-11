@@ -14,7 +14,7 @@ class GetSearchResults @Inject constructor(
     private val pagerFactory: PagerFactory
 ) {
 
-    var pager: Pager<Movie>? = null
+    private var pager: Pager<Movie>? = null
 
     fun get(queryString: String): Single<List<Movie>> {
         if (pager == null || pager!!.param != queryString) {

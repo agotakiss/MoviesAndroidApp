@@ -23,7 +23,7 @@ class DetailsPresenter @Inject constructor(
 
     lateinit var view: DetailsView
     lateinit var movie: Movie
-    lateinit var similarMoviePager: Pager<Movie>
+    private lateinit var similarMoviePager: Pager<Movie>
 
     fun onViewReady(view: DetailsView, movie: Movie) {
         this.view = view

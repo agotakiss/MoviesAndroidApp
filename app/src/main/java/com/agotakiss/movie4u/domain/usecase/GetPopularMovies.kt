@@ -12,7 +12,7 @@ class GetPopularMovies @Inject constructor(
     private val movieRepository: MovieRepository,
     private val pagerFactory: PagerFactory
 ) {
-    val pager = pagerFactory.createPager(PagingType.POPULAR_MOVIES)
+    private val pager = pagerFactory.createPager(PagingType.POPULAR_MOVIES)
 
     fun get(): Single<List<Movie>> {
         return pager.getNextPage().zipWith(movieRepository.getFavoriteMovies(),

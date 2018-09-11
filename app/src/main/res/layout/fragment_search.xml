@@ -1,85 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    tools:context=".presentation.main.search.SearchFragment">
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        tools:context=".presentation.main.search.SearchFragment"
+        >
 
     <TextView
-        android:id="@+id/search_title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:text="@string/search_for_movies"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/search_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="@string/search_for_movies"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/search_et_container"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:textColorHint="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toStartOf="@id/search_cancel_iv"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_title_tv">
+            android:id="@+id/search_et_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColorHint="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toStartOf="@id/search_cancel_iv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_title_tv"
+            >
 
         <EditText
-            android:id="@+id/search_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search"
-            android:paddingStart="8dp"
-            android:inputType="textCapSentences"
-            android:imeOptions="actionSearch"
-            android:textColor="@color/colorPrimaryDark"
-            android:textColorHint="@color/colorPrimaryDark" />
+                android:id="@+id/search_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search"
+                android:paddingStart="8dp"
+                android:inputType="textCapSentences"
+                android:imeOptions="actionSearch"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="@color/colorPrimaryDark"
+                />
 
 
     </android.support.design.widget.TextInputLayout>
 
     <ImageView
-        android:id="@+id/search_cancel_iv"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
-        android:src="@drawable/cancel"
-        app:layout_constraintBottom_toBottomOf="@id/search_et_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/search_et_container" />
+            android:id="@+id/search_cancel_iv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/cancel"
+            app:layout_constraintBottom_toBottomOf="@id/search_et_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/search_et_container"
+            android:contentDescription="@null"
+            />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/camera_av"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:scaleType="centerCrop"
-        app:lottie_rawRes="@raw/camera_animation"
-        app:lottie_loop="true"
-        app:lottie_autoPlay="true" />
+            android:id="@+id/camera_av"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
+            app:lottie_rawRes="@raw/camera_animation"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/search_results_rv"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search_et_container" />
+            android:id="@+id/search_results_rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/search_et_container"
+            />
 
 
 </android.support.constraint.ConstraintLayout>

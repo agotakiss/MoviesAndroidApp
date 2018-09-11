@@ -2,7 +2,7 @@ package com.agotakiss.movie4u.base
 
 import timber.log.Timber
 
-open class BasePresenter() {
+open class BasePresenter {
 
     protected val TAG = this.javaClass.simpleName
 

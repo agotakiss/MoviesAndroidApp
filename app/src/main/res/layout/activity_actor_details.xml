@@ -1,22 +1,27 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
         <ImageView
-            android:id="@+id/actor_detail_photo_iv"
-            android:layout_width="150dp"
-            android:layout_height="195dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:scaleType="fitCenter"
-            android:transitionName="actorTransition"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/actor_detail_photo_iv"
+                android:layout_width="150dp"
+                android:layout_height="195dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="fitCenter"
+                android:transitionName="actorTransition"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@null"
+                />
 
         <TextView
                 android:id="@+id/actor_detail_name_tv"
@@ -25,34 +30,37 @@
                 android:maxLines="4"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="48dp"
-                android:text="name"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/actor_detail_photo_iv"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.027"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.027"
+                />
 
         <TextView
-            android:id="@+id/actor_detail_known_for_department_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintTop_toBottomOf="@id/actor_detail_name_tv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/actor_detail_photo_iv"/>
+                android:id="@+id/actor_detail_known_for_department_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintTop_toBottomOf="@id/actor_detail_name_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/actor_detail_photo_iv"
+                />
 
         <TextView
-            android:id="@+id/actor_detail_birthday_title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/birthday"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toEndOf="@id/actor_detail_photo_iv"
-            app:layout_constraintTop_toBottomOf="@+id/actor_detail_known_for_department_tv" />
+                android:id="@+id/actor_detail_birthday_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/birthday"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toEndOf="@id/actor_detail_photo_iv"
+                app:layout_constraintTop_toBottomOf="@+id/actor_detail_known_for_department_tv"
+                />
 
         <TextView
                 android:id="@+id/actor_detail_birthday_tv"
@@ -60,58 +68,64 @@
                 android:layout_height="wrap_content"
                 android:text="@string/birthday"
                 android:layout_marginStart="24dp"
-                app:layout_constraintStart_toEndOf="@+id/actor_detail_photo_iv" android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/actor_detail_birthday_title_tv"/>
+                app:layout_constraintStart_toEndOf="@+id/actor_detail_photo_iv"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/actor_detail_birthday_title_tv"
+                />
 
 
         <TextView
-            android:id="@+id/actor_detail_biography_title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/actor_detail_photo_iv"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/biography"/>
+                android:id="@+id/actor_detail_biography_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/actor_detail_photo_iv"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/biography"
+                />
 
         <TextView
-            android:id="@+id/actor_detail_biography_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:maxLines="8"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/actor_detail_biography_title_tv" />
+                android:id="@+id/actor_detail_biography_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxLines="8"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/actor_detail_biography_title_tv"
+                />
 
         <TextView
-            android:id="@+id/actor_detail_known_for_title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="24dp"
-            android:gravity="center"
-            android:text="@string/known_for"
-            android:textSize="20sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toTopOf="@id/actor_detail_other_movies_rv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/actor_detail_biography_tv" />
+                android:id="@+id/actor_detail_known_for_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:gravity="center"
+                android:text="@string/known_for"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toTopOf="@id/actor_detail_other_movies_rv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/actor_detail_biography_tv"
+                />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/actor_detail_other_movies_rv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/actor_detail_biography_tv">
+                android:id="@+id/actor_detail_other_movies_rv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/actor_detail_biography_tv"
+                >
 
         </android.support.v7.widget.RecyclerView>
     </android.support.constraint.ConstraintLayout>

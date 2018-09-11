@@ -49,14 +49,14 @@ class DetailsActivity : BaseActivity(), DetailsView {
         const val ACTOR_TRANSITION_NAME = "actorTransition"
     }
 
-    val applicationComponent by lazy { movieApplication.applicationComponent.plus(DetailsModule(this)) }
+    private val applicationComponent by lazy { movieApplication.applicationComponent.plus(DetailsModule(this)) }
 
     @Inject
     lateinit var presenter: DetailsPresenter
 
     private lateinit var movie: Movie
-    internal var similarMovieList: MutableList<Movie> = ArrayList()
-    internal var actorsList: MutableList<Cast> = ArrayList()
+    private var similarMovieList: MutableList<Movie> = ArrayList()
+    private var actorsList: MutableList<Cast> = ArrayList()
     private lateinit var adapter: CardAdapter
     private lateinit var actorAdapter: ActorAdapter
     private var hasStartedAnotherScreen = false
@@ -87,7 +87,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
         if (movie.averageVote == 0F) {
             detail_rating_tv.text = getString(R.string.unrated)
         } else {
-            detail_rating_tv.text = java.lang.Float.toString(movie.averageVote)
+            detail_rating_tv.text = movie.averageVote.toString()
         }
 
         if (movie.posterPath != null) {
@@ -112,13 +112,13 @@ class DetailsActivity : BaseActivity(), DetailsView {
             detail_calendar_iv.visibility = View.INVISIBLE
         }
         if (movie.overview == "") {
-            detail_description_tv.text = "No overview found for this movie."
+            detail_description_tv.text = getString(R.string.no_overview)
         } else {
             detail_description_tv.text = movie.overview
         }
     }
 
-    fun initializeSimilarMovieList() {
+    private fun initializeSimilarMovieList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         detail_similar_movies_rv.layoutManager = layoutManager
         adapter = CardAdapter(
@@ -189,7 +189,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
         adapter.notifyItemRangeInserted(similarMovieList.size - newMovies.size, newMovies.size)
     }
 
-    fun initializeActorsList() {
+    private fun initializeActorsList() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         detail_actors_rv.layoutManager = layoutManager
         actorAdapter = ActorAdapter(actorsList, object : OnEndReachedListener {
@@ -220,7 +220,7 @@ class DetailsActivity : BaseActivity(), DetailsView {
         logE(t)
     }
 
-    fun genresToString(): String {
+    private fun genresToString(): String {
         return if (movie.genres != null && !movie.genres!!.isEmpty()) {
             Observable.fromIterable(movie.genres!!)
                 .map<String> { it.name }

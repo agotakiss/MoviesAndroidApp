@@ -28,13 +28,13 @@ import javax.inject.Inject
 
 class PopularFragment : MainPageFragment(), PopularView {
 
-    val movieApplication: MovieApplication get() = MovieApplication.get()
-    val applicationComponent by lazy { movieApplication.applicationComponent.plus(PopularModule(this)) }
+    private val movieApplication: MovieApplication get() = MovieApplication.get()
+    private val applicationComponent by lazy { movieApplication.applicationComponent.plus(PopularModule(this)) }
 
     @Inject
     lateinit var presenter: PopularPresenter
 
-    internal var movieList: MutableList<Movie> = ArrayList()
+    private var movieList: MutableList<Movie> = ArrayList()
     private lateinit var adapter: PopularMovieAdapter
 
     override fun onCreateView(

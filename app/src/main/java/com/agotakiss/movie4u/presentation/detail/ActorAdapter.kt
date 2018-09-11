@@ -22,11 +22,7 @@ class ActorAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.setOnClickListener(object : View.OnClickListener {
-                override fun onClick(v: View?) {
-                    onItemClickListener.invoke(actors[adapterPosition].id, itemView.actor_photo_iv)
-                }
-            })
+            itemView.setOnClickListener { onItemClickListener.invoke(actors[adapterPosition].id, itemView.actor_photo_iv) }
         }
 
         fun bindViewHolder(position: Int) {
@@ -61,6 +57,6 @@ class ActorAdapter(
     }
 
     companion object {
-        val ACTOR_ID = "actor_id"
+        const val ACTOR_ID = "actor_id"
     }
 }

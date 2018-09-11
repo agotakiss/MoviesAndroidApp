@@ -15,7 +15,7 @@ class MovieApplication : Application() {
         initLogging()
     }
 
-    fun initLogging() {
+    private fun initLogging() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {

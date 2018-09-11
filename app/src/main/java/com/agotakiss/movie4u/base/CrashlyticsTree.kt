@@ -6,6 +6,12 @@ import timber.log.Timber
 
 class CrashlyticsTree : Timber.Tree() {
 
+    companion object {
+        const val CRASHLYTICS_KEY_PRIORITY = "priority"
+        const val CRASHLYTICS_KEY_TAG = "tag"
+        const val CRASHLYTICS_KEY_MESSAGE = "message"
+    }
+
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO) {
             return
@@ -20,11 +26,5 @@ class CrashlyticsTree : Timber.Tree() {
         } else {
             Crashlytics.logException(t)
         }
-    }
-
-    companion object {
-        private val CRASHLYTICS_KEY_PRIORITY = "priority"
-        private val CRASHLYTICS_KEY_TAG = "tag"
-        private val CRASHLYTICS_KEY_MESSAGE = "message"
     }
 }

@@ -15,7 +15,7 @@ class MainActivity : BaseActivity() {
         init()
     }
 
-    fun init() {
+    private fun init() {
         val mainPagerAdapter = ViewPagerAdapter(supportFragmentManager, 3)
         viewpager.adapter = mainPagerAdapter
         viewpager.offscreenPageLimit = 3

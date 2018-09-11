@@ -7,9 +7,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper {
 
-    val API_KEY = "api_key"
-    val MOVIE_DB_API_KEY = "0a08e38b874d0aa2d426ffc04357069d"
-    val MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/"
+    private const val API_KEY = "api_key"
+    private const val MOVIE_DB_API_KEY = "0a08e38b874d0aa2d426ffc04357069d"
+    private const val MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/"
 
     private val okHttpClient: OkHttpClient
         get() {

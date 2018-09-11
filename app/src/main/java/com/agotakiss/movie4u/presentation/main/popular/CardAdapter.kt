@@ -37,7 +37,7 @@ class CardAdapter(
                 onEndReachedListener.onEndReached(position)
             }
             if (movie.averageVote != 0F) {
-                itemView.card_movie_rating_tv!!.text = java.lang.Float.toString(movie.averageVote)
+                itemView.card_movie_rating_tv!!.text = movie.averageVote.toString()
             } else {
                 itemView.card_movie_rating_tv.text = "Unrated"
             }
