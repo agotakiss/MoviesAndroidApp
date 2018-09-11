@@ -14,7 +14,10 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [ApplicationModule::class])
+@Component(modules = [
+    ApplicationModule::class,
+    PagerModule::class
+])
 interface ApplicationComponent {
 
     fun inject(application: MovieApplication)

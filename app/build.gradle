@@ -12,7 +12,7 @@ android {
         targetSdkVersion 27
         versionCode 2
         versionName "1.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'com.github.tmurakami.dexopener.DexOpenerAndroidJUnitRunner' //Required for DaggerMock
     }
 
     signingConfigs {
@@ -45,6 +45,29 @@ android {
     }
 }
 
+ext {
+
+//Testing
+    jUnitVersion = '4.12'
+    mockitoVersion = '2.21.0'
+    mockitoKotlinVersion = '2.0.0-RC1'
+    espressoVersion = '3.0.2'
+    androidTestRulesVersion = '1.0.2'
+    daggerMockVersion = '0.8.4'
+    dexOpenerVersion = '1.0.3'
+
+
+    testDependencies = [junit           : "junit:junit:${jUnitVersion}",
+                        kotlinJUnit     : "org.jetbrains.kotlin:kotlin-test-junit:${kotlinVersion}",
+                        mockito         : "org.mockito:mockito-core:${mockitoVersion}",
+                        mockitoKotlin   : "com.nhaarman.mockitokotlin2:mockito-kotlin:${mockitoKotlinVersion}",
+                        mockitoAndroid  : "org.mockito:mockito-android:${mockitoVersion}",
+                        espresso        : "com.android.support.test.espresso:espresso-core:${espressoVersion}",
+                        androidTestRules: "com.android.support.test:rules:${androidTestRulesVersion}",
+                        daggerMock      : "com.github.fabioCollini.daggermock:daggermock-kotlin:${daggerMockVersion}",
+                        dexOpener       : "com.github.tmurakami:dexopener:${dexOpenerVersion}"]
+
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
@@ -87,9 +110,18 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    //TESTING
+    testImplementation testDependencies.junit
+    testImplementation testDependencies.kotlinJUnit
+    testImplementation testDependencies.mockito
+    testImplementation testDependencies.mockitoAndroid
+    testImplementation testDependencies.mockitoKotlin
+    testImplementation testDependencies.espresso
+    testImplementation testDependencies.androidTestRules
+    testImplementation testDependencies.daggerMock
+    testImplementation testDependencies.dexOpener
+
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
 }

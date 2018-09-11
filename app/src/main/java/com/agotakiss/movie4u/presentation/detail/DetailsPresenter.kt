@@ -4,8 +4,6 @@ import com.agotakiss.movie4u.base.BasePresenter
 import com.agotakiss.movie4u.domain.models.Cast
 import com.agotakiss.movie4u.domain.models.Movie
 import com.agotakiss.movie4u.domain.paging.Pager
-import com.agotakiss.movie4u.domain.paging.PagerFactory
-import com.agotakiss.movie4u.domain.paging.PagingType
 import com.agotakiss.movie4u.domain.repository.CastRepository
 import com.agotakiss.movie4u.domain.repository.MovieRepository
 import com.agotakiss.movie4u.domain.usecase.CheckIfMovieIsFavorite
@@ -13,22 +11,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 class DetailsPresenter @Inject constructor(
     private val movieRepository: MovieRepository,
-    private val pagerFactory: PagerFactory,
+    @Named("similar") private val similarMoviePager: Pager<Movie>,
     private val checkIfMovieIsFavorite: CheckIfMovieIsFavorite,
     private val castRepository: CastRepository
 ) : BasePresenter() {
 
     lateinit var view: DetailsView
     lateinit var movie: Movie
-    private lateinit var similarMoviePager: Pager<Movie>
 
     fun onViewReady(view: DetailsView, movie: Movie) {
         this.view = view
         this.movie = movie
-        this.similarMoviePager = pagerFactory.createPager(PagingType.SIMILAR_MOVIES, movie.id)
         checkIfMovieIsFavorite(movie)
         loadSimilarMovies()
         loadActors()

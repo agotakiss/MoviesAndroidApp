@@ -1,5 +1,6 @@
 package com.agotakiss.movie4u.domain.usecase
 
+import com.agotakiss.movie4u.domain.helper.FavoriteMovieMerger
 import com.agotakiss.movie4u.domain.models.Movie
 import com.agotakiss.movie4u.domain.paging.Pager
 import com.agotakiss.movie4u.domain.paging.PagerFactory
@@ -11,7 +12,8 @@ import javax.inject.Inject
 
 class GetSearchResults @Inject constructor(
     private val movieRepository: MovieRepository,
-    private val pagerFactory: PagerFactory
+    private val pagerFactory: PagerFactory,
+    private val favoriteMovieMerger: FavoriteMovieMerger
 ) {
 
     private var pager: Pager<Movie>? = null
@@ -22,16 +24,7 @@ class GetSearchResults @Inject constructor(
         }
         return pager!!.getNextPage().zipWith(movieRepository.getFavoriteMovies(),
             BiFunction<List<Movie>, List<Movie>, List<Movie>> { searchResults, favoriteMovies ->
-                val moviesToDisplay = mutableListOf<Movie>()
-
-                for (i in 0 until searchResults.size) {
-                    val movie = searchResults[i]
-                    if (favoriteMovies.contains(movie)) {
-                        movie.isFavorite = true
-                    }
-                    moviesToDisplay.add(movie)
-                }
-                moviesToDisplay
+                favoriteMovieMerger.merge(favoriteMovies, searchResults)
             })
     }
 }
