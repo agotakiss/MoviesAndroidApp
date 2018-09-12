@@ -12,7 +12,6 @@ class ActorRepositoryImpl @Inject constructor(
 ) : ActorRepository {
 
     override fun getActor(actorId: Int): Single<Actor> =
-    movieDbApi.getActor(actorId)
+        movieDbApi.getActor(actorId)
             .map { it.toActor() }
-
 }
